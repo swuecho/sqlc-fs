@@ -3,10 +3,12 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
 	"strings"
 	"text/template"
 
 	"github.com/pkg/errors"
+	"github.com/samber/lo"
 	"github.com/stephen/sqlc-ts/internal/plugin"
 	"github.com/stephen/sqlc-ts/internal/sdk"
 )
@@ -86,6 +88,14 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 		}
 	}
 	resp := plugin.CodeGenResponse{}
+	noneSystemStruct := lo.Filter(structs, func(strut Struct, idx int) bool {
+		return strut.Table.Schema != "information_schema" && strut.Table.Schema != "pg_catalog" 
+	})
+	model_of_structs, _ := json.Marshal(noneSystemStruct)
+	resp.Files = append(resp.Files, &plugin.File{
+		Name:     "model.json",
+		Contents: model_of_structs,
+	})
 
 	for filename, code := range output {
 		resp.Files = append(resp.Files, &plugin.File{

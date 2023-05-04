@@ -11,8 +11,8 @@
    "sql": [
     {
       "schema": "schema.sql",
-      "queries": "query.sql",
-      "engine": "sqlite",
+      "queries": "query/",
+      "engine": "postgresql",
       "codegen": [
         {
           "out": "gen",

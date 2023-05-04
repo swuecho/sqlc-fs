@@ -4,10 +4,24 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 
+	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
 	"github.com/stephen/sqlc-ts/internal/plugin"
 )
+
+func ProtoToJSON(msg proto.Message) (string, error) {
+	marshaler := &jsonpb.Marshaler{OrigName: true}
+	jsonstr, err := marshaler.MarshalToString(msg)
+
+	if err != nil {
+		return "", err
+	}
+
+	return jsonstr, nil
+}
 
 func main() {
 	if err := run(); err != nil {
@@ -25,6 +39,10 @@ func run() error {
 	if err := req.UnmarshalVT(reqBlob); err != nil {
 		return err
 	}
+
+	// convert protobuf message to JSON
+	jsonStr, _:= ProtoToJSON(&req)
+	_ = ioutil.WriteFile("output.json", []byte(jsonStr), 0644)
 	resp, err := Generate(&req)
 	if err != nil {
 		return err

@@ -5,3 +5,7 @@ internal/plugin/codegen.pb.go: protos/plugin/codegen.proto
 		--go-vtproto_out=. \
 		--go-vtproto_opt=module=github.com/stephen/sqlc-ts,features=marshal+unmarshal+size \
 		./protos/plugin/codegen.proto
+
+gen: 
+	go build -o bin/sqlc-ts   
+	sqlc generate -f ./testdata/sqlc.json

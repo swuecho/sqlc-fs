@@ -7,7 +7,7 @@ This plugin is early-stage and is not quite production ready.
 ## Installation & Usage
 
 ```bash
-$ go install github.com/kyleconroy/sqlc/cmd/@latest
+go install github.com/kyleconroy/sqlc/cmd/@latest
 ```
 
 ```json5
@@ -38,7 +38,12 @@ $ go install github.com/kyleconroy/sqlc/cmd/@latest
 }
 ```
 
+```build
+go build -o bin/sqlc-ts 
+```
+
 See `testdata/` for a full example that can be run with:
+
 ```bash
-$ sqlc generate -f ./testdata/sqlc.json && cat ./testdata/gen/query.sql.ts | less
+sqlc generate -f ./testdata/sqlc.json && cat ./testdata/gen/query.sql.ts | less
 ```
