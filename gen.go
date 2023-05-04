@@ -48,7 +48,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 			Funcs(funcMap).
 			ParseFS(
 				templates,
-				"templates/*.tmpl",
+				"templates/query.tmpl",
 			),
 	)
 
@@ -89,13 +89,16 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 	}
 	resp := plugin.CodeGenResponse{}
 	noneSystemStruct := lo.Filter(structs, func(strut Struct, idx int) bool {
-		return strut.Table.Schema != "information_schema" && strut.Table.Schema != "pg_catalog" 
+		return strut.Table.Schema != "information_schema" && strut.Table.Schema != "pg_catalog"
 	})
 	model_of_structs, _ := json.Marshal(noneSystemStruct)
 	resp.Files = append(resp.Files, &plugin.File{
 		Name:     "model.json",
 		Contents: model_of_structs,
 	})
+
+	// fmt.Printf("%+v", tmpl.Templates())
+	renderStructs(funcMap, tctx, output)
 
 	for filename, code := range output {
 		resp.Files = append(resp.Files, &plugin.File{
@@ -105,4 +108,23 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 	}
 
 	return &resp, nil
+}
+
+func renderStructs(funcMap template.FuncMap, tctx tmplCtx, output map[string]string) {
+	var b bytes.Buffer
+	w := bufio.NewWriter(&b)
+
+	tmplModel := template.Must(
+		template.New("model").
+			Funcs(funcMap).
+			ParseFS(
+				templates,
+				"templates/model.tmpl",
+			),
+	)
+	// fmt.Printf("%s\n", tmplModel.Name())
+	_ = tmplModel.ExecuteTemplate(w, "structsFile", &tctx)
+	w.Flush()
+	code := b.Bytes()
+	output["model.fs"] = string(code)
 }
