@@ -79,6 +79,7 @@ let GetAuthor db: NpgsqlConnection id: int32 -> GetAuthorRow  =
     Bio = read.string "bio"}
 
   db
+  |> Sql.existingConnection
   |> Sql.query getAuthor
   |> Sql.parameters  [ "@id", Sql.int32 id ]
   |> Sql.execute reader

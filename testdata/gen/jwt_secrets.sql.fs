@@ -31,6 +31,7 @@ let CreateJwtSecret db: NpgsqlConnection arg: CreateJwtSecretParams -> CreateJwt
     Audience = read.string "audience"}
 
   db
+  |> Sql.existingConnection
   |> Sql.query createJwtSecret
   |> Sql.parameters  [ "@name", Sql.string name, "@secret", Sql.string secret, "@audience", Sql.string audience ]
   |> Sql.execute reader
@@ -68,6 +69,7 @@ let GetJwtSecret db: NpgsqlConnection name: string -> GetJwtSecretRow  =
     Audience = read.string "audience"}
 
   db
+  |> Sql.existingConnection
   |> Sql.query getJwtSecret
   |> Sql.parameters  [ "@name", Sql.string name ]
   |> Sql.execute reader
