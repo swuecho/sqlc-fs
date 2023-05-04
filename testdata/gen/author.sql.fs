@@ -73,7 +73,7 @@ type GetAuthorRow = {
 }
 
 let GetAuthor db: NpgsqlConnection id: int32 -> GetAuthorRow  =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
     Bio = read.string "bio"}
@@ -110,7 +110,7 @@ type ListAuthorsRow = {
 
 
 let ListAuthors db: NpgsqlConnection  -> ListAuthorsRow list =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
     Bio = read.string "bio"}

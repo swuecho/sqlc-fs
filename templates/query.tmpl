@@ -30,7 +30,7 @@ type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
 {{range .Comments}}//{{.}}
 {{end}}
 let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
   {{- end -}}
@@ -47,7 +47,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
 {{range .Comments}}//{{.}}
 {{end -}}
 let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}} list =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
   {{- end -}}
@@ -74,7 +74,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}  =
 {{range .Comments}}//{{.}}
 {{end -}}
 let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) -> int =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
   {{- end -}}

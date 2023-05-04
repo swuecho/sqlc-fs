@@ -24,7 +24,7 @@ type CreateJwtSecretRow = {
 }
 
 let CreateJwtSecret db: NpgsqlConnection arg: CreateJwtSecretParams -> CreateJwtSecretRow  =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
     Secret = read.string "secret"
@@ -62,7 +62,7 @@ type GetJwtSecretRow = {
 }
 
 let GetJwtSecret db: NpgsqlConnection name: string -> GetJwtSecretRow  =
-  let reader = fun read -> {
+  let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
     Secret = read.string "secret"
