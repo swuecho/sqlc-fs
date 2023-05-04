@@ -7,7 +7,7 @@ open Npgsql.FSharp
 
 {{define "queryCode"}}
 {{range .Queries}}
-{{- if $.OutputQuery .SourceName -}}
+{{- if $.OutputQuery .SourceName }}
 let {{.ConstantName}} = {{$.Q}}-- name: {{.MethodName}} {{.Cmd}}
 {{escape .SQL}}
 {{$.Q}};
@@ -17,18 +17,18 @@ type {{.Arg.Type}} = { {{- range .Arg.UniqueFields}}
   {{.Name}}: {{.Type}};
   {{- end}}
 }
-{{end}}
+{{- end -}}
 
 {{if .Ret.EmitStruct}}
 type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
   {{.Name}}: {{.Type}};
   {{- end}}
 }
-{{end}}
+{{- end -}}
 
 {{if eq .Cmd ":one"}}
 {{range .Comments}}//{{.}}
-{{end -}}
+{{end}}
 let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
   let reader = fun read -> {
   {{- range $i, $e := .Ret.UniqueFields}}
@@ -65,7 +65,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}  =
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
-  |> Sql.parameters [{{.Arg.Params}}]
+  |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
   |> Sql.executeNonQuery
 {{end}}
 
@@ -78,27 +78,27 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) -> int =
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
   {{- end -}}
   }
-  
-  db
+
+  db 
+  |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
-  |> Sql.parameters  {{.Arg.Pair}}
-  |> Sql.execute reader
+  |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+  |> Sql.executeRow
 {{end}}
 
 {{if eq .Cmd ":execresult"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) -> QueryExecResult =
-  let result = db.exec({{.ConstantName}}, [{{.Arg.Params}}]);
-  if (result.length !== 1) {
-    throw new Error("expected exec() to return a single query result")
-  }
+let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) =
+  db 
+  |> Sql.existingConnection
+  |> Sql.query {{.ConstantName}}
+  |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+  |> Sql.execute
+{{ end }}
 
-  return result[0];
-{{- end -}}
-
-{{- end -}}
-{{- end -}}
-{{- end -}}
+{{ end }}
+{{ end }}
+{{ end }}
 
 
