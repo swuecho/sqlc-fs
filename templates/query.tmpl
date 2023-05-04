@@ -37,7 +37,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
   }
   db
   |> Sql.query {{.ConstantName}}
-  |> Sql.parameters  {{.Arg.Pair}}
+  |> Sql.parameters  {{.Arg.Pair}} 
   |> Sql.execute reader
 {{end}}
 
