@@ -24,7 +24,7 @@ func buildStructs(req *plugin.CodeGenRequest) []Struct {
 			for _, column := range table.Columns {
 				s.Fields = append(s.Fields, Field{
 					Name:    FieldName(column.Name, req.Settings),
-					Type:    tsType(req, column),
+					Type:    fsType(req, column),
 					Comment: column.Comment,
 				})
 			}
@@ -64,7 +64,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			p := query.Params[0]
 			gq.Arg = QueryValue{
 				Name: paramName(p),
-				Typ:  tsType(req, p.Column),
+				Typ:  fsType(req, p.Column),
 			}
 		} else if len(query.Params) > 1 {
 			var cols []column
@@ -93,7 +93,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			}
 			gq.Ret = QueryValue{
 				Name: name,
-				Typ:  tsType(req, c),
+				Typ:  fsType(req, c),
 			}
 		} else if len(query.Columns) > 1 {
 			var gs *Struct
@@ -107,7 +107,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 				for i, f := range s.Fields {
 					c := query.Columns[i]
 					sameName := f.Name == StructName(columnName(c, i), req.Settings)
-					sameType := f.Type == tsType(req, c)
+					sameType := f.Type == fsType(req, c)
 					sameTable := sdk.SameTableName(c.Table, &s.Table, req.Catalog.DefaultSchema)
 					if !sameName || !sameType || !sameTable {
 						same = false
@@ -213,7 +213,7 @@ func columnsToStruct(req *plugin.CodeGenRequest, name string, columns []column, 
 		gs.Fields = append(gs.Fields, Field{
 			Name:              fieldName,
 			DBName:            colName,
-			Type:              tsType(req, c.Column),
+			Type:              fsType(req, c.Column),
 			TypecheckTemplate: tsTypecheckTemplate(req, c.Column),
 		})
 		if _, found := seen[baseFieldName]; !found {

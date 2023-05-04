@@ -98,6 +98,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 	})
 
 	// fmt.Printf("%+v", tmpl.Templates())
+	tctx.Structs = noneSystemStruct 
 	renderStructs(funcMap, tctx, output)
 
 	for filename, code := range output {
