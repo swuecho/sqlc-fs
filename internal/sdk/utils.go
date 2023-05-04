@@ -1,6 +1,7 @@
 package sdk
 
 import (
+	"bytes"
 	"strings"
 	"unicode"
 )
@@ -19,6 +20,21 @@ func Title(s string) string {
 	return strings.Title(s)
 }
 
+func ToSnakeCase(s string) string {
+	if s == "ID" {
+		return "id"
+	}
+	var buf bytes.Buffer
+
+	for i, r := range s {
+		if i > 0 && unicode.IsUpper(r) {
+			buf.WriteRune('_')
+		}
+		buf.WriteRune(unicode.ToLower(r))
+	}
+
+	return buf.String()
+}
 
 func ToPascalCase(s string) string {
 	return ToCamelInitCase(s, true)

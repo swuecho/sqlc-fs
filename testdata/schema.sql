@@ -1,7 +1,7 @@
 CREATE TABLE authors (
           id   INTEGER PRIMARY KEY ,
           name text      NOT NULL,
-          bio  text
+          bio  text NOT NULl
 );
 
 CREATE TABLE IF NOT EXISTS jwt_secrets (
