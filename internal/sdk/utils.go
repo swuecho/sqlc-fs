@@ -1,9 +1,9 @@
 package sdk
 
 import (
-	"bytes"
 	"strings"
 	"unicode"
+	"github.com/iancoleman/strcase"
 )
 
 func LowerTitle(s string) string {
@@ -20,20 +20,12 @@ func Title(s string) string {
 	return strings.Title(s)
 }
 
-func ToSnakeCase(s string) string {
+
+func toSnakeCase(s string) string {
 	if s == "ID" {
 		return "id"
 	}
-	var buf bytes.Buffer
-
-	for i, r := range s {
-		if i > 0 && unicode.IsUpper(r) {
-			buf.WriteRune('_')
-		}
-		buf.WriteRune(unicode.ToLower(r))
-	}
-
-	return buf.String()
+	return strcase.ToSnake(s)
 }
 
 func ToPascalCase(s string) string {
