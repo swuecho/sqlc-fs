@@ -33,13 +33,6 @@ func FieldName(name string, settings *plugin.Settings) string {
 	if rename := settings.Rename[name]; rename != "" {
 		return rename
 	}
-	out := ""
-	for i, p := range strings.Split(name, "_") {
-		if i == 0 {
-			out += sdk.LowerTitle(p)
-		} else {
-			out += sdk.Title(p)
-		}
-	}
+	out := sdk.ToPascalCase(name)
 	return out
 }

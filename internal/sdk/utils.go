@@ -19,6 +19,27 @@ func Title(s string) string {
 	return strings.Title(s)
 }
 
+
+func ToPascalCase(s string) string {
+	return ToCamelInitCase(s, true)
+}
+
+func ToCamelInitCase(name string, initUpper bool) string {
+	out := ""
+	for i, p := range strings.Split(name, "_") {
+		if !initUpper && i == 0 {
+			out += p
+			continue
+		}
+		if p == "id" {
+			out += "ID"
+		} else {
+			out += strings.Title(p)
+		}
+	}
+	return out
+}
+
 // Go string literals cannot contain backtick. If a string contains
 // a backtick, replace it the following way:
 //

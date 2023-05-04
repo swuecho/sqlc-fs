@@ -8,6 +8,6 @@ type {{.Name}} = {{ "{" }}
 {{range .Fields -}}
 {{"    "}} {{.Name}}: {{.Type}}  {{- if .Comment -}} // {{.Comment}} {{- end }}
 {{end -}}
-{{ "}" }}
+{{ "}\n" }}
 {{end}}
 {{end}}
