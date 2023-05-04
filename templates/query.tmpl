@@ -35,9 +35,10 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
   {{- end -}}
   }
+
   db
   |> Sql.query {{.ConstantName}}
-  |> Sql.parameters  {{.Arg.Pair}} 
+  |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
   |> Sql.execute reader
 {{end}}
 
@@ -77,6 +78,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) -> int =
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
   {{- end -}}
   }
+  
   db
   |> Sql.query {{.ConstantName}}
   |> Sql.parameters  {{.Arg.Pair}}

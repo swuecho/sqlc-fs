@@ -94,6 +94,31 @@ func (v QueryValue) Params() string {
 	return "\n" + strings.Join(out, ",\n")
 }
 
+func (v QueryValue) NpgsqlParams() string {
+	if v.isEmpty() {
+		return ""
+	}
+	var out []string
+	var outT []string
+	if v.Struct == nil {
+		out = append(out, v.Name)
+		outT = append(outT, v.Type())
+	} else {
+		for _, f := range v.Struct.Fields {
+			out = append(out, f.Name)
+			outT = append(outT, f.Type)
+		}
+	}
+	var f string
+	for idx, v := range out {
+		f += fmt.Sprintf("\"@%s\", Sql.%s %s", toSnakeCase(v), outT[idx], toSnakeCase(v))
+		if idx < len(out) -1 {
+			f+=", "
+		}
+	}
+	return f
+}
+
 func (v QueryValue) ColumnNames() string {
 	if v.Struct == nil {
 		return fmt.Sprintf("[]string{%q}", v.Name)
