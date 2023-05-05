@@ -7,12 +7,15 @@ import (
 	"github.com/stephen/sqlc-ts/internal/sdk"
 )
 
+
 type Struct struct {
 	Table   plugin.Identifier
 	Name    string
 	Fields  []Field
 	Comment string
 }
+
+
 
 func StructName(name string, settings *plugin.Settings) string {
 	if rename := settings.Rename[name]; rename != "" {

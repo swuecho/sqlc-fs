@@ -6,6 +6,7 @@ import (
 
 	"github.com/stephen/sqlc-ts/internal/metadata"
 	"github.com/stephen/sqlc-ts/internal/plugin"
+	"github.com/stephen/sqlc-ts/internal/sdk"
 )
 
 type QueryValue struct {
@@ -117,7 +118,7 @@ func (v QueryValue) NpgsqlParams() string {
 	// Construct the PostgreSQL params string 
 	var sqlParamsString string  
 	for idx, columnName := range columnNames {
-		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", toSnakeCase(columnName), columnTypes[idx], toSnakeCase(columnName))
+		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", sdk.ToSnakeCase(columnName), columnTypes[idx], sdk.ToSnakeCase(columnName))
 		if idx < len(columnNames) -1 {  
 			sqlParamsString+=", "  
 		}

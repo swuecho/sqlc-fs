@@ -3,8 +3,18 @@ package sdk
 import (
 	"strings"
 	"unicode"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 	"github.com/iancoleman/strcase"
 )
+
+func titleCase(s string) string {
+	// Create a TitleConverter with the current locale's title case rules
+	tc := cases.Title(language.English)
+    
+	// Convert the input string to title case
+	return tc.String(s)
+    }
 
 func LowerTitle(s string) string {
 	if s == "" {
@@ -17,9 +27,8 @@ func LowerTitle(s string) string {
 }
 
 func Title(s string) string {
-	return strings.Title(s)
+	return titleCase(s)
 }
-
 
 func ToSnakeCase(s string) string {
 	if s == "ID" {
@@ -29,10 +38,14 @@ func ToSnakeCase(s string) string {
 }
 
 func ToPascalCase(s string) string {
-	return ToCamelInitCase(s, true)
+	return toCamelInitCase(s, true)
 }
 
-func ToCamelInitCase(name string, initUpper bool) string {
+func ToCamelCase(s string) string {
+	return toCamelInitCase(s, false)
+}
+
+func toCamelInitCase(name string, initUpper bool) string {
 	out := ""
 	for i, p := range strings.Split(name, "_") {
 		if !initUpper && i == 0 {
@@ -42,7 +55,7 @@ func ToCamelInitCase(name string, initUpper bool) string {
 		if p == "id" {
 			out += "ID"
 		} else {
-			out += strings.Title(p)
+			out += titleCase(p)
 		}
 	}
 	return out
@@ -52,12 +65,14 @@ func ToCamelInitCase(name string, initUpper bool) string {
 // a backtick, replace it the following way:
 //
 // input:
-// 	SELECT `group` FROM foo
+//
+//	SELECT `group` FROM foo
 //
 // output:
-// 	SELECT ` + "`" + `group` + "`" + ` FROM foo
 //
-// The escaped string must be rendered inside an existing string literal
+//	SELECT ` + "`" + `group` + "`" + ` FROM foo
+//
+// # The escaped string must be rendered inside an existing string literal
 //
 // A string cannot be escaped twice
 func EscapeBacktick(s string) string {

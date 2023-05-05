@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"github.com/stephen/sqlc-ts/internal/sdk"
 )
 
 type Field struct {
@@ -20,40 +21,12 @@ func (f Field) Typecheck(i int) string {
 func SetCaseStyle(name string, style string) string {
 	switch style {
 	case "camel":
-		return toCamelCase(name)
+		return sdk.ToCamelCase(name)
 	case "pascal":
-		return toPascalCase(name)
+		return sdk.ToPascalCase(name)
 	case "snake":
-		return toSnakeCase(name)
+		return sdk.ToSnakeCase(name)
 	default:
 		panic(fmt.Sprintf("unsupported JSON tags case style: '%s'", style))
 	}
-}
-
-func toSnakeCase(s string) string {
-	return strings.ToLower(s)
-}
-
-func toCamelCase(s string) string {
-	return toCamelInitCase(s, false)
-}
-
-func toPascalCase(s string) string {
-	return toCamelInitCase(s, true)
-}
-
-func toCamelInitCase(name string, initUpper bool) string {
-	out := ""
-	for i, p := range strings.Split(name, "_") {
-		if !initUpper && i == 0 {
-			out += p
-			continue
-		}
-		if p == "id" {
-			out += "ID"
-		} else {
-			out += strings.Title(p)
-		}
-	}
-	return out
 }
