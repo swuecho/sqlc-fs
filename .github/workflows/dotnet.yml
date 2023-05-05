@@ -22,7 +22,6 @@ jobs:
         dotnet-version: 6.0.x
     - name: install paket
       run: |
-        dotnet new tool-manifest
         dotnet tool install paket
         dotnet tool restore
       working-directory: testdata/gen
