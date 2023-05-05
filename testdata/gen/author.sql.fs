@@ -29,7 +29,7 @@ let CreateAuthor db: NpgsqlConnection arg: CreateAuthorParams) =
   db 
   |> Sql.existingConnection
   |> Sql.query createAuthor
-  |> Sql.parameters  [ "@name", Sql.string name, "@bio", Sql.string bio ]
+  |> Sql.parameters  [ "@name", Sql.string arg.name, "@bio", Sql.string arg.bio ]
   |> Sql.execute
 
 
@@ -46,7 +46,7 @@ WHERE id = ?
 
 
 
-let DeleteAuthor db: NpgsqlConnection id: int32  = 
+let DeleteAuthor (db: NpgsqlConnection) (id: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteAuthor
@@ -72,7 +72,7 @@ type GetAuthorRow = {
   Bio: string;
 }
 
-let GetAuthor db: NpgsqlConnection id: int32 -> GetAuthorRow  =
+let GetAuthor (db: NpgsqlConnection) (id: int32) -> GetAuthorRow  =
   let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
@@ -109,7 +109,7 @@ type ListAuthorsRow = {
 }
 
 
-let ListAuthors db: NpgsqlConnection  -> ListAuthorsRow list =
+let ListAuthors (db: NpgsqlConnection) () -> ListAuthorsRow list =
   let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"

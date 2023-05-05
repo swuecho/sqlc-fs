@@ -93,10 +93,10 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 			return "bool"
 	case "json":
 		// TODO
-		return "interface{}"
+		return "string"
 
 	case "jsonb":
-		return "interface{}"
+		return "string"
 
 	case "bytea", "blob", "pg_catalog.bytea":
 		return "[]byte"
@@ -105,16 +105,16 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 			return "DateTime"
 
 	case "pg_catalog.time":
-			return "time.Time"
+			return "DateTime"
 
 	case "pg_catalog.timetz":
-			return "time.Time"
+			return "DateTime"
 
 	case "pg_catalog.timestamp":
-			return "time.Time"
+			return "DateTime"
 
 	case "pg_catalog.timestamptz", "timestamptz":
-			return "time.Time"
+			return "DateTime"
 
 	case "text", "pg_catalog.varchar", "pg_catalog.bpchar", "string":
 			return "string"

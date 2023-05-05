@@ -23,7 +23,7 @@ type CreateJwtSecretRow = {
   Audience: string;
 }
 
-let CreateJwtSecret db: NpgsqlConnection arg: CreateJwtSecretParams -> CreateJwtSecretRow  =
+let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams) -> CreateJwtSecretRow  =
   let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
@@ -33,7 +33,7 @@ let CreateJwtSecret db: NpgsqlConnection arg: CreateJwtSecretParams -> CreateJwt
   db
   |> Sql.existingConnection
   |> Sql.query createJwtSecret
-  |> Sql.parameters  [ "@name", Sql.string name, "@secret", Sql.string secret, "@audience", Sql.string audience ]
+  |> Sql.parameters  [ "@name", Sql.string arg.name, "@secret", Sql.string arg.secret, "@audience", Sql.string arg.audience ]
   |> Sql.execute reader
 
 
@@ -61,7 +61,7 @@ type GetJwtSecretRow = {
   Audience: string;
 }
 
-let GetJwtSecret db: NpgsqlConnection name: string -> GetJwtSecretRow  =
+let GetJwtSecret (db: NpgsqlConnection) (name: string) -> GetJwtSecretRow  =
   let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"

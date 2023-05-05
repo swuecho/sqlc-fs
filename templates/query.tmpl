@@ -29,7 +29,7 @@ type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
 {{if eq .Cmd ":one"}}
 {{range .Comments}}//{{.}}
 {{end}}
-let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
+let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}}) -> {{.Ret.DefineType}}  =
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
@@ -46,7 +46,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}}  =
 {{if eq .Cmd ":many"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}} list =
+let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}}) -> {{.Ret.DefineType}} list =
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name}} = read.{{$e.Type}} "{{$e.Name | snakeCase }}"
@@ -62,7 +62,7 @@ let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} -> {{.Ret.DefineType}} li
 {{if eq .Cmd ":exec"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}  = 
+let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  = 
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}

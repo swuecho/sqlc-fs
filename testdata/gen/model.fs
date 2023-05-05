@@ -3,7 +3,7 @@
 type AuthUser = {
      ID: int32
      Password: string
-     LastLogin: time.Time
+     LastLogin: DateTime
      IsSuperuser: bool
      Username: string
      FirstName: string
@@ -11,15 +11,15 @@ type AuthUser = {
      Email: string
      IsStaff: bool
      IsActive: bool
-     DateJoined: time.Time
+     DateJoined: DateTime
 }
 
 type AuthUserManagement = {
      ID: int32
      UserID: int32
      RateLimit: int32
-     CreatedAt: time.Time
-     UpdatedAt: time.Time
+     CreatedAt: DateTime
+     UpdatedAt: DateTime
 }
 
 type Author = {
@@ -30,10 +30,10 @@ type Author = {
 
 type ChatLog = {
      ID: int32
-     Session: interface{}
-     Question: interface{}
-     Answer: interface{}
-     CreatedAt: time.Time
+     Session: string
+     Question: string
+     Answer: string
+     CreatedAt: DateTime
 }
 
 type ChatMessage = {
@@ -44,14 +44,14 @@ type ChatMessage = {
      Content: string
      Score: float64
      UserID: int32
-     CreatedAt: time.Time
-     UpdatedAt: time.Time
+     CreatedAt: DateTime
+     UpdatedAt: DateTime
      CreatedBy: int32
      UpdatedBy: int32
      IsDeleted: bool
      IsPin: bool
      TokenCount: int32
-     Raw: interface{}
+     Raw: string
 }
 
 type ChatModel = {
@@ -74,8 +74,8 @@ type ChatPrompt = {
      Content: string
      Score: float64
      UserID: int32
-     CreatedAt: time.Time
-     UpdatedAt: time.Time
+     CreatedAt: DateTime
+     UpdatedAt: DateTime
      CreatedBy: int32
      UpdatedBy: int32
      IsDeleted: bool
@@ -87,8 +87,8 @@ type ChatSession = {
      UserID: int32
      Uuid: string
      Topic: string
-     CreatedAt: time.Time
-     UpdatedAt: time.Time
+     CreatedAt: DateTime
+     UpdatedAt: DateTime
      Active: bool
      Model: string
      MaxLength: int32
@@ -106,10 +106,10 @@ type ChatSnapshot = {
      Title: string
      Summary: string
      Model: string
-     Tags: interface{}
-     Session: interface{}
-     Conversation: interface{}
-     CreatedAt: time.Time
+     Tags: string
+     Session: string
+     Conversation: string
+     CreatedAt: DateTime
      Text: string
      SearchVector: interface{} option
 }
@@ -125,8 +125,8 @@ type UserActiveChatSession = {
      ID: int32
      UserID: int32
      ChatSessionUuid: string
-     CreatedAt: time.Time
-     UpdatedAt: time.Time
+     CreatedAt: DateTime
+     UpdatedAt: DateTime
 }
 
 type UserChatModelPrivilege = {
@@ -134,8 +134,8 @@ type UserChatModelPrivilege = {
      UserID: int32
      ChatModelID: int32
      RateLimit: int32
-     CreatedAt: time.Time
-     UpdatedAt: time.Time
+     CreatedAt: DateTime
+     UpdatedAt: DateTime
      CreatedBy: int32
      UpdatedBy: int32
 }
