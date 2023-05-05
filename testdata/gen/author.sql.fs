@@ -15,7 +15,7 @@ INSERT INTO authors (
 
 type CreateAuthorParams = {
   Name: string;
-  Bio: string;
+  Bio: string option;
 }
 
 
@@ -29,7 +29,7 @@ let CreateAuthor db: NpgsqlConnection arg: CreateAuthorParams) =
   db 
   |> Sql.existingConnection
   |> Sql.query createAuthor
-  |> Sql.parameters  [ "@name", Sql.string arg.name, "@bio", Sql.string arg.bio ]
+  |> Sql.parameters  [ "@name", Sql.string arg.name, "@bio", Sql.stringOrNone arg.bio ]
   |> Sql.execute
 
 
@@ -69,14 +69,14 @@ WHERE id = ? LIMIT 1
 type GetAuthorRow = {
   ID: int32;
   Name: string;
-  Bio: string;
+  Bio: string option;
 }
 
 let GetAuthor (db: NpgsqlConnection) (id: int32) -> GetAuthorRow  =
   let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
-    Bio = read.string "bio"}
+    Bio = read.stringOrNone "bio"}
 
   db
   |> Sql.existingConnection
@@ -105,7 +105,7 @@ ORDER BY name
 type ListAuthorsRow = {
   ID: int32;
   Name: string;
-  Bio: string;
+  Bio: string option;
 }
 
 
@@ -113,7 +113,7 @@ let ListAuthors (db: NpgsqlConnection) () -> ListAuthorsRow list =
   let reader = fun (read:RowReader) -> {
     ID = read.int32 "id"
     Name = read.string "name"
-    Bio = read.string "bio"}
+    Bio = read.stringOrNone "bio"}
   db 
   |> Sql.existingConnection
   |> sql.query listAuthors

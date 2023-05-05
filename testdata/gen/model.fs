@@ -25,7 +25,7 @@ type AuthUserManagement = {
 type Author = {
      ID: int32
      Name: string
-     Bio: string
+     Bio: string option
 }
 
 type ChatLog = {

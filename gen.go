@@ -42,6 +42,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 		"comment":    sdk.DoubleSlashComment,
 		"escape":     sdk.EscapeBacktick,
 		"hasPrefix":  strings.HasPrefix,
+		"type2readerFunc": type2readerFunc,
 	}
 
 	tmpl := template.Must(
