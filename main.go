@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 
 	"github.com/golang/protobuf/jsonpb"
@@ -42,7 +41,7 @@ func run() error {
 
 	// convert protobuf message to JSON
 	jsonStr, _:= ProtoToJSON(&req)
-	_ = ioutil.WriteFile("output.json", []byte(jsonStr), 0644)
+	_ = os.WriteFile("output.json", []byte(jsonStr), 0644)
 	resp, err := Generate(&req)
 	if err != nil {
 		return err

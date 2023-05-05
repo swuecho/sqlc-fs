@@ -38,9 +38,11 @@ func (t *tmplCtx) OutputQuery(sourceName string) bool {
 func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*plugin.CodeGenResponse, error) {
 	funcMap := template.FuncMap{
 		"lowerTitle": sdk.LowerTitle,
+		"snakeCase": 	sdk.ToSnakeCase,
 		"comment":    sdk.DoubleSlashComment,
 		"escape":     sdk.EscapeBacktick,
 		"hasPrefix":  strings.HasPrefix,
+		"type2readerFunc": type2readerFunc,
 	}
 
 	tmpl := template.Must(
@@ -53,7 +55,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 	)
 
 	tctx := tmplCtx{
-		Q:       "`",
+		Q:       "\"\"\"",
 		Queries: queries,
 		Structs: structs,
 	}
@@ -70,8 +72,8 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 			return err
 		}
 		code := b.Bytes()
-		if !strings.HasSuffix(name, ".ts") {
-			name += ".ts"
+		if !strings.HasSuffix(name, ".fs") {
+			name += ".fs"
 		}
 		output[name] = string(code)
 		return nil

@@ -6,6 +6,7 @@ import (
 
 	"github.com/stephen/sqlc-ts/internal/metadata"
 	"github.com/stephen/sqlc-ts/internal/plugin"
+	"github.com/stephen/sqlc-ts/internal/sdk"
 )
 
 type QueryValue struct {
@@ -92,6 +93,51 @@ func (v QueryValue) Params() string {
 	}
 	out = append(out, "")
 	return "\n" + strings.Join(out, ",\n")
+}
+
+func (v QueryValue) NpgsqlParams() string {
+	if v.isEmpty() {
+		return ""
+	}
+
+	// Column names and types
+	var columnNames []string
+	var columnTypes []string
+	var isInStruct []bool
+
+	if v.Struct == nil {
+		columnNames = append(columnNames, v.Name)
+		columnTypes = append(columnTypes, v.Type())
+		isInStruct = append(isInStruct, false)
+	} else {
+		// For a struct, get all the field names and types
+		for _, f := range v.Struct.Fields {
+			columnNames = append(columnNames, f.Name)
+			columnTypes = append(columnTypes, f.Type)
+			isInStruct = append(isInStruct, true)
+		}
+	}
+
+	// Construct the PostgreSQL params string
+	var sqlParamsString string
+	for idx, columnName := range columnNames {
+		columnNameFull := sdk.ToSnakeCase(columnName)
+		if isInStruct[idx] {
+			columnNameFull = "arg." + columnNameFull
+		}
+		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", sdk.ToSnakeCase(columnName), type2readerFunc(columnTypes[idx]), columnNameFull)
+		if idx < len(columnNames)-1 {
+			sqlParamsString += ", "
+		}
+	}
+	return sqlParamsString
+}
+
+func type2readerFunc(t string) string {
+	if t =="int32" {
+		t ="int"
+	}
+	return strings.Replace(t, " option", "OrNone", 1)
 }
 
 func (v QueryValue) ColumnNames() string {
