@@ -18,15 +18,15 @@ go install github.com/swuecho/sqlc-fs/cmd/@latest
     {
       "name": "fs",
       "process": {
-        "cmd": "sqlc-fs"  
+        "cmd": "sqlc-fs"
       }
     }
   ],
    "sql": [
     {
       "schema": "schema.sql",
-      "queries": "query.sql",
-      "engine": "sqlite",
+      "queries": "query/",
+      "engine": "postgresql",
       "codegen": [
         {
           "out": "gen",
@@ -35,7 +35,6 @@ go install github.com/swuecho/sqlc-fs/cmd/@latest
       ]
     }
   ]
-}
 ```
 
 ```build
