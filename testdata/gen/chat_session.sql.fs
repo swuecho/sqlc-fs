@@ -16,7 +16,6 @@ open Npgsql.FSharp
 
 
 
-
 let createChatSession = """-- name: CreateChatSession :one
 INSERT INTO chat_session (user_id, topic, max_length, uuid)
 VALUES (@user_id, @topic, @max_length, @uuid)
@@ -241,7 +240,6 @@ let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateC
 
 
 
-
 let deleteChatSession = """-- name: DeleteChatSession :exec
 DELETE FROM chat_session 
 WHERE id = @id
@@ -359,7 +357,6 @@ let GetAllChatSessions (db: NpgsqlConnection) ()  =
   |> sql.query getAllChatSessions
   |> getAllChatSessions
   |> Sql.execute reader
-
 
 
 
@@ -647,7 +644,6 @@ let HasChatSessionPermission (db: NpgsqlConnection) (arg: HasChatSessionPermissi
   |> Sql.query hasChatSessionPermission
   |> Sql.parameters  [ "@id", Sql.int arg.id, "@user_id", Sql.int arg.user_id ]
   |> Sql.execute reader
-
 
 
 

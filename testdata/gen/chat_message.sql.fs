@@ -13,7 +13,6 @@ open Npgsql.FSharp
 
 
 
-
 let createChatMessage = """-- name: CreateChatMessage :one
 INSERT INTO chat_message (chat_session_uuid, uuid, role, content, token_count, score, user_id, created_by, updated_by, raw)
 VALUES (@chat_session_uuid, @uuid, @role, @content, @token_count, @score, @user_id, @created_by, @updated_by, @chat_session_uuid0)
@@ -74,7 +73,6 @@ let CreateChatMessage (db: NpgsqlConnection) (arg: CreateChatMessageParams)  =
   |> Sql.query createChatMessage
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.chat_session_uuid, "@uuid", Sql.string arg.uuid, "@role", Sql.string arg.role, "@content", Sql.string arg.content, "@token_count", Sql.int arg.token_count, "@score", Sql.float64 arg.score, "@user_id", Sql.int arg.user_id, "@created_by", Sql.int arg.created_by, "@updated_by", Sql.int arg.updated_by, "@raw", Sql.string arg.raw ]
   |> Sql.execute reader
-
 
 
 
@@ -229,7 +227,6 @@ let GetAllChatMessages (db: NpgsqlConnection) ()  =
   |> sql.query getAllChatMessages
   |> getAllChatMessages
   |> Sql.execute reader
-
 
 
 
@@ -823,7 +820,6 @@ let HasChatMessagePermission (db: NpgsqlConnection) (arg: HasChatMessagePermissi
   |> Sql.query hasChatMessagePermission
   |> Sql.parameters  [ "@id", Sql.int arg.id, "@user_id", Sql.int arg.user_id ]
   |> Sql.execute reader
-
 
 
 

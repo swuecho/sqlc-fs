@@ -15,7 +15,6 @@ open Npgsql.FSharp
 
 
 
-
 let createChatPrompt = """-- name: CreateChatPrompt :one
 INSERT INTO chat_prompt (uuid, chat_session_uuid, role, content, token_count, user_id, created_by, updated_by)
 VALUES (@uuid, @chat_session_uuid, @role, @content, @token_count, @user_id, @created_by, @updated_by)
@@ -70,7 +69,6 @@ let CreateChatPrompt (db: NpgsqlConnection) (arg: CreateChatPromptParams)  =
   |> Sql.query createChatPrompt
   |> Sql.parameters  [ "@uuid", Sql.string arg.uuid, "@chat_session_uuid", Sql.string arg.chat_session_uuid, "@role", Sql.string arg.role, "@content", Sql.string arg.content, "@token_count", Sql.int arg.token_count, "@user_id", Sql.int arg.user_id, "@created_by", Sql.int arg.created_by, "@updated_by", Sql.int arg.updated_by ]
   |> Sql.execute reader
-
 
 
 
@@ -198,7 +196,6 @@ let GetAllChatPrompts (db: NpgsqlConnection) ()  =
   |> sql.query getAllChatPrompts
   |> getAllChatPrompts
   |> Sql.execute reader
-
 
 
 
@@ -588,7 +585,6 @@ let HasChatPromptPermission (db: NpgsqlConnection) (arg: HasChatPromptPermission
   |> Sql.query hasChatPromptPermission
   |> Sql.parameters  [ "@id", Sql.int arg.id, "@user_id", Sql.int arg.user_id ]
   |> Sql.execute reader
-
 
 
 

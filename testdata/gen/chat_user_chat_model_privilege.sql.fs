@@ -23,7 +23,6 @@ open Npgsql.FSharp
 
 
 
-
 let createUserChatModelPrivilege = """-- name: CreateUserChatModelPrivilege :one
 INSERT INTO user_chat_model_privilege (user_id, chat_model_id, rate_limit, created_by, updated_by)
 VALUES (@user_id, @chat_model_id, @rate_limit, @created_by, @updated_by)
@@ -89,7 +88,6 @@ let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatMode
 
 
 
-
 let deleteUserChatModelPrivilege = """-- name: DeleteUserChatModelPrivilege :exec
 DELETE FROM user_chat_model_privilege WHERE id = @id
 """
@@ -105,8 +103,6 @@ let DeleteUserChatModelPrivilege (db: NpgsqlConnection) (id: int32)  =
   |> Sql.query deleteUserChatModelPrivilege
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeNonQuery
-
-
 
 
 

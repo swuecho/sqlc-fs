@@ -64,9 +64,6 @@ open Npgsql.FSharp
 
 
 
-
-
-
 let getRateLimit = """-- name: GetRateLimit :one
 SELECT rate_limit AS rate_limit
 FROM auth_user_management
@@ -86,7 +83,6 @@ let GetRateLimit (db: NpgsqlConnection) (userID: int32)  =
   |> Sql.query getRateLimit
   |> Sql.parameters  [ "@user_id", Sql.int user_id ]
   |> Sql.execute reader
-
 
 
 

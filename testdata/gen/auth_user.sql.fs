@@ -84,7 +84,6 @@ let CreateAuthUser (db: NpgsqlConnection) (arg: CreateAuthUserParams)  =
 
 
 
-
 let deleteAuthUser = """-- name: DeleteAuthUser :exec
 DELETE FROM auth_user WHERE email = @email
 """
@@ -100,7 +99,6 @@ let DeleteAuthUser (db: NpgsqlConnection) (email: string)  =
   |> Sql.query deleteAuthUser
   |> Sql.parameters  [ "@email", Sql.string email ]
   |> Sql.executeNonQuery
-
 
 
 
@@ -260,7 +258,6 @@ let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.query getAuthUserByID
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.execute reader
-
 
 
 
@@ -491,7 +488,6 @@ let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
   |> sql.query listAuthUsers
   |> listAuthUsers
   |> Sql.execute reader
-
 
 
 

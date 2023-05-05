@@ -49,7 +49,6 @@ let ChatLogByID (db: NpgsqlConnection) (id: int32)  =
 
 
 
-
 let createChatLog = """-- name: CreateChatLog :one
 INSERT INTO chat_logs (session, question, answer)
 VALUES (@session, @question, @answer)
@@ -107,7 +106,6 @@ let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
 
 
 
-
 let deleteChatLog = """-- name: DeleteChatLog :exec
 DELETE FROM chat_logs WHERE id = @id
 """
@@ -123,8 +121,6 @@ let DeleteChatLog (db: NpgsqlConnection) (id: int32)  =
   |> Sql.query deleteChatLog
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeNonQuery
-
-
 
 
 

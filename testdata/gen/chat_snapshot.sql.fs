@@ -196,7 +196,6 @@ let ChatSnapshotSearch (db: NpgsqlConnection) (arg: ChatSnapshotSearchParams)  =
 
 
 
-
 let createChatSnapshot = """-- name: CreateChatSnapshot :one
 INSERT INTO chat_snapshot (uuid, user_id, title, model, summary, tags, conversation ,session, text )
 VALUES (@uuid, @user_id, @title, @model, @summary, @tags, @conversation, @session, @text)
@@ -277,7 +276,6 @@ let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
 
 
 
-
 let deleteChatSnapshot = """-- name: DeleteChatSnapshot :one
 DELETE FROM chat_snapshot WHERE uuid = @uuid
 and user_id = @user_id
@@ -324,8 +322,6 @@ let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
   |> Sql.query deleteChatSnapshot
   |> Sql.parameters  [ "@uuid", Sql.string arg.uuid, "@user_id", Sql.int arg.user_id ]
   |> Sql.execute reader
-
-
 
 
 

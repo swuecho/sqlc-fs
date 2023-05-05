@@ -104,7 +104,6 @@ let ChatModelByName (db: NpgsqlConnection) (name: string)  =
 
 
 
-
 let createChatModel = """-- name: CreateChatModel :one
 INSERT INTO chat_model (name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit)
 VALUES (@name, @label, @is_default, @url, @api_auth_header, @api_auth_key, @user_id, @enable_per_mode_ratelimit)
@@ -151,7 +150,6 @@ let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
   |> Sql.query createChatModel
   |> Sql.parameters  [ "@name", Sql.string arg.name, "@label", Sql.string arg.label, "@is_default", Sql.bool arg.is_default, "@url", Sql.string arg.url, "@api_auth_header", Sql.string arg.api_auth_header, "@api_auth_key", Sql.string arg.api_auth_key, "@user_id", Sql.int arg.user_id, "@enable_per_mode_ratelimit", Sql.bool arg.enable_per_mode_ratelimit ]
   |> Sql.execute reader
-
 
 
 
@@ -233,7 +231,6 @@ let DeleteChatModel (db: NpgsqlConnection) (arg: DeleteChatModelParams)  =
 
 
 
-
 let getDefaultChatModel = """-- name: GetDefaultChatModel :one
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model WHERE is_default = true
 and user_id in (select id from auth_user where is_superuser = true)
@@ -269,7 +266,6 @@ let GetDefaultChatModel (db: NpgsqlConnection) ()  =
   |> Sql.query getDefaultChatModel
   |> Sql.parameters  [  ]
   |> Sql.execute reader
-
 
 
 
