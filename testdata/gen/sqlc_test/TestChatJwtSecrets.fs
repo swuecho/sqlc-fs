@@ -10,7 +10,7 @@ let tests =
     let DSN = Environment.GetEnvironmentVariable("DATABASE_URL")
 
     testList
-        "surveys"
+        "jwt secrets"
         [ testCase "can ref code in parent"
           <| fun _ ->
               let subject = ChatJwtSecrets.getJwtSecret
