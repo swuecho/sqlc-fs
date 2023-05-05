@@ -51,12 +51,14 @@ type CreateOrUpdateUserActiveChatSessionRow = {
 }
 
 let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateOrUpdateUserActiveChatSessionParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
     ChatSessionUuid = read.string "ChatSessionUuid"
     CreatedAt = read.dateTime "CreatedAt"
     UpdatedAt = read.dateTime "UpdatedAt"}
+  
 
   db
   |> Sql.existingConnection
@@ -95,12 +97,14 @@ type CreateUserActiveChatSessionRow = {
 }
 
 let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveChatSessionParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
     ChatSessionUuid = read.string "ChatSessionUuid"
     CreatedAt = read.dateTime "CreatedAt"
     UpdatedAt = read.dateTime "UpdatedAt"}
+  
 
   db
   |> Sql.existingConnection
@@ -180,6 +184,10 @@ let DeleteUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
 
 
 
+
+
+
+
 let getUserActiveChatSession = """-- name: GetUserActiveChatSession :one
 SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_chat_session WHERE user_id = @user_id
 """
@@ -194,18 +202,23 @@ type GetUserActiveChatSessionRow = {
 }
 
 let GetUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
     ChatSessionUuid = read.string "ChatSessionUuid"
     CreatedAt = read.dateTime "CreatedAt"
     UpdatedAt = read.dateTime "UpdatedAt"}
+  
 
   db
   |> Sql.existingConnection
   |> Sql.query getUserActiveChatSession
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
+
+
+
 
 
 
@@ -280,6 +293,7 @@ let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
 
 
 
+
 let updateUserActiveChatSession = """-- name: UpdateUserActiveChatSession :one
 UPDATE user_active_chat_session SET chat_session_uuid = @chat_session_uuid, updated_at = now()
 WHERE user_id = @user_id
@@ -300,12 +314,14 @@ type UpdateUserActiveChatSessionRow = {
 }
 
 let UpdateUserActiveChatSession (db: NpgsqlConnection) (arg: UpdateUserActiveChatSessionParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
     ChatSessionUuid = read.string "ChatSessionUuid"
     CreatedAt = read.dateTime "CreatedAt"
     UpdatedAt = read.dateTime "UpdatedAt"}
+  
 
   db
   |> Sql.existingConnection

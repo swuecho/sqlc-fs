@@ -76,11 +76,11 @@ FROM chat_session cs
 WHERE cs.user_id = $1 and cs.active = true
 ORDER BY cs.id;
 
--- -- name: HasChatSessionPermission :one
--- SELECT COUNT(*) > 0 as has_permission
--- FROM chat_session cs
--- INNER JOIN auth_user au ON cs.user_id = au.id
--- WHERE cs.id = $1 AND (cs.user_id = $2 OR au.is_superuser);
+-- name: HasChatSessionPermission :one
+SELECT COUNT(*) > 0 as has_permission
+FROM chat_session cs
+INNER JOIN auth_user au ON cs.user_id = au.id
+WHERE cs.id = $1 AND (cs.user_id = $2 OR au.is_superuser);
 
 
 -- name: UpdateSessionMaxLength :one

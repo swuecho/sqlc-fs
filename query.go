@@ -60,11 +60,17 @@ func (v *QueryValue) DefineType() string {
 func (v *QueryValue) ReturnName() string {
 	return v.Name
 }
+func (v QueryValue) UniqueFieldsCountMultiple() bool {
+	return len(v.UniqueFields()) > 1
+}
 
 func (v QueryValue) UniqueFields() []Field {
 	seen := map[string]struct{}{}
 	if v.Struct == nil {
-		return []Field{{}}
+		return []Field{{
+			Name: v.Name,
+			Type: v.Typ,
+		}}
 	}
 	fields := make([]Field, 0, len(v.Struct.Fields))
 

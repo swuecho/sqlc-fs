@@ -29,6 +29,7 @@ type ChatModelByIDRow = {
 }
 
 let ChatModelByID (db: NpgsqlConnection) (id: int32)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Name = read.string "Name"
@@ -39,6 +40,7 @@ let ChatModelByID (db: NpgsqlConnection) (id: int32)  =
     ApiAuthKey = read.string "ApiAuthKey"
     UserId = read.int "UserId"
     EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+  
 
   db
   |> Sql.existingConnection
@@ -75,6 +77,7 @@ type ChatModelByNameRow = {
 }
 
 let ChatModelByName (db: NpgsqlConnection) (name: string)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Name = read.string "Name"
@@ -85,6 +88,7 @@ let ChatModelByName (db: NpgsqlConnection) (name: string)  =
     ApiAuthKey = read.string "ApiAuthKey"
     UserId = read.int "UserId"
     EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+  
 
   db
   |> Sql.existingConnection
@@ -140,6 +144,7 @@ type CreateChatModelRow = {
 }
 
 let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Name = read.string "Name"
@@ -150,6 +155,7 @@ let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
     ApiAuthKey = read.string "ApiAuthKey"
     UserId = read.int "UserId"
     EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+  
 
   db
   |> Sql.existingConnection
@@ -235,6 +241,8 @@ let DeleteChatModel (db: NpgsqlConnection) (arg: DeleteChatModelParams)  =
 
 
 
+
+
 let getDefaultChatModel = """-- name: GetDefaultChatModel :one
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model WHERE is_default = true
 and user_id in (select id from auth_user where is_superuser = true)
@@ -254,6 +262,7 @@ type GetDefaultChatModelRow = {
 }
 
 let GetDefaultChatModel (db: NpgsqlConnection) ()  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Name = read.string "Name"
@@ -264,12 +273,18 @@ let GetDefaultChatModel (db: NpgsqlConnection) ()  =
     ApiAuthKey = read.string "ApiAuthKey"
     UserId = read.int "UserId"
     EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+  
 
   db
   |> Sql.existingConnection
   |> Sql.query getDefaultChatModel
   |> Sql.parameters  [  ]
   |> Sql.execute reader
+
+
+
+
+
 
 
 
@@ -392,6 +407,7 @@ let ListSystemChatModels (db: NpgsqlConnection) ()  =
 
 
 
+
 let updateChatModel = """-- name: UpdateChatModel :one
 UPDATE chat_model SET name = @name, label = @label, is_default = @is_default, url = @url, api_auth_header = @api_auth_header, api_auth_key = @api_auth_key, enable_per_mode_ratelimit = @enable_per_mode_ratelimit
 WHERE id = @id and user_id = @user_id
@@ -423,6 +439,7 @@ type UpdateChatModelRow = {
 }
 
 let UpdateChatModel (db: NpgsqlConnection) (arg: UpdateChatModelParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Name = read.string "Name"
@@ -433,6 +450,7 @@ let UpdateChatModel (db: NpgsqlConnection) (arg: UpdateChatModelParams)  =
     ApiAuthKey = read.string "ApiAuthKey"
     UserId = read.int "UserId"
     EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+  
 
   db
   |> Sql.existingConnection
@@ -475,6 +493,7 @@ type UpdateChatModelKeyRow = {
 }
 
 let UpdateChatModelKey (db: NpgsqlConnection) (arg: UpdateChatModelKeyParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Name = read.string "Name"
@@ -485,6 +504,7 @@ let UpdateChatModelKey (db: NpgsqlConnection) (arg: UpdateChatModelKeyParams)  =
     ApiAuthKey = read.string "ApiAuthKey"
     UserId = read.int "UserId"
     EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+  
 
   db
   |> Sql.existingConnection

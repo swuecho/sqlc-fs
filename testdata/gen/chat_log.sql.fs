@@ -24,12 +24,14 @@ type ChatLogByIDRow = {
 }
 
 let ChatLogByID (db: NpgsqlConnection) (id: int32)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Session = read.string "Session"
     Question = read.string "Question"
     Answer = read.string "Answer"
     CreatedAt = read.dateTime "CreatedAt"}
+  
 
   db
   |> Sql.existingConnection
@@ -76,12 +78,14 @@ type CreateChatLogRow = {
 }
 
 let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Session = read.string "Session"
     Question = read.string "Question"
     Answer = read.string "Answer"
     CreatedAt = read.dateTime "CreatedAt"}
+  
 
   db
   |> Sql.existingConnection
@@ -175,6 +179,13 @@ let DeleteChatLog (db: NpgsqlConnection) (id: int32)  =
 
 
 
+
+
+
+
+
+
+
 let listChatLogs = """-- name: ListChatLogs :many
 SELECT id, session, question, answer, created_at FROM chat_logs ORDER BY id
 """
@@ -220,6 +231,7 @@ let ListChatLogs (db: NpgsqlConnection) ()  =
 
 
 
+
 let updateChatLog = """-- name: UpdateChatLog :one
 UPDATE chat_logs SET session = @session, question = @question, answer = @answer
 WHERE id = @id
@@ -242,12 +254,14 @@ type UpdateChatLogRow = {
 }
 
 let UpdateChatLog (db: NpgsqlConnection) (arg: UpdateChatLogParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Session = read.string "Session"
     Question = read.string "Question"
     Answer = read.string "Answer"
     CreatedAt = read.dateTime "CreatedAt"}
+  
 
   db
   |> Sql.existingConnection
