@@ -5,31 +5,50 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: install paket
-      run: |
-        dotnet tool install paket
-        dotnet tool restore
-      working-directory: testdata/gen
-    - name: Restore dependencies
-      run: dotnet restore
-      working-directory: testdata/gen
-    - name: Build
-      run: dotnet build --no-restore
-      working-directory: testdata/gen
+      - uses: actions/checkout@v3
+      - name: docker-compose
+        run: docker-compose up -d
+        working-directory: testdata/gen
+
+      - name: show docker ps
+        run: docker-compose ps
+        working-directory: testdata/gen
+
+      - name: show docker logs
+        run: docker-compose logs
+        working-directory: testdata/gen
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: install paket
+        run: |
+          dotnet tool install paket
+          dotnet tool restore
+        working-directory: testdata/gen
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: testdata/gen
+      - name: Build
+        run: dotnet build --no-restore
+        working-directory: testdata/gen
+      - name: RUN
+        env:
+          DATABASE_URL: "Host=localhost;Port=5432;Username=postgres;Password=thisisapassword;Database=postgres"
+        run: |
+          echo $DATABASE_URL
+          dotnet run
+        working-directory: testdata/gen
+  #  - name: Test
   #  - name: Test
   #    run: dotnet test --no-build --verbosity normal
