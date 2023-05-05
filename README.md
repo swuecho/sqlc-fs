@@ -7,7 +7,7 @@ This plugin is WIP and not usable yet.
 ## Installation & Usage
 
 ```bash
-go install github.com/kyleconroy/sqlc/cmd/@latest
+go install github.com/swuecho/sqlc-fs/cmd/@latest
 ```
 
 ```json5
@@ -16,9 +16,9 @@ go install github.com/kyleconroy/sqlc/cmd/@latest
   "version": "2",
   "plugins": [
     {
-      "name": "ts",
+      "name": "fs",
       "process": {
-        "cmd": "sqlc-ts"
+        "cmd": "sqlc-fs"  
       }
     }
   ],
@@ -30,7 +30,7 @@ go install github.com/kyleconroy/sqlc/cmd/@latest
       "codegen": [
         {
           "out": "gen",
-          "plugin": "ts"
+          "plugin": "fs"
         }
       ]
     }
