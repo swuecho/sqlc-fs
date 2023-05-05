@@ -7,7 +7,7 @@ open Npgsql
 
 module Config =
     /// Custom operator for combining paths
-    let neonDSN = Environment.GetEnvironmentVariable("NEON_DATABASE_URL")
+    let DSN = Environment.GetEnvironmentVariable("DATABASE_URL")
 // postgres://swuecho:VwbE1sYP9OgH@ep-fragrant-sound-219991-pooler.us-west-2.aws.neon.tech/neondb
 // Host=192.168.0.135;Port=5432;Username=hwu;Password=using555;Database=stock
 
@@ -23,8 +23,7 @@ let main args =
 
     printfn "Hello from F#"
 
-    use conn =
-        new NpgsqlConnection("Host=192.168.0.135;Port=5432;Username=hwu;Password=using555;Database=hwu")
+    use conn = new NpgsqlConnection(Config.DSN)
 
     let secrets = ChatJwtSecrets.GetJwtSecret conn "chat"
     printf "%A" secrets
