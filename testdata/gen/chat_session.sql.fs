@@ -640,8 +640,6 @@ let GetChatSessionsByUserID (db: NpgsqlConnection) (userId: int32)  =
 
 
 
-
-
 let updateChatSession = """-- name: UpdateChatSession :one
 UPDATE chat_session SET user_id = @user_id, topic = @topic, updated_at = now(), active = @active
 WHERE id = @id

@@ -371,7 +371,6 @@ let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
 
 
 
-
 let listChatSnapshots = """-- name: ListChatSnapshots :many
 SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, created_at, text, search_vector FROM chat_snapshot ORDER BY id
 """
@@ -411,7 +410,6 @@ let ListChatSnapshots (db: NpgsqlConnection) ()  =
   |> Sql.existingConnection
   |> Sql.query listChatSnapshots
   |> Sql.execute reader
-
 
 
 

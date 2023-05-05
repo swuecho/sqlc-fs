@@ -292,7 +292,6 @@ let GetDefaultChatModel (db: NpgsqlConnection) ()  =
 
 
 
-
 let listChatModels = """-- name: ListChatModels :many
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model ORDER BY id
 """
@@ -372,7 +371,6 @@ let ListSystemChatModels (db: NpgsqlConnection) ()  =
   |> Sql.existingConnection
   |> Sql.query listSystemChatModels
   |> Sql.execute reader
-
 
 
 

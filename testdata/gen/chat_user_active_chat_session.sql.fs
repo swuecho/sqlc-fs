@@ -180,7 +180,6 @@ let DeleteUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
 
 
 
-
 let getUserActiveChatSession = """-- name: GetUserActiveChatSession :one
 SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_chat_session WHERE user_id = @user_id
 """
@@ -251,7 +250,6 @@ let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
   |> Sql.existingConnection
   |> Sql.query listUserActiveChatSessions
   |> Sql.execute reader
-
 
 
 

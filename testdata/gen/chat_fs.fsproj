@@ -6,13 +6,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="auth_user.sql.fs" />
-    <Compile Include="auth_user_management.sql.fs" />
     <Compile Include="chat_jwt_secrets.sql.fs" />
-    <Compile Include="chat_log.sql.fs" />
+    <Compile Include="chat_model.sql.fs" />
     <Compile Include="chat_prompt.sql.fs" />
     <Compile Include="chat_message.sql.fs" />
     <Compile Include="chat_session.sql.fs" />
     <Compile Include="chat_snapshot.sql.fs" />
+    <Compile Include="chat_user_active_chat_session.sql.fs" />
+    <Compile Include="chat_user_chat_model_privilege.sql.fs" />
+    <Compile Include="chat_log.sql.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project=".paket\Paket.Restore.targets" />
