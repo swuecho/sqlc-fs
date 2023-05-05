@@ -4,6 +4,7 @@ open System
 open Dapper.FSharp.PostgreSQL
 open System.Threading.Tasks
 open Npgsql
+open Npgsql.FSharp
 
 module Config =
     /// Custom operator for combining paths
@@ -22,8 +23,15 @@ let main args =
     OptionTypes.register ()
 
     printfn "Hello from F#"
-
     use conn = new NpgsqlConnection(Config.DSN)
+    let schema_content = System.IO.File.ReadAllText("schema.sql")
+
+    let _ =
+        conn
+        |> Sql.existingConnection
+        |> Sql.query schema_content
+        |> Sql.executeNonQuery
+
 
     let createdJwt =
         ChatJwtSecrets.CreateJwtSecret
