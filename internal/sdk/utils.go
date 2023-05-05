@@ -30,6 +30,10 @@ func Title(s string) string {
 	return titleCase(s)
 }
 
+func Stem(s string) string {
+	return strings.ReplaceAll(s, ".sql", "")
+}
+
 func ToSnakeCase(s string) string {
 	if s == "ID" {
 		return "id"

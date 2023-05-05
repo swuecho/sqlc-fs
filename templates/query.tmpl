@@ -2,6 +2,9 @@
 // source: {{.SourceName}}
 
 open Npgsql.FSharp
+
+module {{ .SourceName | stem | pascalCase}} =
+
 {{template "queryCode" . }}
 {{end}}
 

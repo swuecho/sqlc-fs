@@ -3,6 +3,9 @@
 
 open Npgsql.FSharp
 
+module ChatModel =
+
+
 
 
 let chatModelByID = """-- name: ChatModelByID :one
