@@ -57,14 +57,14 @@ type CreateUserChatModelPrivilegeRow = {
 let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatModelPrivilegeParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatModelId = read.int "ChatModelId"
-    RateLimit = read.int "RateLimit"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatModelId = read.int "chat_model_id"
+    RateLimit = read.int "rate_limit"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"}
   
 
   db
@@ -308,8 +308,8 @@ type RateLimiteByUserAndSessionUUIDRow = {
 let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection) (arg: RateLimiteByUserAndSessionUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    RateLimit = read.int "RateLimit"
-    ChatModelName = read.string "ChatModelName"}
+    RateLimit = read.int "rate_limit"
+    ChatModelName = read.string "chat_model_name"}
   
 
   db
@@ -373,14 +373,14 @@ type UpdateUserChatModelPrivilegeRow = {
 let UpdateUserChatModelPrivilege (db: NpgsqlConnection) (arg: UpdateUserChatModelPrivilegeParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatModelId = read.int "ChatModelId"
-    RateLimit = read.int "RateLimit"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatModelId = read.int "chat_model_id"
+    RateLimit = read.int "rate_limit"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"}
   
 
   db
@@ -420,14 +420,14 @@ type UserChatModelPrivilegeByIDRow = {
 let UserChatModelPrivilegeByID (db: NpgsqlConnection) (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatModelId = read.int "ChatModelId"
-    RateLimit = read.int "RateLimit"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatModelId = read.int "chat_model_id"
+    RateLimit = read.int "rate_limit"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"}
   
 
   db
@@ -470,14 +470,14 @@ type UserChatModelPrivilegeByUserAndModelIDRow = {
 let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection) (arg: UserChatModelPrivilegeByUserAndModelIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatModelId = read.int "ChatModelId"
-    RateLimit = read.int "RateLimit"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatModelId = read.int "chat_model_id"
+    RateLimit = read.int "rate_limit"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"}
   
 
   db

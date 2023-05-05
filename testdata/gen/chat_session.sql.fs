@@ -55,20 +55,20 @@ type CreateChatSessionRow = {
 let CreateChatSession (db: NpgsqlConnection) (arg: CreateChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -123,20 +123,20 @@ type CreateChatSessionByUUIDRow = {
 let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -208,20 +208,20 @@ type CreateOrUpdateChatSessionByUUIDRow = {
 let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateChatSessionByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -416,20 +416,20 @@ type GetChatSessionByIDRow = {
 let GetChatSessionByID (db: NpgsqlConnection) (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -476,20 +476,20 @@ type GetChatSessionByUUIDRow = {
 let GetChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -536,20 +536,20 @@ type GetChatSessionByUUIDWithInActiveRow = {
 let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection) (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -726,20 +726,20 @@ type UpdateChatSessionRow = {
 let UpdateChatSession (db: NpgsqlConnection) (arg: UpdateChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -791,20 +791,20 @@ type UpdateChatSessionByUUIDRow = {
 let UpdateChatSessionByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -860,20 +860,20 @@ type UpdateChatSessionTopicByUUIDRow = {
 let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionTopicByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db
@@ -928,20 +928,20 @@ type UpdateSessionMaxLengthRow = {
 let UpdateSessionMaxLength (db: NpgsqlConnection) (arg: UpdateSessionMaxLengthParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   
 
   db

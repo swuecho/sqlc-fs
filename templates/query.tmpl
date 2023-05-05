@@ -39,12 +39,12 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   {{ if  .Ret.UniqueFieldsCountMultiple }}
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
-    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name }}"
+    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name | snakeCase }}"
   {{- end -}}
   }
   {{ else}}
   {{- range $i, $e := .Ret.UniqueFields}}
-  let reader = fun (read:RowReader) -> read.{{$e.Type | type2readerFunc }} "{{$e.Name }}"
+  let reader = fun (read:RowReader) -> read.{{$e.Type | type2readerFunc }} "{{$e.Name | snakeCase }}"
   {{- end -}}
   {{end}}
 
