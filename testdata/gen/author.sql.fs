@@ -36,6 +36,9 @@ let CreateAuthor db: NpgsqlConnection arg: CreateAuthorParams) =
 
 
 
+
+
+
 let deleteAuthor = """-- name: DeleteAuthor :exec
 DELETE FROM authors
 WHERE id = ?
@@ -52,6 +55,8 @@ let DeleteAuthor (db: NpgsqlConnection) (id: int32)  =
   |> Sql.query deleteAuthor
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeNonQuery
+
+
 
 
 
@@ -96,6 +101,7 @@ let GetAuthor (db: NpgsqlConnection) (id: int32)  =
 
 
 
+
 let listAuthors = """-- name: ListAuthors :many
 SELECT id, name, bio FROM authors
 ORDER BY name
@@ -119,6 +125,15 @@ let ListAuthors (db: NpgsqlConnection) ()  =
   |> sql.query listAuthors
   |> listAuthors
   |> Sql.execute reader
+
+
+
+
+
+
+
+
+
 
 
 
