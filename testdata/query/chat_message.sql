@@ -59,13 +59,13 @@ RETURNING *;
 UPDATE chat_message SET is_deleted = true, updated_at = now()
 WHERE uuid = $1;
 
-
--- name: HasChatMessagePermission :one
-SELECT COUNT(*) > 0 as has_permission
-FROM chat_message cm
-INNER JOIN chat_session cs ON cm.chat_session_uuid = cs.uuid
-INNER JOIN auth_user au ON cs.user_id = au.id
-WHERE cm.is_deleted = false and  cm.id = $1 AND (cs.user_id = $2 OR au.is_superuser) and cs.active = true;
+-- TODO:
+-- -- name: HasChatMessagePermission :one
+-- SELECT COUNT(*) > 0 as has_permission
+-- FROM chat_message cm
+-- INNER JOIN chat_session cs ON cm.chat_session_uuid = cs.uuid
+-- INNER JOIN auth_user au ON cs.user_id = au.id
+-- WHERE cm.is_deleted = false and  cm.id = $1 AND (cs.user_id = $2 OR au.is_superuser) and cs.active = true;
 
 
 -- name: GetLatestMessagesBySessionUUID :many
@@ -128,19 +128,21 @@ SET is_deleted = true, updated_at = now()
 WHERE is_deleted = false and is_pin = false and chat_session_uuid = $1;
 
 
--- name: GetChatMessagesCount :one
--- Get total chat message count for user in last 10 minutes
-SELECT COUNT(*)
-FROM chat_message
-WHERE user_id = $1
-AND created_at >= NOW() - INTERVAL '10 minutes';
+-- comment: because of count issus
+-- -- name: GetChatMessagesCount :one
+-- -- Get total chat message count for user in last 10 minutes
+-- SELECT COUNT(*)
+-- FROM chat_message
+-- WHERE user_id = $1
+-- AND created_at >= NOW() - INTERVAL '10 minutes';
 
 
--- name: GetChatMessagesCountByUserAndModel :one
--- Get total chat message count for user of model in last 10 minutes
-SELECT COUNT(*)
-FROM chat_message cm
-JOIN chat_session cs ON (cm.chat_session_uuid = cs.uuid AND cs.user_id = cm.user_id)
-WHERE cm.user_id = $1
-AND cs.model = $2 
-AND cm.created_at >= NOW() - INTERVAL '10 minutes';
+-- comment: because of count issus
+-- -- name: GetChatMessagesCountByUserAndModel :one
+-- -- Get total chat message count for user of model in last 10 minutes
+-- SELECT COUNT(*)
+-- FROM chat_message cm
+-- JOIN chat_session cs ON (cm.chat_session_uuid = cs.uuid AND cs.user_id = cm.user_id)
+-- WHERE cm.user_id = $1
+-- AND cs.model = $2 
+-- AND cm.created_at >= NOW() - INTERVAL '10 minutes';

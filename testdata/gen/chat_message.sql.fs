@@ -32,20 +32,20 @@ type CreateChatMessageParams = {
   Role: string;
   Content: string;
   TokenCount: int32;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedBy: int32;
   UpdatedBy: int32;
   Raw: string;
 }
 type CreateChatMessageRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -58,26 +58,26 @@ type CreateChatMessageRow = {
 
 let CreateChatMessage (db: NpgsqlConnection) (arg: CreateChatMessageParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection
   |> Sql.query createChatMessage
-  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@uuid", Sql.string arg.Uuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount; "@score", Sql.float64 arg.Score; "@user_id", Sql.int arg.UserID; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy; "@raw", Sql.string arg.Raw ]
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@uuid", Sql.string arg.Uuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy; "@raw", Sql.string arg.Raw ]
   |> Sql.execute reader
 
 
@@ -166,7 +166,7 @@ let DeleteChatMessagesBySesionUUID (db: NpgsqlConnection) (chatSessionUuid: stri
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatMessagesBySesionUUID
-  |> Sql.parameters  [ "@chat_session_uuid", Sql.string chat_session_uuid ]
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.executeNonQuery
 
 
@@ -193,13 +193,13 @@ ORDER BY id
 
 
 type GetAllChatMessagesRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -213,21 +213,21 @@ type GetAllChatMessagesRow = {
 
 let GetAllChatMessages (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatMessages
@@ -253,13 +253,13 @@ WHERE is_deleted = false and id = @id
 
 
 type GetChatMessageByIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -272,21 +272,21 @@ type GetChatMessageByIDRow = {
 
 let GetChatMessageByID (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection
@@ -321,13 +321,13 @@ type GetChatMessageBySessionUUIDParams = {
   Offset: int32;
 }
 type GetChatMessageBySessionUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -340,21 +340,21 @@ type GetChatMessageBySessionUUIDRow = {
 
 let GetChatMessageBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessageBySessionUUIDParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection
@@ -381,13 +381,13 @@ WHERE is_deleted = false and uuid = @uuid
 
 
 type GetChatMessageByUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -401,21 +401,21 @@ type GetChatMessageByUUIDRow = {
 
 let GetChatMessageByUUID (db: NpgsqlConnection) (uuid: string)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection
@@ -451,13 +451,13 @@ type GetChatMessagesBySessionUUIDParams = {
   Limit: int32;
 }
 type GetChatMessagesBySessionUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -471,93 +471,25 @@ type GetChatMessagesBySessionUUIDRow = {
 
 let GetChatMessagesBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessagesBySessionUUIDParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getChatMessagesBySessionUUID
   |> Sql.execute reader
-
-
-
-
-
-
-
-
-
-
-let getChatMessagesCount = """-- name: GetChatMessagesCount :one
-SELECT COUNT(*)
-FROM chat_message
-WHERE user_id = @user_id
-AND created_at >= NOW() - INTERVAL '10 minutes'
-"""
-
-
-// Get total chat message count for user in last 10 minutes
-
-let GetChatMessagesCount (db: NpgsqlConnection) (userID: int32)  =
-  let reader = fun (read:RowReader) -> {
-     = read. ""}
-
-  db
-  |> Sql.existingConnection
-  |> Sql.query getChatMessagesCount
-  |> Sql.parameters  [ "@user_id", Sql.int user_id ]
-  |> Sql.execute reader
-
-
-
-
-
-
-
-
-
-
-
-
-let getChatMessagesCountByUserAndModel = """-- name: GetChatMessagesCountByUserAndModel :one
-SELECT COUNT(*)
-FROM chat_message cm
-JOIN chat_session cs ON (cm.chat_session_uuid = cs.uuid AND cs.user_id = cm.user_id)
-WHERE cm.user_id = @user_id
-AND cs.model = @model 
-AND cm.created_at >= NOW() - INTERVAL '10 minutes'
-"""
-
-
-type GetChatMessagesCountByUserAndModelParams = {
-  UserID: int32;
-  Model: string;
-}
-// Get total chat message count for user of model in last 10 minutes
-
-let GetChatMessagesCountByUserAndModel (db: NpgsqlConnection) (arg: GetChatMessagesCountByUserAndModelParams)  =
-  let reader = fun (read:RowReader) -> {
-     = read. ""}
-
-  db
-  |> Sql.existingConnection
-  |> Sql.query getChatMessagesCountByUserAndModel
-  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@model", Sql.string arg.Model ]
-  |> Sql.execute reader
-
-
 
 
 
@@ -588,13 +520,13 @@ LIMIT 1
 
 
 type GetFirstMessageBySessionUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -607,26 +539,26 @@ type GetFirstMessageBySessionUUIDRow = {
 
 let GetFirstMessageBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection
   |> Sql.query getFirstMessageBySessionUUID
-  |> Sql.parameters  [ "@chat_session_uuid", Sql.string chat_session_uuid ]
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.execute reader
 
 
@@ -669,13 +601,13 @@ type GetLastNChatMessagesParams = {
   ChatSessionUuid: string;
 }
 type GetLastNChatMessagesRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -689,21 +621,21 @@ type GetLastNChatMessagesRow = {
 
 let GetLastNChatMessages (db: NpgsqlConnection) (arg: GetLastNChatMessagesParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getLastNChatMessages
@@ -719,6 +651,8 @@ let GetLastNChatMessages (db: NpgsqlConnection) (arg: GetLastNChatMessagesParams
 
 
 let getLatestMessagesBySessionUUID = """-- name: GetLatestMessagesBySessionUUID :many
+
+
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, is_pin, token_count, raw
 FROM chat_message
 Where chat_message.id in 
@@ -744,13 +678,13 @@ type GetLatestMessagesBySessionUUIDParams = {
   Limit: int32;
 }
 type GetLatestMessagesBySessionUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -762,66 +696,35 @@ type GetLatestMessagesBySessionUUIDRow = {
 }
 
 
+// TODO:
+// -- name: HasChatMessagePermission :one
+// SELECT COUNT(*) > 0 as has_permission
+// FROM chat_message cm
+// INNER JOIN chat_session cs ON cm.chat_session_uuid = cs.uuid
+// INNER JOIN auth_user au ON cs.user_id = au.id
+// WHERE cm.is_deleted = false and  cm.id = $1 AND (cs.user_id = $2 OR au.is_superuser) and cs.active = true;
 let GetLatestMessagesBySessionUUID (db: NpgsqlConnection) (arg: GetLatestMessagesBySessionUUIDParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getLatestMessagesBySessionUUID
   |> Sql.execute reader
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let hasChatMessagePermission = """-- name: HasChatMessagePermission :one
-SELECT COUNT(*) > 0 as has_permission
-FROM chat_message cm
-INNER JOIN chat_session cs ON cm.chat_session_uuid = cs.uuid
-INNER JOIN auth_user au ON cs.user_id = au.id
-WHERE cm.is_deleted = false and  cm.id = @id AND (cs.user_id = @user_id OR au.is_superuser) and cs.active = true
-"""
-
-
-type HasChatMessagePermissionParams = {
-  ID: int32;
-  UserID: int32;
-}
-
-let HasChatMessagePermission (db: NpgsqlConnection) (arg: HasChatMessagePermissionParams)  =
-  let reader = fun (read:RowReader) -> {
-     = read. ""}
-
-  db
-  |> Sql.existingConnection
-  |> Sql.query hasChatMessagePermission
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@user_id", Sql.int arg.UserID ]
-  |> Sql.execute reader
 
 
 
@@ -858,21 +761,21 @@ RETURNING id, uuid, chat_session_uuid, role, content, score, user_id, created_at
 
 
 type UpdateChatMessageParams = {
-  ID: int32;
+  Id: int32;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   UpdatedBy: int32;
 }
 type UpdateChatMessageRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -885,26 +788,26 @@ type UpdateChatMessageRow = {
 
 let UpdateChatMessage (db: NpgsqlConnection) (arg: UpdateChatMessageParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateChatMessage
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@score", Sql.float64 arg.Score; "@user_id", Sql.int arg.UserID; "@updated_by", Sql.int arg.UpdatedBy ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@updated_by", Sql.int arg.UpdatedBy ]
   |> Sql.execute reader
 
 
@@ -932,13 +835,13 @@ type UpdateChatMessageByUUIDParams = {
   TokenCount: int32;
 }
 type UpdateChatMessageByUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
   ChatSessionUuid: string;
   Role: string;
   Content: string;
-  Score: float64;
-  UserID: int32;
+  Score: float;
+  UserId: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
   CreatedBy: int32;
@@ -951,21 +854,21 @@ type UpdateChatMessageByUUIDRow = {
 
 let UpdateChatMessageByUUID (db: NpgsqlConnection) (arg: UpdateChatMessageByUUIDParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    Role = read.string "role"
-    Content = read.string "content"
-    Score = read.float64 "score"
-    UserID = read.int "user_id"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"
-    IsDeleted = read.bool "is_deleted"
-    IsPin = read.bool "is_pin"
-    TokenCount = read.int "token_count"
-    Raw = read.string "raw"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    Role = read.string "Role"
+    Content = read.string "Content"
+    Score = read.double "Score"
+    UserId = read.int "UserId"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"
+    IsDeleted = read.bool "IsDeleted"
+    IsPin = read.bool "IsPin"
+    TokenCount = read.int "TokenCount"
+    Raw = read.string "Raw"}
 
   db
   |> Sql.existingConnection

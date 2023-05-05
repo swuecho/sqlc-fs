@@ -38,7 +38,7 @@ type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
 let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
-    {{$e.Name}} = read.{{$e.Type | type2readerFunc}} "{{$e.Name | snakeCase }}"
+    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name }}"
   {{- end -}}
   }
 
@@ -55,7 +55,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
-    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name | snakeCase }}"
+    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
   {{- end -}}
   }
   db 

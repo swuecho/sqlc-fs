@@ -39,12 +39,12 @@ returning id, user_id, chat_session_uuid, created_at, updated_at
 
 
 type CreateOrUpdateUserActiveChatSessionParams = {
-  UserID: int32;
+  UserId: int32;
   ChatSessionUuid: string;
 }
 type CreateOrUpdateUserActiveChatSessionRow = {
-  ID: int32;
-  UserID: int32;
+  Id: int32;
+  UserId: int32;
   ChatSessionUuid: string;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -52,16 +52,16 @@ type CreateOrUpdateUserActiveChatSessionRow = {
 
 let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateOrUpdateUserActiveChatSessionParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"}
 
   db
   |> Sql.existingConnection
   |> Sql.query createOrUpdateUserActiveChatSession
-  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
+  |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
   |> Sql.execute reader
 
 
@@ -83,12 +83,12 @@ RETURNING id, user_id, chat_session_uuid, created_at, updated_at
 
 
 type CreateUserActiveChatSessionParams = {
-  UserID: int32;
+  UserId: int32;
   ChatSessionUuid: string;
 }
 type CreateUserActiveChatSessionRow = {
-  ID: int32;
-  UserID: int32;
+  Id: int32;
+  UserId: int32;
   ChatSessionUuid: string;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -96,16 +96,16 @@ type CreateUserActiveChatSessionRow = {
 
 let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveChatSessionParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"}
 
   db
   |> Sql.existingConnection
   |> Sql.query createUserActiveChatSession
-  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
+  |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
   |> Sql.execute reader
 
 
@@ -140,15 +140,12 @@ DELETE FROM user_active_chat_session WHERE user_id = @user_id
 
 
 
-let DeleteUserActiveChatSession (db: NpgsqlConnection) (userID: int32)  = 
+let DeleteUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteUserActiveChatSession
-  |> Sql.parameters  [ "@user_id", Sql.int user_id ]
+  |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.executeNonQuery
-
-
-
 
 
 
@@ -190,29 +187,26 @@ SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_c
 
 
 type GetUserActiveChatSessionRow = {
-  ID: int32;
-  UserID: int32;
+  Id: int32;
+  UserId: int32;
   ChatSessionUuid: string;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
 }
 
-let GetUserActiveChatSession (db: NpgsqlConnection) (userID: int32)  =
+let GetUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"}
 
   db
   |> Sql.existingConnection
   |> Sql.query getUserActiveChatSession
-  |> Sql.parameters  [ "@user_id", Sql.int user_id ]
+  |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
-
-
-
 
 
 
@@ -238,8 +232,8 @@ SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_c
 
 
 type ListUserActiveChatSessionsRow = {
-  ID: int32;
-  UserID: int32;
+  Id: int32;
+  UserId: int32;
   ChatSessionUuid: string;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -248,11 +242,11 @@ type ListUserActiveChatSessionsRow = {
 
 let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserActiveChatSessions
@@ -297,11 +291,11 @@ RETURNING id, user_id, chat_session_uuid, created_at, updated_at
 
 type UpdateUserActiveChatSessionParams = {
   ChatSessionUuid: string;
-  UserID: int32;
+  UserId: int32;
 }
 type UpdateUserActiveChatSessionRow = {
-  ID: int32;
-  UserID: int32;
+  Id: int32;
+  UserId: int32;
   ChatSessionUuid: string;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -309,16 +303,16 @@ type UpdateUserActiveChatSessionRow = {
 
 let UpdateUserActiveChatSession (db: NpgsqlConnection) (arg: UpdateUserActiveChatSessionParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatSessionUuid = read.string "ChatSessionUuid"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateUserActiveChatSession
-  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@user_id", Sql.int arg.UserID ]
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.execute reader
 
 

@@ -94,6 +94,22 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 		}
 
 		if len(query.Columns) == 1 {
+			// {
+			// 	"text": "SELECT COUNT(*)\nFROM chat_message\nWHERE user_id = $1\nAND created_at \u003e= NOW() - INTERVAL '10 minutes'",
+			// 	"name": "GetChatMessagesCount",
+			// 	"cmd": ":one",
+			// 	"columns": [
+			// 		{
+			// 			"name": "count",
+			// 			"not_null": true,
+			// 			"length": -1,
+			// 			"is_func_call": true,
+			// 			"type": {
+			// 				"name": "bigint"
+			// 			}
+			// 		}
+			// 	],
+			// },
 			c := query.Columns[0]
 			name := columnName(c, 0)
 			if c.IsFuncCall {
@@ -167,8 +183,6 @@ func argName(name string) string {
 	for i, p := range strings.Split(name, "_") {
 		if i == 0 {
 			out += strings.ToLower(p)
-		} else if p == "id" {
-			out += "ID"
 		} else {
 			out += strings.Title(p)
 		}

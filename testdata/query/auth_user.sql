@@ -35,8 +35,8 @@ SELECT * FROM auth_user WHERE email = $1;
 -- name: UpdateUserPassword :exec
 UPDATE auth_user SET "password" = $2 WHERE email = $1;
 
--- name: GetTotalActiveUserCount :one
-SELECT COUNT(*) FROM auth_user WHERE is_active = true;
+-- -- name: GetTotalActiveUserCount :one
+-- SELECT COUNT(*) FROM auth_user WHERE is_active = true;
 
 
 -- name: UpdateAuthUserRateLimitByEmail :one

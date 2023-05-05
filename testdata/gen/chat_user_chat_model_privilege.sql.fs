@@ -37,16 +37,16 @@ RETURNING id, user_id, chat_model_id, rate_limit, created_at, updated_at, create
 
 
 type CreateUserChatModelPrivilegeParams = {
-  UserID: int32;
-  ChatModelID: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedBy: int32;
   UpdatedBy: int32;
 }
 type CreateUserChatModelPrivilegeRow = {
-  ID: int32;
-  UserID: int32;
-  ChatModelID: int32;
+  Id: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -56,19 +56,19 @@ type CreateUserChatModelPrivilegeRow = {
 
 let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatModelPrivilegeParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatModelID = read.int "chat_model_id"
-    RateLimit = read.int "rate_limit"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatModelId = read.int "ChatModelId"
+    RateLimit = read.int "RateLimit"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"}
 
   db
   |> Sql.existingConnection
   |> Sql.query createUserChatModelPrivilege
-  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@chat_model_id", Sql.int arg.ChatModelID; "@rate_limit", Sql.int arg.RateLimit; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy ]
+  |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_model_id", Sql.int arg.ChatModelId; "@rate_limit", Sql.int arg.RateLimit; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy ]
   |> Sql.execute reader
 
 
@@ -152,21 +152,15 @@ let DeleteUserChatModelPrivilege (db: NpgsqlConnection) (id: int32)  =
 
 
 
-
-
-
-
-
-
 let listUserChatModelPrivileges = """-- name: ListUserChatModelPrivileges :many
 SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_by, updated_by FROM user_chat_model_privilege ORDER BY id
 """
 
 
 type ListUserChatModelPrivilegesRow = {
-  ID: int32;
-  UserID: int32;
-  ChatModelID: int32;
+  Id: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -177,14 +171,14 @@ type ListUserChatModelPrivilegesRow = {
 
 let ListUserChatModelPrivileges (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatModelID = read.int "chat_model_id"
-    RateLimit = read.int "rate_limit"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatModelId = read.int "ChatModelId"
+    RateLimit = read.int "RateLimit"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivileges
@@ -208,9 +202,9 @@ ORDER BY id
 
 
 type ListUserChatModelPrivilegesByUserIDRow = {
-  ID: int32;
-  UserID: int32;
-  ChatModelID: int32;
+  Id: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -221,16 +215,16 @@ type ListUserChatModelPrivilegesByUserIDRow = {
 
 // TODO add ratelimit
 // LIMIT 1000
-let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection) (userID: int32)  =
+let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatModelID = read.int "chat_model_id"
-    RateLimit = read.int "rate_limit"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatModelId = read.int "ChatModelId"
+    RateLimit = read.int "RateLimit"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesByUserID
@@ -255,7 +249,7 @@ ORDER by au.last_login DESC
 
 
 type ListUserChatModelPrivilegesRateLimitRow = {
-  ID: int32;
+  Id: int32;
   UserEmail: string;
   FullName: string;
   ChatModelName: string;
@@ -265,11 +259,11 @@ type ListUserChatModelPrivilegesRateLimitRow = {
 
 let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserEmail = read.string "user_email"
-    FullName = read.string "full_name"
-    ChatModelName = read.string "chat_model_name"
-    RateLimit = read.int "rate_limit"}
+    Id = read.int "Id"
+    UserEmail = read.string "UserEmail"
+    FullName = read.string "FullName"
+    ChatModelName = read.string "ChatModelName"
+    RateLimit = read.int "RateLimit"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesRateLimit
@@ -296,7 +290,7 @@ WHERE cs.uuid = @uuid
 
 type RateLimiteByUserAndSessionUUIDParams = {
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
 }
 type RateLimiteByUserAndSessionUUIDRow = {
   RateLimit: int32;
@@ -305,13 +299,13 @@ type RateLimiteByUserAndSessionUUIDRow = {
 
 let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection) (arg: RateLimiteByUserAndSessionUUIDParams)  =
   let reader = fun (read:RowReader) -> {
-    RateLimit = read.int "rate_limit"
-    ChatModelName = read.string "chat_model_name"}
+    RateLimit = read.int "RateLimit"
+    ChatModelName = read.string "ChatModelName"}
 
   db
   |> Sql.existingConnection
   |> Sql.query rateLimiteByUserAndSessionUUID
-  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserID ]
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.execute reader
 
 
@@ -351,14 +345,14 @@ RETURNING id, user_id, chat_model_id, rate_limit, created_at, updated_at, create
 
 
 type UpdateUserChatModelPrivilegeParams = {
-  ID: int32;
+  Id: int32;
   RateLimit: int32;
   UpdatedBy: int32;
 }
 type UpdateUserChatModelPrivilegeRow = {
-  ID: int32;
-  UserID: int32;
-  ChatModelID: int32;
+  Id: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -368,19 +362,19 @@ type UpdateUserChatModelPrivilegeRow = {
 
 let UpdateUserChatModelPrivilege (db: NpgsqlConnection) (arg: UpdateUserChatModelPrivilegeParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatModelID = read.int "chat_model_id"
-    RateLimit = read.int "rate_limit"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatModelId = read.int "ChatModelId"
+    RateLimit = read.int "RateLimit"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateUserChatModelPrivilege
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@rate_limit", Sql.int arg.RateLimit; "@updated_by", Sql.int arg.UpdatedBy ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@rate_limit", Sql.int arg.RateLimit; "@updated_by", Sql.int arg.UpdatedBy ]
   |> Sql.execute reader
 
 
@@ -401,9 +395,9 @@ SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_b
 
 
 type UserChatModelPrivilegeByIDRow = {
-  ID: int32;
-  UserID: int32;
-  ChatModelID: int32;
+  Id: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -413,14 +407,14 @@ type UserChatModelPrivilegeByIDRow = {
 
 let UserChatModelPrivilegeByID (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatModelID = read.int "chat_model_id"
-    RateLimit = read.int "rate_limit"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatModelId = read.int "ChatModelId"
+    RateLimit = read.int "RateLimit"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"}
 
   db
   |> Sql.existingConnection
@@ -445,13 +439,13 @@ SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_b
 
 
 type UserChatModelPrivilegeByUserAndModelIDParams = {
-  UserID: int32;
-  ChatModelID: int32;
+  UserId: int32;
+  ChatModelId: int32;
 }
 type UserChatModelPrivilegeByUserAndModelIDRow = {
-  ID: int32;
-  UserID: int32;
-  ChatModelID: int32;
+  Id: int32;
+  UserId: int32;
+  ChatModelId: int32;
   RateLimit: int32;
   CreatedAt: DateTime;
   UpdatedAt: DateTime;
@@ -461,19 +455,19 @@ type UserChatModelPrivilegeByUserAndModelIDRow = {
 
 let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection) (arg: UserChatModelPrivilegeByUserAndModelIDParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    UserID = read.int "user_id"
-    ChatModelID = read.int "chat_model_id"
-    RateLimit = read.int "rate_limit"
-    CreatedAt = read.dateTime "created_at"
-    UpdatedAt = read.dateTime "updated_at"
-    CreatedBy = read.int "created_by"
-    UpdatedBy = read.int "updated_by"}
+    Id = read.int "Id"
+    UserId = read.int "UserId"
+    ChatModelId = read.int "ChatModelId"
+    RateLimit = read.int "RateLimit"
+    CreatedAt = read.dateTime "CreatedAt"
+    UpdatedAt = read.dateTime "UpdatedAt"
+    CreatedBy = read.int "CreatedBy"
+    UpdatedBy = read.int "UpdatedBy"}
 
   db
   |> Sql.existingConnection
   |> Sql.query userChatModelPrivilegeByUserAndModelID
-  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@chat_model_id", Sql.int arg.ChatModelID ]
+  |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_model_id", Sql.int arg.ChatModelId ]
   |> Sql.execute reader
 
 

@@ -34,7 +34,7 @@ type CreateAuthUserParams = {
   IsSuperuser: bool;
 }
 type CreateAuthUserRow = {
-  ID: int32;
+  Id: int32;
   Password: string;
   LastLogin: DateTime;
   IsSuperuser: bool;
@@ -49,17 +49,17 @@ type CreateAuthUserRow = {
 
 let CreateAuthUser (db: NpgsqlConnection) (arg: CreateAuthUserParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Password = read.string "password"
-    LastLogin = read.dateTime "last_login"
-    IsSuperuser = read.bool "is_superuser"
-    Username = read.string "username"
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"
-    IsStaff = read.bool "is_staff"
-    IsActive = read.bool "is_active"
-    DateJoined = read.dateTime "date_joined"}
+    Id = read.int "Id"
+    Password = read.string "Password"
+    LastLogin = read.dateTime "LastLogin"
+    IsSuperuser = read.bool "IsSuperuser"
+    Username = read.string "Username"
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"
+    IsStaff = read.bool "IsStaff"
+    IsActive = read.bool "IsActive"
+    DateJoined = read.dateTime "DateJoined"}
 
   db
   |> Sql.existingConnection
@@ -131,7 +131,7 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 
 
 type GetAllAuthUsersRow = {
-  ID: int32;
+  Id: int32;
   Password: string;
   LastLogin: DateTime;
   IsSuperuser: bool;
@@ -147,17 +147,17 @@ type GetAllAuthUsersRow = {
 
 let GetAllAuthUsers (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Password = read.string "password"
-    LastLogin = read.dateTime "last_login"
-    IsSuperuser = read.bool "is_superuser"
-    Username = read.string "username"
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"
-    IsStaff = read.bool "is_staff"
-    IsActive = read.bool "is_active"
-    DateJoined = read.dateTime "date_joined"}
+    Id = read.int "Id"
+    Password = read.string "Password"
+    LastLogin = read.dateTime "LastLogin"
+    IsSuperuser = read.bool "IsSuperuser"
+    Username = read.string "Username"
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"
+    IsStaff = read.bool "IsStaff"
+    IsActive = read.bool "IsActive"
+    DateJoined = read.dateTime "DateJoined"}
   db 
   |> Sql.existingConnection
   |> Sql.query getAllAuthUsers
@@ -181,7 +181,7 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 
 
 type GetAuthUserByEmailRow = {
-  ID: int32;
+  Id: int32;
   Password: string;
   LastLogin: DateTime;
   IsSuperuser: bool;
@@ -196,17 +196,17 @@ type GetAuthUserByEmailRow = {
 
 let GetAuthUserByEmail (db: NpgsqlConnection) (email: string)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Password = read.string "password"
-    LastLogin = read.dateTime "last_login"
-    IsSuperuser = read.bool "is_superuser"
-    Username = read.string "username"
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"
-    IsStaff = read.bool "is_staff"
-    IsActive = read.bool "is_active"
-    DateJoined = read.dateTime "date_joined"}
+    Id = read.int "Id"
+    Password = read.string "Password"
+    LastLogin = read.dateTime "LastLogin"
+    IsSuperuser = read.bool "IsSuperuser"
+    Username = read.string "Username"
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"
+    IsStaff = read.bool "IsStaff"
+    IsActive = read.bool "IsActive"
+    DateJoined = read.dateTime "DateJoined"}
 
   db
   |> Sql.existingConnection
@@ -231,7 +231,7 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 
 
 type GetAuthUserByIDRow = {
-  ID: int32;
+  Id: int32;
   Password: string;
   LastLogin: DateTime;
   IsSuperuser: bool;
@@ -246,17 +246,17 @@ type GetAuthUserByIDRow = {
 
 let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Password = read.string "password"
-    LastLogin = read.dateTime "last_login"
-    IsSuperuser = read.bool "is_superuser"
-    Username = read.string "username"
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"
-    IsStaff = read.bool "is_staff"
-    IsActive = read.bool "is_active"
-    DateJoined = read.dateTime "date_joined"}
+    Id = read.int "Id"
+    Password = read.string "Password"
+    LastLogin = read.dateTime "LastLogin"
+    IsSuperuser = read.bool "IsSuperuser"
+    Username = read.string "Username"
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"
+    IsStaff = read.bool "IsStaff"
+    IsActive = read.bool "IsActive"
+    DateJoined = read.dateTime "DateJoined"}
 
   db
   |> Sql.existingConnection
@@ -296,42 +296,13 @@ let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
 
 
 
-
-let getTotalActiveUserCount = """-- name: GetTotalActiveUserCount :one
-SELECT COUNT(*) FROM auth_user WHERE is_active = true
-"""
-
-
-
-let GetTotalActiveUserCount (db: NpgsqlConnection) ()  =
-  let reader = fun (read:RowReader) -> {
-     = read. ""}
-
-  db
-  |> Sql.existingConnection
-  |> Sql.query getTotalActiveUserCount
-  |> Sql.parameters  [  ]
-  |> Sql.execute reader
-
-
-
-
-
-
-
-
-
-
-
-
-
 let getUserByEmail = """-- name: GetUserByEmail :one
 SELECT id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined FROM auth_user WHERE email = @email
 """
 
 
 type GetUserByEmailRow = {
-  ID: int32;
+  Id: int32;
   Password: string;
   LastLogin: DateTime;
   IsSuperuser: bool;
@@ -346,17 +317,17 @@ type GetUserByEmailRow = {
 
 let GetUserByEmail (db: NpgsqlConnection) (email: string)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Password = read.string "password"
-    LastLogin = read.dateTime "last_login"
-    IsSuperuser = read.bool "is_superuser"
-    Username = read.string "username"
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"
-    IsStaff = read.bool "is_staff"
-    IsActive = read.bool "is_active"
-    DateJoined = read.dateTime "date_joined"}
+    Id = read.int "Id"
+    Password = read.string "Password"
+    LastLogin = read.dateTime "LastLogin"
+    IsSuperuser = read.bool "IsSuperuser"
+    Username = read.string "Username"
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"
+    IsStaff = read.bool "IsStaff"
+    IsActive = read.bool "IsActive"
+    DateJoined = read.dateTime "DateJoined"}
 
   db
   |> Sql.existingConnection
@@ -425,21 +396,18 @@ type GetUserStatsRow = {
 
 let GetUserStats (db: NpgsqlConnection) (arg: GetUserStatsParams)  =
   let reader = fun (read:RowReader) -> {
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    UserEmail = read.string "user_email"
-    TotalChatMessages = read.int64 "total_chat_messages"
-    TotalTokenCount = read.int64 "total_token_count"
-    TotalChatMessages3Days = read.int64 "total_chat_messages_3_days"
-    TotalTokenCount3Days = read.int64 "total_token_count_3_days"
-    RateLimit = read.int "rate_limit"}
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    UserEmail = read.string "UserEmail"
+    TotalChatMessages = read.int64 "TotalChatMessages"
+    TotalTokenCount = read.int64 "TotalTokenCount"
+    TotalChatMessages3Days = read.int64 "TotalChatMessages3Days"
+    TotalTokenCount3Days = read.int64 "TotalTokenCount3Days"
+    RateLimit = read.int "RateLimit"}
   db 
   |> Sql.existingConnection
   |> Sql.query getUserStats
   |> Sql.execute reader
-
-
-
 
 
 
@@ -460,7 +428,7 @@ type ListAuthUsersParams = {
   Offset: int32;
 }
 type ListAuthUsersRow = {
-  ID: int32;
+  Id: int32;
   Password: string;
   LastLogin: DateTime;
   IsSuperuser: bool;
@@ -476,17 +444,17 @@ type ListAuthUsersRow = {
 
 let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Password = read.string "password"
-    LastLogin = read.dateTime "last_login"
-    IsSuperuser = read.bool "is_superuser"
-    Username = read.string "username"
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"
-    IsStaff = read.bool "is_staff"
-    IsActive = read.bool "is_active"
-    DateJoined = read.dateTime "date_joined"}
+    Id = read.int "Id"
+    Password = read.string "Password"
+    LastLogin = read.dateTime "LastLogin"
+    IsSuperuser = read.bool "IsSuperuser"
+    Username = read.string "Username"
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"
+    IsStaff = read.bool "IsStaff"
+    IsActive = read.bool "IsActive"
+    DateJoined = read.dateTime "DateJoined"}
   db 
   |> Sql.existingConnection
   |> Sql.query listAuthUsers
@@ -518,7 +486,7 @@ RETURNING first_name, last_name, email
 
 
 type UpdateAuthUserParams = {
-  ID: int32;
+  Id: int32;
   FirstName: string;
   LastName: string;
 }
@@ -530,14 +498,14 @@ type UpdateAuthUserRow = {
 
 let UpdateAuthUser (db: NpgsqlConnection) (arg: UpdateAuthUserParams)  =
   let reader = fun (read:RowReader) -> {
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"}
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateAuthUser
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@first_name", Sql.string arg.FirstName; "@last_name", Sql.string arg.LastName ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@first_name", Sql.string arg.FirstName; "@last_name", Sql.string arg.LastName ]
   |> Sql.execute reader
 
 
@@ -571,9 +539,9 @@ type UpdateAuthUserByEmailRow = {
 
 let UpdateAuthUserByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserByEmailParams)  =
   let reader = fun (read:RowReader) -> {
-    FirstName = read.string "first_name"
-    LastName = read.string "last_name"
-    Email = read.string "email"}
+    FirstName = read.string "FirstName"
+    LastName = read.string "LastName"
+    Email = read.string "Email"}
 
   db
   |> Sql.existingConnection
@@ -593,6 +561,8 @@ let UpdateAuthUserByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserByEmailPara
 
 
 let updateAuthUserRateLimitByEmail = """-- name: UpdateAuthUserRateLimitByEmail :one
+
+
 INSERT INTO auth_user_management (user_id, rate_limit, created_at, updated_at)
 VALUES ((SELECT id FROM auth_user WHERE email = @email), @rate_limit, NOW(), NOW())
 ON CONFLICT (user_id) DO UPDATE SET rate_limit = @rate_limit, updated_at = NOW()
@@ -604,6 +574,8 @@ type UpdateAuthUserRateLimitByEmailParams = {
   Email: string;
   RateLimit: int32;
 }
+// -- name: GetTotalActiveUserCount :one
+// SELECT COUNT(*) FROM auth_user WHERE is_active = true;
 
 let UpdateAuthUserRateLimitByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserRateLimitByEmailParams)  =
   let reader = fun (read:RowReader) -> {

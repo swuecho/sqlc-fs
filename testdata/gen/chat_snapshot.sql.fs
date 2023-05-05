@@ -19,9 +19,9 @@ SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, cr
 
 
 type ChatSnapshotByIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Model: string;
@@ -30,23 +30,23 @@ type ChatSnapshotByIDRow = {
   Conversation: string;
   CreatedAt: DateTime;
   Text: string;
-  SearchVector: interface{} option;
+  SearchVector: string option;
 }
 
 let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    UserID = read.int "user_id"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Model = read.string "model"
-    Tags = read.string "tags"
-    Session = read.string "session"
-    Conversation = read.string "conversation"
-    CreatedAt = read.dateTime "created_at"
-    Text = read.string "text"
-    SearchVector = read.interfaceOrNone "search_vector"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    UserId = read.int "UserId"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Model = read.string "Model"
+    Tags = read.string "Tags"
+    Session = read.string "Session"
+    Conversation = read.string "Conversation"
+    CreatedAt = read.dateTime "CreatedAt"
+    Text = read.string "Text"
+    SearchVector = read.stringOrNone "SearchVector"}
 
   db
   |> Sql.existingConnection
@@ -71,9 +71,9 @@ SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, cr
 
 
 type ChatSnapshotByUUIDRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Model: string;
@@ -82,23 +82,23 @@ type ChatSnapshotByUUIDRow = {
   Conversation: string;
   CreatedAt: DateTime;
   Text: string;
-  SearchVector: interface{} option;
+  SearchVector: string option;
 }
 
 let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    UserID = read.int "user_id"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Model = read.string "model"
-    Tags = read.string "tags"
-    Session = read.string "session"
-    Conversation = read.string "conversation"
-    CreatedAt = read.dateTime "created_at"
-    Text = read.string "text"
-    SearchVector = read.interfaceOrNone "search_vector"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    UserId = read.int "UserId"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Model = read.string "Model"
+    Tags = read.string "Tags"
+    Session = read.string "Session"
+    Conversation = read.string "Conversation"
+    CreatedAt = read.dateTime "CreatedAt"
+    Text = read.string "Text"
+    SearchVector = read.stringOrNone "SearchVector"}
 
   db
   |> Sql.existingConnection
@@ -133,13 +133,13 @@ type ChatSnapshotMetaByUserIDRow = {
 }
 
 
-let ChatSnapshotMetaByUserID (db: NpgsqlConnection) (userID: int32)  =
+let ChatSnapshotMetaByUserID (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    Uuid = read.string "uuid"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Tags = read.string "tags"
-    CreatedAt = read.dateTime "created_at"}
+    Uuid = read.string "Uuid"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Tags = read.string "Tags"
+    CreatedAt = read.dateTime "CreatedAt"}
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotMetaByUserID
@@ -164,7 +164,7 @@ LIMIT 20
 
 
 type ChatSnapshotSearchParams = {
-  UserID: int32;
+  UserId: int32;
   Search: string;
 }
 type ChatSnapshotSearchRow = {
@@ -176,9 +176,9 @@ type ChatSnapshotSearchRow = {
 
 let ChatSnapshotSearch (db: NpgsqlConnection) (arg: ChatSnapshotSearchParams)  =
   let reader = fun (read:RowReader) -> {
-    Uuid = read.string "uuid"
-    Title = read.string "title"
-    Rank = read.float32 "rank"}
+    Uuid = read.string "Uuid"
+    Title = read.string "Title"
+    Rank = read.float "Rank"}
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotSearch
@@ -209,7 +209,7 @@ RETURNING id, uuid, user_id, title, summary, model, tags, session, conversation,
 
 type CreateChatSnapshotParams = {
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Model: string;
   Summary: string;
@@ -219,9 +219,9 @@ type CreateChatSnapshotParams = {
   Text: string;
 }
 type CreateChatSnapshotRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Model: string;
@@ -230,28 +230,28 @@ type CreateChatSnapshotRow = {
   Conversation: string;
   CreatedAt: DateTime;
   Text: string;
-  SearchVector: interface{} option;
+  SearchVector: string option;
 }
 
 let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    UserID = read.int "user_id"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Model = read.string "model"
-    Tags = read.string "tags"
-    Session = read.string "session"
-    Conversation = read.string "conversation"
-    CreatedAt = read.dateTime "created_at"
-    Text = read.string "text"
-    SearchVector = read.interfaceOrNone "search_vector"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    UserId = read.int "UserId"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Model = read.string "Model"
+    Tags = read.string "Tags"
+    Session = read.string "Session"
+    Conversation = read.string "Conversation"
+    CreatedAt = read.dateTime "CreatedAt"
+    Text = read.string "Text"
+    SearchVector = read.stringOrNone "SearchVector"}
 
   db
   |> Sql.existingConnection
   |> Sql.query createChatSnapshot
-  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserID; "@title", Sql.string arg.Title; "@model", Sql.string arg.Model; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@session", Sql.string arg.Session; "@text", Sql.string arg.Text ]
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@model", Sql.string arg.Model; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@session", Sql.string arg.Session; "@text", Sql.string arg.Text ]
   |> Sql.execute reader
 
 
@@ -289,12 +289,12 @@ RETURNING id, uuid, user_id, title, summary, model, tags, session, conversation,
 
 type DeleteChatSnapshotParams = {
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
 }
 type DeleteChatSnapshotRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Model: string;
@@ -303,35 +303,29 @@ type DeleteChatSnapshotRow = {
   Conversation: string;
   CreatedAt: DateTime;
   Text: string;
-  SearchVector: interface{} option;
+  SearchVector: string option;
 }
 
 let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    UserID = read.int "user_id"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Model = read.string "model"
-    Tags = read.string "tags"
-    Session = read.string "session"
-    Conversation = read.string "conversation"
-    CreatedAt = read.dateTime "created_at"
-    Text = read.string "text"
-    SearchVector = read.interfaceOrNone "search_vector"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    UserId = read.int "UserId"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Model = read.string "Model"
+    Tags = read.string "Tags"
+    Session = read.string "Session"
+    Conversation = read.string "Conversation"
+    CreatedAt = read.dateTime "CreatedAt"
+    Text = read.string "Text"
+    SearchVector = read.stringOrNone "SearchVector"}
 
   db
   |> Sql.existingConnection
   |> Sql.query deleteChatSnapshot
-  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserID ]
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.execute reader
-
-
-
-
-
-
 
 
 
@@ -384,9 +378,9 @@ SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, cr
 
 
 type ListChatSnapshotsRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Model: string;
@@ -395,24 +389,24 @@ type ListChatSnapshotsRow = {
   Conversation: string;
   CreatedAt: DateTime;
   Text: string;
-  SearchVector: interface{} option;
+  SearchVector: string option;
 }
 
 
 let ListChatSnapshots (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    UserID = read.int "user_id"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Model = read.string "model"
-    Tags = read.string "tags"
-    Session = read.string "session"
-    Conversation = read.string "conversation"
-    CreatedAt = read.dateTime "created_at"
-    Text = read.string "text"
-    SearchVector = read.interfaceOrNone "search_vector"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    UserId = read.int "UserId"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Model = read.string "Model"
+    Tags = read.string "Tags"
+    Session = read.string "Session"
+    Conversation = read.string "Conversation"
+    CreatedAt = read.dateTime "CreatedAt"
+    Text = read.string "Text"
+    SearchVector = read.stringOrNone "SearchVector"}
   db 
   |> Sql.existingConnection
   |> Sql.query listChatSnapshots
@@ -456,9 +450,9 @@ RETURNING id, uuid, user_id, title, summary, model, tags, session, conversation,
 
 
 type UpdateChatSnapshotParams = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Tags: string;
@@ -466,9 +460,9 @@ type UpdateChatSnapshotParams = {
   CreatedAt: DateTime;
 }
 type UpdateChatSnapshotRow = {
-  ID: int32;
+  Id: int32;
   Uuid: string;
-  UserID: int32;
+  UserId: int32;
   Title: string;
   Summary: string;
   Model: string;
@@ -477,28 +471,28 @@ type UpdateChatSnapshotRow = {
   Conversation: string;
   CreatedAt: DateTime;
   Text: string;
-  SearchVector: interface{} option;
+  SearchVector: string option;
 }
 
 let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Uuid = read.string "uuid"
-    UserID = read.int "user_id"
-    Title = read.string "title"
-    Summary = read.string "summary"
-    Model = read.string "model"
-    Tags = read.string "tags"
-    Session = read.string "session"
-    Conversation = read.string "conversation"
-    CreatedAt = read.dateTime "created_at"
-    Text = read.string "text"
-    SearchVector = read.interfaceOrNone "search_vector"}
+    Id = read.int "Id"
+    Uuid = read.string "Uuid"
+    UserId = read.int "UserId"
+    Title = read.string "Title"
+    Summary = read.string "Summary"
+    Model = read.string "Model"
+    Tags = read.string "Tags"
+    Session = read.string "Session"
+    Conversation = read.string "Conversation"
+    CreatedAt = read.dateTime "CreatedAt"
+    Text = read.string "Text"
+    SearchVector = read.stringOrNone "SearchVector"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateChatSnapshot
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserID; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@created_at", Sql.dateTime arg.CreatedAt ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@created_at", Sql.date arg.CreatedAt ]
   |> Sql.execute reader
 
 
@@ -523,7 +517,7 @@ type UpdateChatSnapshotMetaByUUIDParams = {
   Uuid: string;
   Title: string;
   Summary: string;
-  UserID: int32;
+  UserId: int32;
 }
 
 
@@ -533,7 +527,7 @@ let UpdateChatSnapshotMetaByUUID (db: NpgsqlConnection) (arg: UpdateChatSnapshot
   db 
   |> Sql.existingConnection
   |> Sql.query updateChatSnapshotMetaByUUID
-  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@user_id", Sql.int arg.UserID ]
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeNonQuery
 
 

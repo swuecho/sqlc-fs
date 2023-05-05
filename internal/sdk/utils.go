@@ -4,7 +4,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/iancoleman/strcase"
+	"github.com/stoewer/go-strcase"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -39,34 +39,19 @@ func ToSnakeCase(s string) string {
 	if s == "ID" {
 		return "id"
 	}
-	return strcase.ToSnake(s)
+	return strcase.SnakeCase(s)
 }
 
 func ToPascalCase(s string) string {
-	return toCamelInitCase(s, true)
+	return strcase.UpperCamelCase(s)
 }
 
 func ToLowerCamelCase(s string) string {
-	return strcase.ToLowerCamel(s)
+	return strcase.LowerCamelCase(s)
 }
 
 func ToCamelCase(s string) string {
-	return strcase.ToLowerCamel(s)
-}
-func toCamelInitCase(name string, initUpper bool) string {
-	out := ""
-	for i, p := range strings.Split(name, "_") {
-		if !initUpper && i == 0 {
-			out += p
-			continue
-		}
-		if p == "id" {
-			out += "ID"
-		} else {
-			out += titleCase(p)
-		}
-	}
-	return out
+	return strcase.UpperCamelCase(s)
 }
 
 // Go string literals cannot contain backtick. If a string contains

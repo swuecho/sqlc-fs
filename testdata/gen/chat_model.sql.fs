@@ -17,28 +17,28 @@ SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id,
 
 
 type ChatModelByIDRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 let ChatModelByID (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
 
   db
   |> Sql.existingConnection
@@ -63,28 +63,28 @@ SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id,
 
 
 type ChatModelByNameRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 let ChatModelByName (db: NpgsqlConnection) (name: string)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
 
   db
   |> Sql.existingConnection
@@ -124,37 +124,37 @@ type CreateChatModelParams = {
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 type CreateChatModelRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
 
   db
   |> Sql.existingConnection
   |> Sql.query createChatModel
-  |> Sql.parameters  [ "@name", Sql.string arg.Name; "@label", Sql.string arg.Label; "@is_default", Sql.bool arg.IsDefault; "@url", Sql.string arg.Url; "@api_auth_header", Sql.string arg.ApiAuthHeader; "@api_auth_key", Sql.string arg.ApiAuthKey; "@user_id", Sql.int arg.UserID; "@enable_per_mode_ratelimit", Sql.bool arg.EnablePerModeRatelimit ]
+  |> Sql.parameters  [ "@name", Sql.string arg.Name; "@label", Sql.string arg.Label; "@is_default", Sql.bool arg.IsDefault; "@url", Sql.string arg.Url; "@api_auth_header", Sql.string arg.ApiAuthHeader; "@api_auth_key", Sql.string arg.ApiAuthKey; "@user_id", Sql.int arg.UserId; "@enable_per_mode_ratelimit", Sql.bool arg.EnablePerModeRatelimit ]
   |> Sql.execute reader
 
 
@@ -188,8 +188,8 @@ DELETE FROM chat_model WHERE id = @id and user_id = @user_id
 
 
 type DeleteChatModelParams = {
-  ID: int32;
-  UserID: int32;
+  Id: int32;
+  UserId: int32;
 }
 
 
@@ -199,10 +199,8 @@ let DeleteChatModel (db: NpgsqlConnection) (arg: DeleteChatModelParams)  =
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatModel
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@user_id", Sql.int arg.UserID ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -244,28 +242,28 @@ and user_id in (select id from auth_user where is_superuser = true)
 
 
 type GetDefaultChatModelRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 let GetDefaultChatModel (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
 
   db
   |> Sql.existingConnection
@@ -295,39 +293,35 @@ let GetDefaultChatModel (db: NpgsqlConnection) ()  =
 
 
 
-
-
-
-
 let listChatModels = """-- name: ListChatModels :many
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model ORDER BY id
 """
 
 
 type ListChatModelsRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 
 let ListChatModels (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
   db 
   |> Sql.existingConnection
   |> Sql.query listChatModels
@@ -351,29 +345,29 @@ ORDER BY id
 
 
 type ListSystemChatModelsRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 
 let ListSystemChatModels (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
   db 
   |> Sql.existingConnection
   |> Sql.query listSystemChatModels
@@ -408,44 +402,44 @@ RETURNING id, name, label, is_default, url, api_auth_header, api_auth_key, user_
 
 
 type UpdateChatModelParams = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 type UpdateChatModelRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 let UpdateChatModel (db: NpgsqlConnection) (arg: UpdateChatModelParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateChatModel
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@name", Sql.string arg.Name; "@label", Sql.string arg.Label; "@is_default", Sql.bool arg.IsDefault; "@url", Sql.string arg.Url; "@api_auth_header", Sql.string arg.ApiAuthHeader; "@api_auth_key", Sql.string arg.ApiAuthKey; "@user_id", Sql.int arg.UserID; "@enable_per_mode_ratelimit", Sql.bool arg.EnablePerModeRatelimit ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@name", Sql.string arg.Name; "@label", Sql.string arg.Label; "@is_default", Sql.bool arg.IsDefault; "@url", Sql.string arg.Url; "@api_auth_header", Sql.string arg.ApiAuthHeader; "@api_auth_key", Sql.string arg.ApiAuthKey; "@user_id", Sql.int arg.UserId; "@enable_per_mode_ratelimit", Sql.bool arg.EnablePerModeRatelimit ]
   |> Sql.execute reader
 
 
@@ -467,37 +461,37 @@ RETURNING id, name, label, is_default, url, api_auth_header, api_auth_key, user_
 
 
 type UpdateChatModelKeyParams = {
-  ID: int32;
+  Id: int32;
   ApiAuthKey: string;
 }
 type UpdateChatModelKeyRow = {
-  ID: int32;
+  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
   Url: string;
   ApiAuthHeader: string;
   ApiAuthKey: string;
-  UserID: int32;
+  UserId: int32;
   EnablePerModeRatelimit: bool;
 }
 
 let UpdateChatModelKey (db: NpgsqlConnection) (arg: UpdateChatModelKeyParams)  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int "id"
-    Name = read.string "name"
-    Label = read.string "label"
-    IsDefault = read.bool "is_default"
-    Url = read.string "url"
-    ApiAuthHeader = read.string "api_auth_header"
-    ApiAuthKey = read.string "api_auth_key"
-    UserID = read.int "user_id"
-    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+    Id = read.int "Id"
+    Name = read.string "Name"
+    Label = read.string "Label"
+    IsDefault = read.bool "IsDefault"
+    Url = read.string "Url"
+    ApiAuthHeader = read.string "ApiAuthHeader"
+    ApiAuthKey = read.string "ApiAuthKey"
+    UserId = read.int "UserId"
+    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateChatModelKey
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@api_auth_key", Sql.string arg.ApiAuthKey ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@api_auth_key", Sql.string arg.ApiAuthKey ]
   |> Sql.execute reader
 
 

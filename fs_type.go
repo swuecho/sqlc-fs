@@ -81,7 +81,7 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		return "int16"
 
 	case "float", "double precision", "float8", "pg_catalog.float8":
-		return "float64"
+		return "float"
 
 	case "real", "float4", "pg_catalog.float4":
 		return "float32"
@@ -96,6 +96,9 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		return "string"
 
 	case "jsonb":
+		return "string"
+
+	case "tsvector":
 		return "string"
 
 	case "bytea", "blob", "pg_catalog.bytea":
