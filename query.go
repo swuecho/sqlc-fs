@@ -63,6 +63,9 @@ func (v *QueryValue) ReturnName() string {
 
 func (v QueryValue) UniqueFields() []Field {
 	seen := map[string]struct{}{}
+	if v.Struct == nil {
+		return []Field{{}}
+	}
 	fields := make([]Field, 0, len(v.Struct.Fields))
 
 	for _, field := range v.Struct.Fields {

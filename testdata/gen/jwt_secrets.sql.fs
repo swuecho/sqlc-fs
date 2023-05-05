@@ -5,6 +5,21 @@ open Npgsql.FSharp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let createJwtSecret = """-- name: CreateJwtSecret :one
 INSERT INTO jwt_secrets (name, secret, audience)
 VALUES (@name, @secret, @audience) RETURNING id, name, secret, audience
@@ -54,6 +69,41 @@ let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams)  =
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let getJwtSecret = """-- name: GetJwtSecret :one
 SELECT id, name, secret, audience FROM jwt_secrets WHERE name = @name
 """
@@ -78,6 +128,39 @@ let GetJwtSecret (db: NpgsqlConnection) (name: string)  =
   |> Sql.query getJwtSecret
   |> Sql.parameters  [ "@name", Sql.string name ]
   |> Sql.execute reader
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

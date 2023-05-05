@@ -8,6 +8,22 @@ open Npgsql.FSharp
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let createUserChatModelPrivilege = """-- name: CreateUserChatModelPrivilege :one
 INSERT INTO user_chat_model_privilege (user_id, chat_model_id, rate_limit, created_by, updated_by)
 VALUES (@user_id, @chat_model_id, @rate_limit, @created_by, @updated_by)
@@ -63,6 +79,17 @@ let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatMode
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 let deleteUserChatModelPrivilege = """-- name: DeleteUserChatModelPrivilege :exec
 DELETE FROM user_chat_model_privilege WHERE id = @id
 """
@@ -78,6 +105,44 @@ let DeleteUserChatModelPrivilege (db: NpgsqlConnection) (id: int32)  =
   |> Sql.query deleteUserChatModelPrivilege
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeNonQuery
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -262,6 +327,23 @@ let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection) (arg: RateLimiteByUser
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let updateUserChatModelPrivilege = """-- name: UpdateUserChatModelPrivilege :one
 UPDATE user_chat_model_privilege SET rate_limit = @rate_limit, updated_at = now(), updated_by = @updated_by
 WHERE id = @id
@@ -301,6 +383,7 @@ let UpdateUserChatModelPrivilege (db: NpgsqlConnection) (arg: UpdateUserChatMode
   |> Sql.query updateUserChatModelPrivilege
   |> Sql.parameters  [ "@id", Sql.int arg.id, "@rate_limit", Sql.int arg.rate_limit, "@updated_by", Sql.int arg.updated_by ]
   |> Sql.execute reader
+
 
 
 
