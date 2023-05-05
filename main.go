@@ -8,7 +8,7 @@ import (
 
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
-	"github.com/stephen/sqlc-ts/internal/plugin"
+	"github.com/swuecho/sqlc-fs/internal/plugin"
 )
 
 func ProtoToJSON(msg proto.Message) (string, error) {
@@ -40,7 +40,7 @@ func run() error {
 	}
 
 	// convert protobuf message to JSON
-	jsonStr, _:= ProtoToJSON(&req)
+	jsonStr, _ := ProtoToJSON(&req)
 	_ = os.WriteFile("output.json", []byte(jsonStr), 0644)
 	resp, err := Generate(&req)
 	if err != nil {

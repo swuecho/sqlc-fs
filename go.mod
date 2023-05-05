@@ -1,4 +1,4 @@
-module github.com/stephen/sqlc-ts
+module github.com/swuecho/sqlc-fs
 
 go 1.19
 

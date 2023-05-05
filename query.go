@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/stephen/sqlc-ts/internal/metadata"
-	"github.com/stephen/sqlc-ts/internal/plugin"
-	"github.com/stephen/sqlc-ts/internal/sdk"
+	"github.com/swuecho/sqlc-fs/internal/metadata"
+	"github.com/swuecho/sqlc-fs/internal/plugin"
+	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
 type QueryValue struct {
@@ -134,8 +134,8 @@ func (v QueryValue) NpgsqlParams() string {
 }
 
 func type2readerFunc(t string) string {
-	if t =="int32" {
-		t ="int"
+	if t == "int32" {
+		t = "int"
 	}
 	return strings.Replace(t, " option", "OrNone", 1)
 }

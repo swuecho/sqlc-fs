@@ -2,9 +2,9 @@
   "version": "2",
   "plugins": [
     {
-      "name": "ts",
+      "name": "fs",
       "process": {
-        "cmd": "./bin/sqlc-ts"
+        "cmd": "./bin/sqlc-fs"
       }
     }
   ],
@@ -16,7 +16,7 @@
       "codegen": [
         {
           "out": "gen",
-          "plugin": "ts"
+          "plugin": "fs"
         }
       ]
     }
