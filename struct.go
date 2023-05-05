@@ -3,10 +3,9 @@ package main
 import (
 	"strings"
 
-	"github.com/stephen/sqlc-ts/internal/plugin"
-	"github.com/stephen/sqlc-ts/internal/sdk"
+	"github.com/swuecho/sqlc-fs/internal/plugin"
+	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
-
 
 type Struct struct {
 	Table   plugin.Identifier
@@ -14,8 +13,6 @@ type Struct struct {
 	Fields  []Field
 	Comment string
 }
-
-
 
 func StructName(name string, settings *plugin.Settings) string {
 	if rename := settings.Rename[name]; rename != "" {

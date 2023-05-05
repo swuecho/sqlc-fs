@@ -9,8 +9,8 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/samber/lo"
-	"github.com/stephen/sqlc-ts/internal/plugin"
-	"github.com/stephen/sqlc-ts/internal/sdk"
+	"github.com/swuecho/sqlc-fs/internal/plugin"
+	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
 func Generate(req *plugin.CodeGenRequest) (*plugin.CodeGenResponse, error) {
@@ -37,11 +37,11 @@ func (t *tmplCtx) OutputQuery(sourceName string) bool {
 
 func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*plugin.CodeGenResponse, error) {
 	funcMap := template.FuncMap{
-		"lowerTitle": sdk.LowerTitle,
-		"snakeCase": 	sdk.ToSnakeCase,
-		"comment":    sdk.DoubleSlashComment,
-		"escape":     sdk.EscapeBacktick,
-		"hasPrefix":  strings.HasPrefix,
+		"lowerTitle":      sdk.LowerTitle,
+		"snakeCase":       sdk.ToSnakeCase,
+		"comment":         sdk.DoubleSlashComment,
+		"escape":          sdk.EscapeBacktick,
+		"hasPrefix":       strings.HasPrefix,
 		"type2readerFunc": type2readerFunc,
 	}
 
@@ -100,7 +100,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 	})
 
 	// fmt.Printf("%+v", tmpl.Templates())
-	tctx.Structs = noneSystemStruct 
+	tctx.Structs = noneSystemStruct
 	renderStructs(funcMap, tctx, output)
 
 	for filename, code := range output {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/stephen/sqlc-ts/internal/plugin"
-	"github.com/stephen/sqlc-ts/internal/sdk"
+	"github.com/swuecho/sqlc-fs/internal/plugin"
+	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
 func tsTypecheckTemplate(req *plugin.CodeGenRequest, col *plugin.Column) string {
@@ -67,30 +67,30 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		return "int32"
 
 	case "bigserial", "serial8", "pg_catalog.serial8":
-			return "int64"
+		return "int64"
 	case "smallserial", "serial2", "pg_catalog.serial2":
-			return "int16"
+		return "int16"
 
 	case "integer", "int", "int4", "pg_catalog.int4":
-			return "int32"
+		return "int32"
 
 	case "bigint", "int8", "pg_catalog.int8":
-			return "int64"
+		return "int64"
 
 	case "smallint", "int2", "pg_catalog.int2":
-			return "int16"
+		return "int16"
 
 	case "float", "double precision", "float8", "pg_catalog.float8":
-			return "float64"
+		return "float64"
 
 	case "real", "float4", "pg_catalog.float4":
-			return "float32"
+		return "float32"
 
 	case "numeric", "pg_catalog.numeric", "money":
-			return "string"
+		return "string"
 
 	case "boolean", "bool", "pg_catalog.bool":
-			return "bool"
+		return "bool"
 	case "json":
 		// TODO
 		return "string"
@@ -102,25 +102,25 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		return "[]byte"
 
 	case "date":
-			return "DateTime"
+		return "DateTime"
 
 	case "pg_catalog.time":
-			return "DateTime"
+		return "DateTime"
 
 	case "pg_catalog.timetz":
-			return "DateTime"
+		return "DateTime"
 
 	case "pg_catalog.timestamp":
-			return "DateTime"
+		return "DateTime"
 
 	case "pg_catalog.timestamptz", "timestamptz":
-			return "DateTime"
+		return "DateTime"
 
 	case "text", "pg_catalog.varchar", "pg_catalog.bpchar", "string":
-			return "string"
+		return "string"
 
 	case "uuid":
-			return "uuid.UUID"
+		return "uuid.UUID"
 	case "inet":
 		return "interface{}"
 
@@ -136,10 +136,10 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		// facilities for searching through label trees are provided.
 		//
 		// https://www.postgresql.org/docs/current/ltree.html
-			return "string"
+		return "string"
 
 	case "interval", "pg_catalog.interval":
-			return "int64"
+		return "int64"
 	case "daterange":
 		return "interface{}"
 

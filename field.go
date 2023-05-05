@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/swuecho/sqlc-fs/internal/sdk"
 	"strings"
-	"github.com/stephen/sqlc-ts/internal/sdk"
 )
 
 type Field struct {

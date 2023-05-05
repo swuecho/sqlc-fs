@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/jinzhu/inflection"
-	"github.com/stephen/sqlc-ts/internal/plugin"
-	"github.com/stephen/sqlc-ts/internal/sdk"
+	"github.com/swuecho/sqlc-fs/internal/plugin"
+	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
 func buildStructs(req *plugin.CodeGenRequest) []Struct {
