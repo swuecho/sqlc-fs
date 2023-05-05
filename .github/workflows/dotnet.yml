@@ -49,6 +49,18 @@ jobs:
           echo $DATABASE_URL
           dotnet run
         working-directory: testdata/gen
+
+      - name: Restore dependencies
+        run: dotnet restore
+        working-directory: testdata/gen/sqlc_test
+      - name: RUN
+        env:
+          DATABASE_URL: "Host=localhost;Port=5432;Username=postgres;Password=thisisapassword;Database=postgres"
+        run: |
+          echo $DATABASE_URL
+          dotnet run
+        working-directory: testdata/gen/sqlc_test
+      
   #  - name: Test
   #  - name: Test
   #    run: dotnet test --no-build --verbosity normal
