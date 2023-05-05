@@ -36,18 +36,18 @@ type ChatSnapshotByIDRow = {
 let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    UserId = read.int "UserId"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Model = read.string "Model"
-    Tags = read.string "Tags"
-    Session = read.string "Session"
-    Conversation = read.string "Conversation"
-    CreatedAt = read.dateTime "CreatedAt"
-    Text = read.string "Text"
-    SearchVector = read.stringOrNone "SearchVector"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    UserId = read.int "user_id"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Model = read.string "model"
+    Tags = read.string "tags"
+    Session = read.string "session"
+    Conversation = read.string "conversation"
+    CreatedAt = read.dateTime "created_at"
+    Text = read.string "text"
+    SearchVector = read.stringOrNone "search_vector"}
   
 
   db
@@ -90,18 +90,18 @@ type ChatSnapshotByUUIDRow = {
 let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    UserId = read.int "UserId"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Model = read.string "Model"
-    Tags = read.string "Tags"
-    Session = read.string "Session"
-    Conversation = read.string "Conversation"
-    CreatedAt = read.dateTime "CreatedAt"
-    Text = read.string "Text"
-    SearchVector = read.stringOrNone "SearchVector"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    UserId = read.int "user_id"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Model = read.string "model"
+    Tags = read.string "tags"
+    Session = read.string "session"
+    Conversation = read.string "conversation"
+    CreatedAt = read.dateTime "created_at"
+    Text = read.string "text"
+    SearchVector = read.stringOrNone "search_vector"}
   
 
   db
@@ -240,18 +240,18 @@ type CreateChatSnapshotRow = {
 let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    UserId = read.int "UserId"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Model = read.string "Model"
-    Tags = read.string "Tags"
-    Session = read.string "Session"
-    Conversation = read.string "Conversation"
-    CreatedAt = read.dateTime "CreatedAt"
-    Text = read.string "Text"
-    SearchVector = read.stringOrNone "SearchVector"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    UserId = read.int "user_id"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Model = read.string "model"
+    Tags = read.string "tags"
+    Session = read.string "session"
+    Conversation = read.string "conversation"
+    CreatedAt = read.dateTime "created_at"
+    Text = read.string "text"
+    SearchVector = read.stringOrNone "search_vector"}
   
 
   db
@@ -315,18 +315,18 @@ type DeleteChatSnapshotRow = {
 let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    UserId = read.int "UserId"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Model = read.string "Model"
-    Tags = read.string "Tags"
-    Session = read.string "Session"
-    Conversation = read.string "Conversation"
-    CreatedAt = read.dateTime "CreatedAt"
-    Text = read.string "Text"
-    SearchVector = read.stringOrNone "SearchVector"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    UserId = read.int "user_id"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Model = read.string "model"
+    Tags = read.string "tags"
+    Session = read.string "session"
+    Conversation = read.string "conversation"
+    CreatedAt = read.dateTime "created_at"
+    Text = read.string "text"
+    SearchVector = read.stringOrNone "search_vector"}
   
 
   db
@@ -491,18 +491,18 @@ type UpdateChatSnapshotRow = {
 let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    UserId = read.int "UserId"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Model = read.string "Model"
-    Tags = read.string "Tags"
-    Session = read.string "Session"
-    Conversation = read.string "Conversation"
-    CreatedAt = read.dateTime "CreatedAt"
-    Text = read.string "Text"
-    SearchVector = read.stringOrNone "SearchVector"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    UserId = read.int "user_id"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Model = read.string "model"
+    Tags = read.string "tags"
+    Session = read.string "session"
+    Conversation = read.string "conversation"
+    CreatedAt = read.dateTime "created_at"
+    Text = read.string "text"
+    SearchVector = read.stringOrNone "search_vector"}
   
 
   db

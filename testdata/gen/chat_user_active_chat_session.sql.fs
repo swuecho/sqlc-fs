@@ -53,11 +53,11 @@ type CreateOrUpdateUserActiveChatSessionRow = {
 let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateOrUpdateUserActiveChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
   
 
   db
@@ -99,11 +99,11 @@ type CreateUserActiveChatSessionRow = {
 let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
   
 
   db
@@ -204,11 +204,11 @@ type GetUserActiveChatSessionRow = {
 let GetUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
   
 
   db
@@ -316,11 +316,11 @@ type UpdateUserActiveChatSessionRow = {
 let UpdateUserActiveChatSession (db: NpgsqlConnection) (arg: UpdateUserActiveChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
   
 
   db

@@ -26,11 +26,11 @@ type ChatLogByIDRow = {
 let ChatLogByID (db: NpgsqlConnection) (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Session = read.string "Session"
-    Question = read.string "Question"
-    Answer = read.string "Answer"
-    CreatedAt = read.dateTime "CreatedAt"}
+    Id = read.int "id"
+    Session = read.string "session"
+    Question = read.string "question"
+    Answer = read.string "answer"
+    CreatedAt = read.dateTime "created_at"}
   
 
   db
@@ -80,11 +80,11 @@ type CreateChatLogRow = {
 let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Session = read.string "Session"
-    Question = read.string "Question"
-    Answer = read.string "Answer"
-    CreatedAt = read.dateTime "CreatedAt"}
+    Id = read.int "id"
+    Session = read.string "session"
+    Question = read.string "question"
+    Answer = read.string "answer"
+    CreatedAt = read.dateTime "created_at"}
   
 
   db
@@ -256,11 +256,11 @@ type UpdateChatLogRow = {
 let UpdateChatLog (db: NpgsqlConnection) (arg: UpdateChatLogParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Session = read.string "Session"
-    Question = read.string "Question"
-    Answer = read.string "Answer"
-    CreatedAt = read.dateTime "CreatedAt"}
+    Id = read.int "id"
+    Session = read.string "session"
+    Question = read.string "question"
+    Answer = read.string "answer"
+    CreatedAt = read.dateTime "created_at"}
   
 
   db

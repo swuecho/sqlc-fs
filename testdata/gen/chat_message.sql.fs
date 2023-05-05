@@ -59,21 +59,21 @@ type CreateChatMessageRow = {
 let CreateChatMessage (db: NpgsqlConnection) (arg: CreateChatMessageParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db
@@ -275,21 +275,21 @@ type GetChatMessageByIDRow = {
 let GetChatMessageByID (db: NpgsqlConnection) (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db
@@ -345,21 +345,21 @@ type GetChatMessageBySessionUUIDRow = {
 let GetChatMessageBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessageBySessionUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db
@@ -408,21 +408,21 @@ type GetChatMessageByUUIDRow = {
 let GetChatMessageByUUID (db: NpgsqlConnection) (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db
@@ -616,21 +616,21 @@ type GetFirstMessageBySessionUUIDRow = {
 let GetFirstMessageBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db
@@ -896,21 +896,21 @@ type UpdateChatMessageRow = {
 let UpdateChatMessage (db: NpgsqlConnection) (arg: UpdateChatMessageParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db
@@ -964,21 +964,21 @@ type UpdateChatMessageByUUIDRow = {
 let UpdateChatMessageByUUID (db: NpgsqlConnection) (arg: UpdateChatMessageByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    IsPin = read.bool "IsPin"
-    TokenCount = read.int "TokenCount"
-    Raw = read.string "Raw"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    IsPin = read.bool "is_pin"
+    TokenCount = read.int "token_count"
+    Raw = read.string "raw"}
   
 
   db

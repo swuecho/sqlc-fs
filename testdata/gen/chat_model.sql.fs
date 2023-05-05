@@ -31,15 +31,15 @@ type ChatModelByIDRow = {
 let ChatModelByID (db: NpgsqlConnection) (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Name = read.string "Name"
-    Label = read.string "Label"
-    IsDefault = read.bool "IsDefault"
-    Url = read.string "Url"
-    ApiAuthHeader = read.string "ApiAuthHeader"
-    ApiAuthKey = read.string "ApiAuthKey"
-    UserId = read.int "UserId"
-    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+    Id = read.int "id"
+    Name = read.string "name"
+    Label = read.string "label"
+    IsDefault = read.bool "is_default"
+    Url = read.string "url"
+    ApiAuthHeader = read.string "api_auth_header"
+    ApiAuthKey = read.string "api_auth_key"
+    UserId = read.int "user_id"
+    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   
 
   db
@@ -79,15 +79,15 @@ type ChatModelByNameRow = {
 let ChatModelByName (db: NpgsqlConnection) (name: string)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Name = read.string "Name"
-    Label = read.string "Label"
-    IsDefault = read.bool "IsDefault"
-    Url = read.string "Url"
-    ApiAuthHeader = read.string "ApiAuthHeader"
-    ApiAuthKey = read.string "ApiAuthKey"
-    UserId = read.int "UserId"
-    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+    Id = read.int "id"
+    Name = read.string "name"
+    Label = read.string "label"
+    IsDefault = read.bool "is_default"
+    Url = read.string "url"
+    ApiAuthHeader = read.string "api_auth_header"
+    ApiAuthKey = read.string "api_auth_key"
+    UserId = read.int "user_id"
+    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   
 
   db
@@ -146,15 +146,15 @@ type CreateChatModelRow = {
 let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Name = read.string "Name"
-    Label = read.string "Label"
-    IsDefault = read.bool "IsDefault"
-    Url = read.string "Url"
-    ApiAuthHeader = read.string "ApiAuthHeader"
-    ApiAuthKey = read.string "ApiAuthKey"
-    UserId = read.int "UserId"
-    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+    Id = read.int "id"
+    Name = read.string "name"
+    Label = read.string "label"
+    IsDefault = read.bool "is_default"
+    Url = read.string "url"
+    ApiAuthHeader = read.string "api_auth_header"
+    ApiAuthKey = read.string "api_auth_key"
+    UserId = read.int "user_id"
+    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   
 
   db
@@ -264,15 +264,15 @@ type GetDefaultChatModelRow = {
 let GetDefaultChatModel (db: NpgsqlConnection) ()  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Name = read.string "Name"
-    Label = read.string "Label"
-    IsDefault = read.bool "IsDefault"
-    Url = read.string "Url"
-    ApiAuthHeader = read.string "ApiAuthHeader"
-    ApiAuthKey = read.string "ApiAuthKey"
-    UserId = read.int "UserId"
-    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+    Id = read.int "id"
+    Name = read.string "name"
+    Label = read.string "label"
+    IsDefault = read.bool "is_default"
+    Url = read.string "url"
+    ApiAuthHeader = read.string "api_auth_header"
+    ApiAuthKey = read.string "api_auth_key"
+    UserId = read.int "user_id"
+    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   
 
   db
@@ -441,15 +441,15 @@ type UpdateChatModelRow = {
 let UpdateChatModel (db: NpgsqlConnection) (arg: UpdateChatModelParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Name = read.string "Name"
-    Label = read.string "Label"
-    IsDefault = read.bool "IsDefault"
-    Url = read.string "Url"
-    ApiAuthHeader = read.string "ApiAuthHeader"
-    ApiAuthKey = read.string "ApiAuthKey"
-    UserId = read.int "UserId"
-    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+    Id = read.int "id"
+    Name = read.string "name"
+    Label = read.string "label"
+    IsDefault = read.bool "is_default"
+    Url = read.string "url"
+    ApiAuthHeader = read.string "api_auth_header"
+    ApiAuthKey = read.string "api_auth_key"
+    UserId = read.int "user_id"
+    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   
 
   db
@@ -495,15 +495,15 @@ type UpdateChatModelKeyRow = {
 let UpdateChatModelKey (db: NpgsqlConnection) (arg: UpdateChatModelKeyParams)  =
   
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Name = read.string "Name"
-    Label = read.string "Label"
-    IsDefault = read.bool "IsDefault"
-    Url = read.string "Url"
-    ApiAuthHeader = read.string "ApiAuthHeader"
-    ApiAuthKey = read.string "ApiAuthKey"
-    UserId = read.int "UserId"
-    EnablePerModeRatelimit = read.bool "EnablePerModeRatelimit"}
+    Id = read.int "id"
+    Name = read.string "name"
+    Label = read.string "label"
+    IsDefault = read.bool "is_default"
+    Url = read.string "url"
+    ApiAuthHeader = read.string "api_auth_header"
+    ApiAuthKey = read.string "api_auth_key"
+    UserId = read.int "user_id"
+    EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   
 
   db
