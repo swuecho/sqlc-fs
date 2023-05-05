@@ -255,8 +255,7 @@ let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
     UpdatedAt = read.dateTime "updated_at"}
   db 
   |> Sql.existingConnection
-  |> sql.query listUserActiveChatSessions
-  |> listUserActiveChatSessions
+  |> Sql.query listUserActiveChatSessions
   |> Sql.execute reader
 
 

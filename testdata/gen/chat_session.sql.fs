@@ -360,8 +360,7 @@ let GetAllChatSessions (db: NpgsqlConnection) ()  =
     Debug = read.bool "debug"}
   db 
   |> Sql.existingConnection
-  |> sql.query getAllChatSessions
-  |> getAllChatSessions
+  |> Sql.query getAllChatSessions
   |> Sql.execute reader
 
 
@@ -602,8 +601,7 @@ let GetChatSessionsByUserID (db: NpgsqlConnection) (userID: int32)  =
     Debug = read.bool "debug"}
   db 
   |> Sql.existingConnection
-  |> sql.query getChatSessionsByUserID
-  |> getChatSessionsByUserID
+  |> Sql.query getChatSessionsByUserID
   |> Sql.execute reader
 
 

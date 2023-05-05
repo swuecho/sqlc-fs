@@ -187,8 +187,7 @@ let ListUserChatModelPrivileges (db: NpgsqlConnection) ()  =
     UpdatedBy = read.int "updated_by"}
   db 
   |> Sql.existingConnection
-  |> sql.query listUserChatModelPrivileges
-  |> listUserChatModelPrivileges
+  |> Sql.query listUserChatModelPrivileges
   |> Sql.execute reader
 
 
@@ -234,8 +233,7 @@ let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection) (userID: int32)  
     UpdatedBy = read.int "updated_by"}
   db 
   |> Sql.existingConnection
-  |> sql.query listUserChatModelPrivilegesByUserID
-  |> listUserChatModelPrivilegesByUserID
+  |> Sql.query listUserChatModelPrivilegesByUserID
   |> Sql.execute reader
 
 
@@ -274,8 +272,7 @@ let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection) ()  =
     RateLimit = read.int "rate_limit"}
   db 
   |> Sql.existingConnection
-  |> sql.query listUserChatModelPrivilegesRateLimit
-  |> listUserChatModelPrivilegesRateLimit
+  |> Sql.query listUserChatModelPrivilegesRateLimit
   |> Sql.execute reader
 
 

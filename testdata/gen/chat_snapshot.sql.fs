@@ -142,8 +142,7 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection) (userID: int32)  =
     CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
-  |> sql.query chatSnapshotMetaByUserID
-  |> chatSnapshotMetaByUserID
+  |> Sql.query chatSnapshotMetaByUserID
   |> Sql.execute reader
 
 
@@ -182,8 +181,7 @@ let ChatSnapshotSearch (db: NpgsqlConnection) (arg: ChatSnapshotSearchParams)  =
     Rank = read.float32 "rank"}
   db 
   |> Sql.existingConnection
-  |> sql.query chatSnapshotSearch
-  |> chatSnapshotSearch
+  |> Sql.query chatSnapshotSearch
   |> Sql.execute reader
 
 
@@ -417,8 +415,7 @@ let ListChatSnapshots (db: NpgsqlConnection) ()  =
     SearchVector = read.interfaceOrNone "search_vector"}
   db 
   |> Sql.existingConnection
-  |> sql.query listChatSnapshots
-  |> listChatSnapshots
+  |> Sql.query listChatSnapshots
   |> Sql.execute reader
 
 

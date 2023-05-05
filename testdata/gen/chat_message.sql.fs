@@ -230,8 +230,7 @@ let GetAllChatMessages (db: NpgsqlConnection) ()  =
     Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
-  |> sql.query getAllChatMessages
-  |> getAllChatMessages
+  |> Sql.query getAllChatMessages
   |> Sql.execute reader
 
 
@@ -489,8 +488,7 @@ let GetChatMessagesBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessagesByS
     Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
-  |> sql.query getChatMessagesBySessionUUID
-  |> getChatMessagesBySessionUUID
+  |> Sql.query getChatMessagesBySessionUUID
   |> Sql.execute reader
 
 
@@ -708,8 +706,7 @@ let GetLastNChatMessages (db: NpgsqlConnection) (arg: GetLastNChatMessagesParams
     Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
-  |> sql.query getLastNChatMessages
-  |> getLastNChatMessages
+  |> Sql.query getLastNChatMessages
   |> Sql.execute reader
 
 
@@ -784,8 +781,7 @@ let GetLatestMessagesBySessionUUID (db: NpgsqlConnection) (arg: GetLatestMessage
     Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
-  |> sql.query getLatestMessagesBySessionUUID
-  |> getLatestMessagesBySessionUUID
+  |> Sql.query getLatestMessagesBySessionUUID
   |> Sql.execute reader
 
 

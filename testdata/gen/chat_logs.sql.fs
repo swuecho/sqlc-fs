@@ -205,8 +205,7 @@ let ListChatLogs (db: NpgsqlConnection) ()  =
     CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
-  |> sql.query listChatLogs
-  |> listChatLogs
+  |> Sql.query listChatLogs
   |> Sql.execute reader
 
 

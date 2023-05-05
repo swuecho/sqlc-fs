@@ -60,8 +60,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   }
   db 
   |> Sql.existingConnection
-  |> sql.query {{.ConstantName}}
-  |> {{.ConstantName}}
+  |> Sql.query {{.ConstantName}}
   |> Sql.execute reader
 {{end}}
 

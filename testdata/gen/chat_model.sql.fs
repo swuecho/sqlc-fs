@@ -330,8 +330,7 @@ let ListChatModels (db: NpgsqlConnection) ()  =
     EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   db 
   |> Sql.existingConnection
-  |> sql.query listChatModels
-  |> listChatModels
+  |> Sql.query listChatModels
   |> Sql.execute reader
 
 
@@ -377,8 +376,7 @@ let ListSystemChatModels (db: NpgsqlConnection) ()  =
     EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
   db 
   |> Sql.existingConnection
-  |> sql.query listSystemChatModels
-  |> listSystemChatModels
+  |> Sql.query listSystemChatModels
   |> Sql.execute reader
 
 

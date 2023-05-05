@@ -160,8 +160,7 @@ let GetAllAuthUsers (db: NpgsqlConnection) ()  =
     DateJoined = read.dateTime "date_joined"}
   db 
   |> Sql.existingConnection
-  |> sql.query getAllAuthUsers
-  |> getAllAuthUsers
+  |> Sql.query getAllAuthUsers
   |> Sql.execute reader
 
 
@@ -436,8 +435,7 @@ let GetUserStats (db: NpgsqlConnection) (arg: GetUserStatsParams)  =
     RateLimit = read.int "rate_limit"}
   db 
   |> Sql.existingConnection
-  |> sql.query getUserStats
-  |> getUserStats
+  |> Sql.query getUserStats
   |> Sql.execute reader
 
 
@@ -491,8 +489,7 @@ let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
     DateJoined = read.dateTime "date_joined"}
   db 
   |> Sql.existingConnection
-  |> sql.query listAuthUsers
-  |> listAuthUsers
+  |> Sql.query listAuthUsers
   |> Sql.execute reader
 
 

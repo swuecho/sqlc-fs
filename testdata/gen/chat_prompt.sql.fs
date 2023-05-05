@@ -199,8 +199,7 @@ let GetAllChatPrompts (db: NpgsqlConnection) ()  =
     TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
-  |> sql.query getAllChatPrompts
-  |> getAllChatPrompts
+  |> Sql.query getAllChatPrompts
   |> Sql.execute reader
 
 
@@ -373,8 +372,7 @@ let GetChatPromptsBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)
     TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
-  |> sql.query getChatPromptsBySessionUUID
-  |> getChatPromptsBySessionUUID
+  |> Sql.query getChatPromptsBySessionUUID
   |> Sql.execute reader
 
 
@@ -428,8 +426,7 @@ let GetChatPromptsByUserID (db: NpgsqlConnection) (userID: int32)  =
     TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
-  |> sql.query getChatPromptsByUserID
-  |> getChatPromptsByUserID
+  |> Sql.query getChatPromptsByUserID
   |> Sql.execute reader
 
 
@@ -483,8 +480,7 @@ let GetChatPromptsBysession_uuid (db: NpgsqlConnection) (chatSessionUuid: string
     TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
-  |> sql.query getChatPromptsBysession_uuid
-  |> getChatPromptsBysession_uuid
+  |> Sql.query getChatPromptsBysession_uuid
   |> Sql.execute reader
 
 
