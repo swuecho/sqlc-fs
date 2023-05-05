@@ -4,6 +4,8 @@ sqlc-fs is a [sqlc plugin](https://docs.sqlc.dev/en/stable/guides/plugins.html) 
 
 This plugin is alpha. (current implementation assuming the table column is snake_case)
 
+check https://github.com/swuecho/sqlc-fs/tree/main/testdata for demo.
+
 ## Installation & Usage
 
 ```bash
