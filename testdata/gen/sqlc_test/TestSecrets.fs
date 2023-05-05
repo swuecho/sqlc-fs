@@ -1,6 +1,8 @@
 module TestsSecrets
 
 open Expecto
+open Npgsql
+open System
 
 [<Tests>]
 let tests =
@@ -10,14 +12,18 @@ let tests =
           <| fun _ ->
               let subject = ChatJwtSecrets.getJwtSecret
 
-              let expected ="""-- name: GetJwtSecret :one
+              let expected =
+                  """-- name: GetJwtSecret :one
 SELECT id, name, secret, audience FROM jwt_secrets WHERE name = @name
 """
 
               Expect.equal subject expected "I compute, therefore I am."
 
-        
-          testCase "html page"
+
+          testCase "get secrets"
           <| fun _ ->
-              Expect.equal "a" "a" "I compute, therefore I am."
-        ]
+              let DSN = Environment.GetEnvironmentVariable("DATABASE_URL")
+              use conn = new NpgsqlConnection(DSN)
+              let subject = ChatJwtSecrets.GetJwtSecret conn "my-jwt-secret"
+
+              Expect.equal subject.Head.Audience "my-app" "app name ok" ]
