@@ -55,6 +55,7 @@ type CreateChatPromptRow = {
 }
 
 let CreateChatPrompt (db: NpgsqlConnection) (arg: CreateChatPromptParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -69,6 +70,7 @@ let CreateChatPrompt (db: NpgsqlConnection) (arg: CreateChatPromptParams)  =
     UpdatedBy = read.int "UpdatedBy"
     IsDeleted = read.bool "IsDeleted"
     TokenCount = read.int "TokenCount"}
+  
 
   db
   |> Sql.existingConnection
@@ -127,8 +129,6 @@ let DeleteChatPrompt (db: NpgsqlConnection) (id: int32)  =
 
 
 let deleteChatPromptByUUID = """-- name: DeleteChatPromptByUUID :exec
-
-
 UPDATE chat_prompt
 SET is_deleted = true, updated_at = now()
 WHERE uuid = @uuid
@@ -139,11 +139,6 @@ WHERE uuid = @uuid
 
 
 
-// -- name: HasChatPromptPermission :one
-// SELECT COUNT(*) > 0 as has_permission
-// FROM chat_prompt cp
-// INNER JOIN auth_user au ON cp.user_id = au.id
-// WHERE cp.id = $1 AND (cp.user_id = $2 OR au.is_superuser) AND cp.is_deleted = false;
 let DeleteChatPromptByUUID (db: NpgsqlConnection) (uuid: string)  = 
   db 
   |> Sql.existingConnection
@@ -225,6 +220,8 @@ let GetAllChatPrompts (db: NpgsqlConnection) ()  =
 
 
 
+
+
 let getChatPromptByID = """-- name: GetChatPromptByID :one
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, token_count FROM chat_prompt
 WHERE is_deleted = false and  id = @id
@@ -248,6 +245,7 @@ type GetChatPromptByIDRow = {
 }
 
 let GetChatPromptByID (db: NpgsqlConnection) (id: int32)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -262,6 +260,7 @@ let GetChatPromptByID (db: NpgsqlConnection) (id: int32)  =
     UpdatedBy = read.int "UpdatedBy"
     IsDeleted = read.bool "IsDeleted"
     TokenCount = read.int "TokenCount"}
+  
 
   db
   |> Sql.existingConnection
@@ -303,6 +302,7 @@ type GetChatPromptByUUIDRow = {
 }
 
 let GetChatPromptByUUID (db: NpgsqlConnection) (uuid: string)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -317,6 +317,7 @@ let GetChatPromptByUUID (db: NpgsqlConnection) (uuid: string)  =
     UpdatedBy = read.int "UpdatedBy"
     IsDeleted = read.bool "IsDeleted"
     TokenCount = read.int "TokenCount"}
+  
 
   db
   |> Sql.existingConnection
@@ -532,6 +533,7 @@ type GetOneChatPromptBySessionUUIDRow = {
 }
 
 let GetOneChatPromptBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -546,6 +548,7 @@ let GetOneChatPromptBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: strin
     UpdatedBy = read.int "UpdatedBy"
     IsDeleted = read.bool "IsDeleted"
     TokenCount = read.int "TokenCount"}
+  
 
   db
   |> Sql.existingConnection
@@ -553,6 +556,45 @@ let GetOneChatPromptBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: strin
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.execute reader
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let hasChatPromptPermission = """-- name: HasChatPromptPermission :one
+SELECT COUNT(*) > 0 as has_permission
+FROM chat_prompt cp
+INNER JOIN auth_user au ON cp.user_id = au.id
+WHERE cp.id = @id AND (cp.user_id = @user_id OR au.is_superuser) AND cp.is_deleted = false
+"""
+
+
+type HasChatPromptPermissionParams = {
+  Id: int32;
+  UserId: int32;
+}
+
+let HasChatPromptPermission (db: NpgsqlConnection) (arg: HasChatPromptPermissionParams)  =
+  
+  let reader = fun (read:RowReader) -> read.bool "has_permission"
+
+  db
+  |> Sql.existingConnection
+  |> Sql.query hasChatPromptPermission
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
+  |> Sql.execute reader
 
 
 
@@ -618,6 +660,7 @@ type UpdateChatPromptRow = {
 }
 
 let UpdateChatPrompt (db: NpgsqlConnection) (arg: UpdateChatPromptParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -632,6 +675,7 @@ let UpdateChatPrompt (db: NpgsqlConnection) (arg: UpdateChatPromptParams)  =
     UpdatedBy = read.int "UpdatedBy"
     IsDeleted = read.bool "IsDeleted"
     TokenCount = read.int "TokenCount"}
+  
 
   db
   |> Sql.existingConnection
@@ -679,6 +723,7 @@ type UpdateChatPromptByUUIDRow = {
 }
 
 let UpdateChatPromptByUUID (db: NpgsqlConnection) (arg: UpdateChatPromptByUUIDParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -693,6 +738,7 @@ let UpdateChatPromptByUUID (db: NpgsqlConnection) (arg: UpdateChatPromptByUUIDPa
     UpdatedBy = read.int "UpdatedBy"
     IsDeleted = read.bool "IsDeleted"
     TokenCount = read.int "TokenCount"}
+  
 
   db
   |> Sql.existingConnection

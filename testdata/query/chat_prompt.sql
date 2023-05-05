@@ -56,11 +56,11 @@ LIMIT 1;
 
 
 
--- -- name: HasChatPromptPermission :one
--- SELECT COUNT(*) > 0 as has_permission
--- FROM chat_prompt cp
--- INNER JOIN auth_user au ON cp.user_id = au.id
--- WHERE cp.id = $1 AND (cp.user_id = $2 OR au.is_superuser) AND cp.is_deleted = false;
+-- name: HasChatPromptPermission :one
+SELECT COUNT(*) > 0 as has_permission
+FROM chat_prompt cp
+INNER JOIN auth_user au ON cp.user_id = au.id
+WHERE cp.id = $1 AND (cp.user_id = $2 OR au.is_superuser) AND cp.is_deleted = false;
 
 
 -- name: DeleteChatPromptByUUID :exec

@@ -34,6 +34,7 @@ type ChatSnapshotByIDRow = {
 }
 
 let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -47,6 +48,7 @@ let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
     CreatedAt = read.dateTime "CreatedAt"
     Text = read.string "Text"
     SearchVector = read.stringOrNone "SearchVector"}
+  
 
   db
   |> Sql.existingConnection
@@ -86,6 +88,7 @@ type ChatSnapshotByUUIDRow = {
 }
 
 let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -99,6 +102,7 @@ let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
     CreatedAt = read.dateTime "CreatedAt"
     Text = read.string "Text"
     SearchVector = read.stringOrNone "SearchVector"}
+  
 
   db
   |> Sql.existingConnection
@@ -234,6 +238,7 @@ type CreateChatSnapshotRow = {
 }
 
 let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -247,6 +252,7 @@ let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
     CreatedAt = read.dateTime "CreatedAt"
     Text = read.string "Text"
     SearchVector = read.stringOrNone "SearchVector"}
+  
 
   db
   |> Sql.existingConnection
@@ -307,6 +313,7 @@ type DeleteChatSnapshotRow = {
 }
 
 let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -320,12 +327,20 @@ let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
     CreatedAt = read.dateTime "CreatedAt"
     Text = read.string "Text"
     SearchVector = read.stringOrNone "SearchVector"}
+  
 
   db
   |> Sql.existingConnection
   |> Sql.query deleteChatSnapshot
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.execute reader
+
+
+
+
+
+
+
 
 
 
@@ -439,6 +454,7 @@ let ListChatSnapshots (db: NpgsqlConnection) ()  =
 
 
 
+
 let updateChatSnapshot = """-- name: UpdateChatSnapshot :one
 UPDATE chat_snapshot
 SET uuid = @uuid, user_id = @user_id, title = @title, summary = @summary, tags = @tags, conversation = @conversation, created_at = @created_at
@@ -473,6 +489,7 @@ type UpdateChatSnapshotRow = {
 }
 
 let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     Uuid = read.string "Uuid"
@@ -486,6 +503,7 @@ let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
     CreatedAt = read.dateTime "CreatedAt"
     Text = read.string "Text"
     SearchVector = read.stringOrNone "SearchVector"}
+  
 
   db
   |> Sql.existingConnection

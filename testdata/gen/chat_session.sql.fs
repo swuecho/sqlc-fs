@@ -53,6 +53,7 @@ type CreateChatSessionRow = {
 }
 
 let CreateChatSession (db: NpgsqlConnection) (arg: CreateChatSessionParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -68,6 +69,7 @@ let CreateChatSession (db: NpgsqlConnection) (arg: CreateChatSessionParams)  =
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -119,6 +121,7 @@ type CreateChatSessionByUUIDRow = {
 }
 
 let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUIDParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -134,6 +137,7 @@ let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUID
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -202,6 +206,7 @@ type CreateOrUpdateChatSessionByUUIDRow = {
 }
 
 let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateChatSessionByUUIDParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -217,6 +222,7 @@ let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateC
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -383,6 +389,8 @@ let GetAllChatSessions (db: NpgsqlConnection) ()  =
 
 
 
+
+
 let getChatSessionByID = """-- name: GetChatSessionByID :one
 SELECT id, user_id, uuid, topic, created_at, updated_at, active, model, max_length, temperature, top_p, max_tokens, n, debug FROM chat_session WHERE id = @id
 """
@@ -406,6 +414,7 @@ type GetChatSessionByIDRow = {
 }
 
 let GetChatSessionByID (db: NpgsqlConnection) (id: int32)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -421,6 +430,7 @@ let GetChatSessionByID (db: NpgsqlConnection) (id: int32)  =
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -464,6 +474,7 @@ type GetChatSessionByUUIDRow = {
 }
 
 let GetChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -479,6 +490,7 @@ let GetChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  =
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -522,6 +534,7 @@ type GetChatSessionByUUIDWithInActiveRow = {
 }
 
 let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection) (uuid: string)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -537,6 +550,7 @@ let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection) (uuid: string)  =
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -624,6 +638,45 @@ let GetChatSessionsByUserID (db: NpgsqlConnection) (userId: int32)  =
 
 
 
+let hasChatSessionPermission = """-- name: HasChatSessionPermission :one
+SELECT COUNT(*) > 0 as has_permission
+FROM chat_session cs
+INNER JOIN auth_user au ON cs.user_id = au.id
+WHERE cs.id = @id AND (cs.user_id = @user_id OR au.is_superuser)
+"""
+
+
+type HasChatSessionPermissionParams = {
+  Id: int32;
+  UserId: int32;
+}
+
+let HasChatSessionPermission (db: NpgsqlConnection) (arg: HasChatSessionPermissionParams)  =
+  
+  let reader = fun (read:RowReader) -> read.bool "has_permission"
+
+  db
+  |> Sql.existingConnection
+  |> Sql.query hasChatSessionPermission
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
+  |> Sql.execute reader
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -671,6 +724,7 @@ type UpdateChatSessionRow = {
 }
 
 let UpdateChatSession (db: NpgsqlConnection) (arg: UpdateChatSessionParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -686,6 +740,7 @@ let UpdateChatSession (db: NpgsqlConnection) (arg: UpdateChatSessionParams)  =
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -734,6 +789,7 @@ type UpdateChatSessionByUUIDRow = {
 }
 
 let UpdateChatSessionByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionByUUIDParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -749,6 +805,7 @@ let UpdateChatSessionByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionByUUID
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -801,6 +858,7 @@ type UpdateChatSessionTopicByUUIDRow = {
 }
 
 let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionTopicByUUIDParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -816,6 +874,7 @@ let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionT
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
@@ -837,8 +896,6 @@ let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionT
 
 
 let updateSessionMaxLength = """-- name: UpdateSessionMaxLength :one
-
-
 UPDATE chat_session
 SET max_length = @max_length,
     updated_at = now()
@@ -867,13 +924,9 @@ type UpdateSessionMaxLengthRow = {
   N: int32;
   Debug: bool;
 }
-// -- name: HasChatSessionPermission :one
-// SELECT COUNT(*) > 0 as has_permission
-// FROM chat_session cs
-// INNER JOIN auth_user au ON cs.user_id = au.id
-// WHERE cs.id = $1 AND (cs.user_id = $2 OR au.is_superuser);
 
 let UpdateSessionMaxLength (db: NpgsqlConnection) (arg: UpdateSessionMaxLengthParams)  =
+  
   let reader = fun (read:RowReader) -> {
     Id = read.int "Id"
     UserId = read.int "UserId"
@@ -889,6 +942,7 @@ let UpdateSessionMaxLength (db: NpgsqlConnection) (arg: UpdateSessionMaxLengthPa
     MaxTokens = read.int "MaxTokens"
     N = read.int "N"
     Debug = read.bool "Debug"}
+  
 
   db
   |> Sql.existingConnection
