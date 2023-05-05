@@ -2,7 +2,7 @@
 
 sqlc-fs is a [sqlc plugin](https://docs.sqlc.dev/en/stable/guides/plugins.html) to generate queries that are compatible with [Npgsql.Fsharp](https://github.com/Zaid-Ajaj/Npgsql.FSharp).
 
-This plugin is WIP and not usable yet.
+This plugin is alpha. 
 
 ## Installation & Usage
 
