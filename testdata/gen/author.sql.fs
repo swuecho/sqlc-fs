@@ -10,7 +10,7 @@ INSERT INTO authors (
 ) VALUES (
   ?, ?
 )
-""";
+"""
 
 
 type CreateAuthorParams = {
@@ -39,7 +39,7 @@ let CreateAuthor db: NpgsqlConnection arg: CreateAuthorParams) =
 let deleteAuthor = """-- name: DeleteAuthor :exec
 DELETE FROM authors
 WHERE id = ?
-""";
+"""
 
 
 
@@ -63,7 +63,7 @@ let DeleteAuthor (db: NpgsqlConnection) (id: int32)  =
 let getAuthor = """-- name: GetAuthor :one
 SELECT id, name, bio FROM authors
 WHERE id = ? LIMIT 1
-""";
+"""
 
 
 type GetAuthorRow = {
@@ -72,7 +72,7 @@ type GetAuthorRow = {
   Bio: string option;
 }
 
-let GetAuthor (db: NpgsqlConnection) (id: int32) -> GetAuthorRow  =
+let GetAuthor (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Name = read.string "name"
@@ -99,7 +99,7 @@ let GetAuthor (db: NpgsqlConnection) (id: int32) -> GetAuthorRow  =
 let listAuthors = """-- name: ListAuthors :many
 SELECT id, name, bio FROM authors
 ORDER BY name
-""";
+"""
 
 
 type ListAuthorsRow = {
@@ -109,7 +109,7 @@ type ListAuthorsRow = {
 }
 
 
-let ListAuthors (db: NpgsqlConnection) () -> ListAuthorsRow list =
+let ListAuthors (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Name = read.string "name"

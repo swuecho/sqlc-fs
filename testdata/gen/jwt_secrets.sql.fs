@@ -8,7 +8,7 @@ open Npgsql.FSharp
 let createJwtSecret = """-- name: CreateJwtSecret :one
 INSERT INTO jwt_secrets (name, secret, audience)
 VALUES ($1, $2, $3) RETURNING id, name, secret, audience
-""";
+"""
 
 
 type CreateJwtSecretParams = {
@@ -23,7 +23,7 @@ type CreateJwtSecretRow = {
   Audience: string;
 }
 
-let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams) -> CreateJwtSecretRow  =
+let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Name = read.string "name"
@@ -51,7 +51,7 @@ let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams) -> Creat
 
 let getJwtSecret = """-- name: GetJwtSecret :one
 SELECT id, name, secret, audience FROM jwt_secrets WHERE name = $1
-""";
+"""
 
 
 type GetJwtSecretRow = {
@@ -61,7 +61,7 @@ type GetJwtSecretRow = {
   Audience: string;
 }
 
-let GetJwtSecret (db: NpgsqlConnection) (name: string) -> GetJwtSecretRow  =
+let GetJwtSecret (db: NpgsqlConnection) (name: string)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Name = read.string "name"
