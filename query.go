@@ -126,11 +126,11 @@ func (v QueryValue) NpgsqlParams() string {
 	for idx, columnName := range columnNames {
 		columnNameFull := sdk.ToSnakeCase(columnName)
 		if isInStruct[idx] {
-			columnNameFull = "arg." + columnNameFull
+			columnNameFull = "arg." + sdk.ToPascalCase(columnNameFull)
 		}
 		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", sdk.ToSnakeCase(columnName), type2readerFunc(columnTypes[idx]), columnNameFull)
 		if idx < len(columnNames)-1 {
-			sqlParamsString += ", "
+			sqlParamsString += "; "
 		}
 	}
 	return sqlParamsString
