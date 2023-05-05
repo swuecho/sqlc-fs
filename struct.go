@@ -23,7 +23,7 @@ func StructName(name string, settings *plugin.Settings) string {
 		if p == "id" {
 			out += p
 		} else {
-			out += strings.Title(p)
+			out += sdk.Title(p)
 		}
 	}
 	return out
