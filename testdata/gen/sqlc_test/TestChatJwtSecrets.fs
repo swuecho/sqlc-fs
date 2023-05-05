@@ -8,7 +8,6 @@ open System
 let tests =
 
     let DSN = Environment.GetEnvironmentVariable("DATABASE_URL")
-    use conn = new NpgsqlConnection(DSN)
 
     testList
         "surveys"
@@ -26,6 +25,7 @@ SELECT id, name, secret, audience FROM jwt_secrets WHERE name = @name
 
           testCase "get secrets"
           <| fun _ ->
+              use conn = new NpgsqlConnection(DSN)
               let subject = ChatJwtSecrets.GetJwtSecret conn "my-jwt-secret"
 
               Expect.equal subject.Head.Audience "my-app" "app name ok" ]
