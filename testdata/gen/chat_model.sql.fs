@@ -46,7 +46,7 @@ let ChatModelByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query chatModelByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -94,7 +94,7 @@ let ChatModelByName (db: NpgsqlConnection) (name: string)  =
   |> Sql.existingConnection
   |> Sql.query chatModelByName
   |> Sql.parameters  [ "@name", Sql.string name ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -161,7 +161,7 @@ let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
   |> Sql.existingConnection
   |> Sql.query createChatModel
   |> Sql.parameters  [ "@name", Sql.string arg.Name; "@label", Sql.string arg.Label; "@is_default", Sql.bool arg.IsDefault; "@url", Sql.string arg.Url; "@api_auth_header", Sql.string arg.ApiAuthHeader; "@api_auth_key", Sql.string arg.ApiAuthKey; "@user_id", Sql.int arg.UserId; "@enable_per_mode_ratelimit", Sql.bool arg.EnablePerModeRatelimit ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -279,7 +279,7 @@ let GetDefaultChatModel (db: NpgsqlConnection) ()  =
   |> Sql.existingConnection
   |> Sql.query getDefaultChatModel
   |> Sql.parameters  [  ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -456,7 +456,7 @@ let UpdateChatModel (db: NpgsqlConnection) (arg: UpdateChatModelParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatModel
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@name", Sql.string arg.Name; "@label", Sql.string arg.Label; "@is_default", Sql.bool arg.IsDefault; "@url", Sql.string arg.Url; "@api_auth_header", Sql.string arg.ApiAuthHeader; "@api_auth_key", Sql.string arg.ApiAuthKey; "@user_id", Sql.int arg.UserId; "@enable_per_mode_ratelimit", Sql.bool arg.EnablePerModeRatelimit ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -510,7 +510,7 @@ let UpdateChatModelKey (db: NpgsqlConnection) (arg: UpdateChatModelKeyParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatModelKey
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@api_auth_key", Sql.string arg.ApiAuthKey ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

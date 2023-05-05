@@ -67,7 +67,7 @@ let CreateAuthUser (db: NpgsqlConnection) (arg: CreateAuthUserParams)  =
   |> Sql.existingConnection
   |> Sql.query createAuthUser
   |> Sql.parameters  [ "@email", Sql.string arg.Email; "@password", Sql.string arg.Password; "@first_name", Sql.string arg.FirstName; "@last_name", Sql.string arg.LastName; "@username", Sql.string arg.Username; "@is_staff", Sql.bool arg.IsStaff; "@is_superuser", Sql.bool arg.IsSuperuser ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -216,7 +216,7 @@ let GetAuthUserByEmail (db: NpgsqlConnection) (email: string)  =
   |> Sql.existingConnection
   |> Sql.query getAuthUserByEmail
   |> Sql.parameters  [ "@email", Sql.string email ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -268,7 +268,7 @@ let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query getAuthUserByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -317,7 +317,7 @@ let GetTotalActiveUserCount (db: NpgsqlConnection) ()  =
   |> Sql.existingConnection
   |> Sql.query getTotalActiveUserCount
   |> Sql.parameters  [  ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -370,7 +370,7 @@ let GetUserByEmail (db: NpgsqlConnection) (email: string)  =
   |> Sql.existingConnection
   |> Sql.query getUserByEmail
   |> Sql.parameters  [ "@email", Sql.string email ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -548,7 +548,7 @@ let UpdateAuthUser (db: NpgsqlConnection) (arg: UpdateAuthUserParams)  =
   |> Sql.existingConnection
   |> Sql.query updateAuthUser
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@first_name", Sql.string arg.FirstName; "@last_name", Sql.string arg.LastName ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -591,7 +591,7 @@ let UpdateAuthUserByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserByEmailPara
   |> Sql.existingConnection
   |> Sql.query updateAuthUserByEmail
   |> Sql.parameters  [ "@email", Sql.string arg.Email; "@first_name", Sql.string arg.FirstName; "@last_name", Sql.string arg.LastName ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -625,7 +625,7 @@ let UpdateAuthUserRateLimitByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserRa
   |> Sql.existingConnection
   |> Sql.query updateAuthUserRateLimitByEmail
   |> Sql.parameters  [ "@email", Sql.string arg.Email; "@rate_limit", Sql.int arg.RateLimit ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

@@ -64,7 +64,7 @@ let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateOrUpd
   |> Sql.existingConnection
   |> Sql.query createOrUpdateUserActiveChatSession
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -110,7 +110,7 @@ let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveCha
   |> Sql.existingConnection
   |> Sql.query createUserActiveChatSession
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -215,7 +215,7 @@ let GetUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
   |> Sql.existingConnection
   |> Sql.query getUserActiveChatSession
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -327,7 +327,7 @@ let UpdateUserActiveChatSession (db: NpgsqlConnection) (arg: UpdateUserActiveCha
   |> Sql.existingConnection
   |> Sql.query updateUserActiveChatSession
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@user_id", Sql.int arg.UserId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

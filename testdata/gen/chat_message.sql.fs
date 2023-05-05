@@ -80,7 +80,7 @@ let CreateChatMessage (db: NpgsqlConnection) (arg: CreateChatMessageParams)  =
   |> Sql.existingConnection
   |> Sql.query createChatMessage
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@uuid", Sql.string arg.Uuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy; "@raw", Sql.string arg.Raw ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -296,7 +296,7 @@ let GetChatMessageByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query getChatMessageByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -366,7 +366,7 @@ let GetChatMessageBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessageBySes
   |> Sql.existingConnection
   |> Sql.query getChatMessageBySessionUUID
   |> Sql.parameters  [ "@limit", Sql.int arg.Limit; "@offset", Sql.int arg.Offset ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -429,7 +429,7 @@ let GetChatMessageByUUID (db: NpgsqlConnection) (uuid: string)  =
   |> Sql.existingConnection
   |> Sql.query getChatMessageByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -526,7 +526,7 @@ let GetChatMessagesCount (db: NpgsqlConnection) (userId: int32)  =
   |> Sql.existingConnection
   |> Sql.query getChatMessagesCount
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -563,7 +563,7 @@ let GetChatMessagesCountByUserAndModel (db: NpgsqlConnection) (arg: GetChatMessa
   |> Sql.existingConnection
   |> Sql.query getChatMessagesCountByUserAndModel
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@model", Sql.string arg.Model ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -637,7 +637,7 @@ let GetFirstMessageBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string
   |> Sql.existingConnection
   |> Sql.query getFirstMessageBySessionUUID
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -831,7 +831,7 @@ let HasChatMessagePermission (db: NpgsqlConnection) (arg: HasChatMessagePermissi
   |> Sql.existingConnection
   |> Sql.query hasChatMessagePermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -917,7 +917,7 @@ let UpdateChatMessage (db: NpgsqlConnection) (arg: UpdateChatMessageParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatMessage
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@updated_by", Sql.int arg.UpdatedBy ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -985,7 +985,7 @@ let UpdateChatMessageByUUID (db: NpgsqlConnection) (arg: UpdateChatMessageByUUID
   |> Sql.existingConnection
   |> Sql.query updateChatMessageByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@content", Sql.string arg.Content; "@is_pin", Sql.bool arg.IsPin; "@token_count", Sql.int arg.TokenCount ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

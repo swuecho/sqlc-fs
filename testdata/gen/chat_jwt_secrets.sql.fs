@@ -56,7 +56,7 @@ let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams)  =
   |> Sql.existingConnection
   |> Sql.query createJwtSecret
   |> Sql.parameters  [ "@name", Sql.string arg.Name; "@secret", Sql.string arg.Secret; "@audience", Sql.string arg.Audience ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -134,7 +134,7 @@ let GetJwtSecret (db: NpgsqlConnection) (name: string)  =
   |> Sql.existingConnection
   |> Sql.query getJwtSecret
   |> Sql.parameters  [ "@name", Sql.string name ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

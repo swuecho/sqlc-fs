@@ -75,7 +75,7 @@ let CreateChatSession (db: NpgsqlConnection) (arg: CreateChatSessionParams)  =
   |> Sql.existingConnection
   |> Sql.query createChatSession
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@topic", Sql.string arg.Topic; "@max_length", Sql.int arg.MaxLength; "@uuid", Sql.string arg.Uuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -143,7 +143,7 @@ let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUID
   |> Sql.existingConnection
   |> Sql.query createChatSessionByUUID
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@uuid", Sql.string arg.Uuid; "@topic", Sql.string arg.Topic; "@created_at", Sql.date arg.CreatedAt; "@active", Sql.bool arg.Active; "@max_length", Sql.int arg.MaxLength ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -228,7 +228,7 @@ let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateC
   |> Sql.existingConnection
   |> Sql.query createOrUpdateChatSessionByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@topic", Sql.string arg.Topic; "@max_length", Sql.int arg.MaxLength; "@temperature", Sql.double arg.Temperature; "@model", Sql.string arg.Model; "@max_tokens", Sql.int arg.MaxTokens; "@top_p", Sql.double arg.TopP; "@n", Sql.int arg.N; "@debug", Sql.bool arg.Debug ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -436,7 +436,7 @@ let GetChatSessionByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query getChatSessionByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -496,7 +496,7 @@ let GetChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  =
   |> Sql.existingConnection
   |> Sql.query getChatSessionByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -556,7 +556,7 @@ let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection) (uuid: string)  =
   |> Sql.existingConnection
   |> Sql.query getChatSessionByUUIDWithInActive
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -659,7 +659,7 @@ let HasChatSessionPermission (db: NpgsqlConnection) (arg: HasChatSessionPermissi
   |> Sql.existingConnection
   |> Sql.query hasChatSessionPermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -746,7 +746,7 @@ let UpdateChatSession (db: NpgsqlConnection) (arg: UpdateChatSessionParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatSession
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId; "@topic", Sql.string arg.Topic; "@active", Sql.bool arg.Active ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -811,7 +811,7 @@ let UpdateChatSessionByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionByUUID
   |> Sql.existingConnection
   |> Sql.query updateChatSessionByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@topic", Sql.string arg.Topic ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -880,7 +880,7 @@ let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionT
   |> Sql.existingConnection
   |> Sql.query updateChatSessionTopicByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@topic", Sql.string arg.Topic ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -948,7 +948,7 @@ let UpdateSessionMaxLength (db: NpgsqlConnection) (arg: UpdateSessionMaxLengthPa
   |> Sql.existingConnection
   |> Sql.query updateSessionMaxLength
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@max_length", Sql.int arg.MaxLength ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

@@ -28,4 +28,4 @@ SELECT id, name, secret, audience FROM jwt_secrets WHERE name = @name
               use conn = new NpgsqlConnection(DSN)
               let subject = ChatJwtSecrets.GetJwtSecret conn "my-jwt-secret"
 
-              Expect.equal subject.Head.Audience "my-app" "app name ok" ]
+              Expect.equal subject.Audience "my-app" "app name ok" ]
