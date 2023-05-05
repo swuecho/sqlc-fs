@@ -88,7 +88,7 @@ let GetRateLimit (db: NpgsqlConnection) (userId: int32)  =
   |> Sql.existingConnection
   |> Sql.query getRateLimit
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

@@ -52,7 +52,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 {{end}}
 
 {{if eq .Cmd ":many"}}

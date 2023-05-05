@@ -40,7 +40,7 @@ let main args =
               Secret = "p@ssw0rd"
               Audience = "my-app" }
 
-    let secrets = ChatJwtSecrets.GetJwtSecret conn createdJwt.Head.Name
+    let secrets = ChatJwtSecrets.GetJwtSecret conn createdJwt.Name
     printf "%A" secrets
 
     0

@@ -54,7 +54,7 @@ let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query chatSnapshotByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -108,7 +108,7 @@ let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
   |> Sql.existingConnection
   |> Sql.query chatSnapshotByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -258,7 +258,7 @@ let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
   |> Sql.existingConnection
   |> Sql.query createChatSnapshot
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@model", Sql.string arg.Model; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@session", Sql.string arg.Session; "@text", Sql.string arg.Text ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -333,7 +333,7 @@ let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
   |> Sql.existingConnection
   |> Sql.query deleteChatSnapshot
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -509,7 +509,7 @@ let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatSnapshot
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@created_at", Sql.date arg.CreatedAt ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

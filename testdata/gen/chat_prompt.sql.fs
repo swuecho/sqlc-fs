@@ -76,7 +76,7 @@ let CreateChatPrompt (db: NpgsqlConnection) (arg: CreateChatPromptParams)  =
   |> Sql.existingConnection
   |> Sql.query createChatPrompt
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount; "@user_id", Sql.int arg.UserId; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -266,7 +266,7 @@ let GetChatPromptByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query getChatPromptByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -323,7 +323,7 @@ let GetChatPromptByUUID (db: NpgsqlConnection) (uuid: string)  =
   |> Sql.existingConnection
   |> Sql.query getChatPromptByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -554,7 +554,7 @@ let GetOneChatPromptBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: strin
   |> Sql.existingConnection
   |> Sql.query getOneChatPromptBySessionUUID
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -594,7 +594,7 @@ let HasChatPromptPermission (db: NpgsqlConnection) (arg: HasChatPromptPermission
   |> Sql.existingConnection
   |> Sql.query hasChatPromptPermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -681,7 +681,7 @@ let UpdateChatPrompt (db: NpgsqlConnection) (arg: UpdateChatPromptParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatPrompt
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@updated_by", Sql.int arg.UpdatedBy ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -744,7 +744,7 @@ let UpdateChatPromptByUUID (db: NpgsqlConnection) (arg: UpdateChatPromptByUUIDPa
   |> Sql.existingConnection
   |> Sql.query updateChatPromptByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

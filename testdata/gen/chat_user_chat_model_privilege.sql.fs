@@ -71,7 +71,7 @@ let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatMode
   |> Sql.existingConnection
   |> Sql.query createUserChatModelPrivilege
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_model_id", Sql.int arg.ChatModelId; "@rate_limit", Sql.int arg.RateLimit; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -316,7 +316,7 @@ let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection) (arg: RateLimiteByUser
   |> Sql.existingConnection
   |> Sql.query rateLimiteByUserAndSessionUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -387,7 +387,7 @@ let UpdateUserChatModelPrivilege (db: NpgsqlConnection) (arg: UpdateUserChatMode
   |> Sql.existingConnection
   |> Sql.query updateUserChatModelPrivilege
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@rate_limit", Sql.int arg.RateLimit; "@updated_by", Sql.int arg.UpdatedBy ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -434,7 +434,7 @@ let UserChatModelPrivilegeByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query userChatModelPrivilegeByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -484,7 +484,7 @@ let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection) (arg: UserChat
   |> Sql.existingConnection
   |> Sql.query userChatModelPrivilegeByUserAndModelID
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_model_id", Sql.int arg.ChatModelId ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 

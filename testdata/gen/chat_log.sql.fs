@@ -37,7 +37,7 @@ let ChatLogByID (db: NpgsqlConnection) (id: int32)  =
   |> Sql.existingConnection
   |> Sql.query chatLogByID
   |> Sql.parameters  [ "@id", Sql.int id ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -91,7 +91,7 @@ let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
   |> Sql.existingConnection
   |> Sql.query createChatLog
   |> Sql.parameters  [ "@session", Sql.string arg.Session; "@question", Sql.string arg.Question; "@answer", Sql.string arg.Answer ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
@@ -267,7 +267,7 @@ let UpdateChatLog (db: NpgsqlConnection) (arg: UpdateChatLogParams)  =
   |> Sql.existingConnection
   |> Sql.query updateChatLog
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@session", Sql.string arg.Session; "@question", Sql.string arg.Question; "@answer", Sql.string arg.Answer ]
-  |> Sql.execute reader
+  |> Sql.executeRow reader
 
 
 
