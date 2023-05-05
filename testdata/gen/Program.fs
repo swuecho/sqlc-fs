@@ -25,7 +25,14 @@ let main args =
 
     use conn = new NpgsqlConnection(Config.DSN)
 
-    let secrets = ChatJwtSecrets.GetJwtSecret conn "chat"
+    let createdJwt =
+        ChatJwtSecrets.CreateJwtSecret
+            conn
+            { Name = "my-jwt-secret"
+              Secret = "p@ssw0rd"
+              Audience = "my-app" }
+
+    let secrets = ChatJwtSecrets.GetJwtSecret conn createdJwt.Head.Name
     printf "%A" secrets
 
     0
