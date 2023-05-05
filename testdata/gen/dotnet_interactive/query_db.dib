@@ -1,0 +1,13 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!fsharp
+
+#r "nuget: Dapper.FSharp, 4.4"
+#r "nuget: Npgsql, 7.0.2"
+
+#!fsharp
+
+open Dapper.FSharp
+open Dapper.FSharp.PostgreSQL

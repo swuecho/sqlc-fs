@@ -1,0 +1,134 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
+#!fsharp
+
+#r "nuget: Newtonsoft.Json"
+#r "nuget: FSharp.Data"
+#r "nuget: FsToolkit.ErrorHandling"
+
+open Newtonsoft.Json
+open FSharp.Data
+open FsToolkit.ErrorHandling
+
+#!fsharp
+
+type Field = {
+    Name: string
+    DBName: string
+    Type: string
+    TypecheckTemplate: string
+    Comment: string
+}
+
+type Table = {
+    schema: string
+    name: string
+}
+
+type Definition = {
+    Table: Table
+    Name: string
+    Fields: Field list
+    Comment: string
+}
+
+#!fsharp
+
+let json = """[
+    {
+        "Table": {
+            "schema": "public",
+            "name": "authors"
+        },
+        "Name": "Author",
+        "Fields": [
+            {
+                "Name": "id",
+                "DBName": "",
+                "Type": "unknown",
+                "TypecheckTemplate": "",
+                "Comment": ""
+            },
+            {
+                "Name": "name",
+                "DBName": "",
+                "Type": "string",
+                "TypecheckTemplate": "",
+                "Comment": ""
+            },
+            {
+                "Name": "bio",
+                "DBName": "",
+                "Type": "string | null",
+                "TypecheckTemplate": "",
+                "Comment": ""
+            }
+        ],
+        "Comment": ""
+    }
+]"""
+
+#!fsharp
+
+let definitions = JsonConvert.DeserializeObject<System.Collections.Generic.List<Definition>>(json) 
+
+#!fsharp
+
+definitions
+
+#!fsharp
+
+definitions[0]
+
+#!fsharp
+
+let fieldTypeToFsType fieldType =
+        match fieldType with
+        | "string" -> "string"
+        | "int" -> "int"
+        | "float" -> "float"
+        | "bool" -> "bool"
+        | "datetime" -> "DateTime"
+        | "unknown" -> "obj"
+        | f -> failwithf "unsupported field type: %s" f
+
+let nullableFieldTypeToFsType fieldType =
+        match fieldType with
+        | "string" -> "string option"
+        | "int" -> "int option"
+        | "float" -> "float option"
+        | "bool" -> "bool option"
+        | "datetime" -> "DateTime option"
+        | "unknown" -> "obj option"
+        | f -> failwithf "unsupported nullable field type: %s" f
+
+#!fsharp
+
+let fieldToFsType (field: Field) =
+        if field.Name = "id" then
+            sprintf "%s: %s" field.Name "int32"
+        else
+            if field.Type.EndsWith(" | null") then
+                sprintf "%s: %s" field.Name (nullableFieldTypeToFsType (field.Type.Replace(" | null", "")))
+            else
+                sprintf "%s: %s" field.Name (fieldTypeToFsType field.Type)
+
+#!fsharp
+
+let generateTypeDefinition (definition: Definition) =
+
+    let tableName = sprintf "%s.%s" definition.Table.schema definition.Table.name
+    let fields = definition.Fields |> List.map fieldToFsType |> String.concat "\n"
+
+    sprintf """
+type %s = {
+%s
+}
+    """ definition.Name fields
+
+#!fsharp
+
+let typeDefinitions = definitions |> Seq.map generateTypeDefinition |> String.concat "\n"
+printfn "%s" typeDefinitions

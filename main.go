@@ -24,7 +24,7 @@ func ProtoToJSON(msg proto.Message) (string, error) {
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Fprintf(os.Stderr, "error generating typescript: %s", err)
+		fmt.Fprintf(os.Stderr, "error generating F#: %s", err)
 		os.Exit(2)
 	}
 }

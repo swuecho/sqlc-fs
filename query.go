@@ -63,6 +63,9 @@ func (v *QueryValue) ReturnName() string {
 
 func (v QueryValue) UniqueFields() []Field {
 	seen := map[string]struct{}{}
+	if v.Struct == nil {
+		return []Field{{}}
+	}
 	fields := make([]Field, 0, len(v.Struct.Fields))
 
 	for _, field := range v.Struct.Fields {
@@ -121,23 +124,49 @@ func (v QueryValue) NpgsqlParams() string {
 	// Construct the PostgreSQL params string
 	var sqlParamsString string
 	for idx, columnName := range columnNames {
-		columnNameFull := sdk.ToSnakeCase(columnName)
+		columnNameFull := sdk.ToLowerCamelCase(columnName)
 		if isInStruct[idx] {
-			columnNameFull = "arg." + columnNameFull
+			columnNameFull = "arg." + sdk.ToPascalCase(columnNameFull)
 		}
-		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", sdk.ToSnakeCase(columnName), type2readerFunc(columnTypes[idx]), columnNameFull)
+		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", sdk.ToSnakeCase(columnName), type2readerFuncParam(columnTypes[idx]), columnNameFull)
 		if idx < len(columnNames)-1 {
-			sqlParamsString += ", "
+			sqlParamsString += "; "
 		}
 	}
 	return sqlParamsString
+}
+
+func type2readerFuncParam(t string) string {
+	if t == "int32" {
+		t = "int"
+	}
+	if t == "float64" || t == "float" {
+		t = "double"
+	}
+	if t == "float32" {
+		t = "float"
+	}
+
+	if t == "DateTime" {
+		t = "date"
+	}
+
+	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
 }
 
 func type2readerFunc(t string) string {
 	if t == "int32" {
 		t = "int"
 	}
-	return strings.Replace(t, " option", "OrNone", 1)
+	if t == "float64" || t == "float" {
+		t = "double"
+	}
+
+	if t == "float32" {
+		t = "float"
+	}
+
+	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
 }
 
 func (v QueryValue) ColumnNames() string {
