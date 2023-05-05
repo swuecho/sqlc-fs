@@ -7,7 +7,7 @@ open Npgsql.FSharp
 
 let createJwtSecret = """-- name: CreateJwtSecret :one
 INSERT INTO jwt_secrets (name, secret, audience)
-VALUES ($1, $2, $3) RETURNING id, name, secret, audience
+VALUES (@name, @secret, @audience) RETURNING id, name, secret, audience
 """
 
 
@@ -50,7 +50,7 @@ let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams)  =
 
 
 let getJwtSecret = """-- name: GetJwtSecret :one
-SELECT id, name, secret, audience FROM jwt_secrets WHERE name = $1
+SELECT id, name, secret, audience FROM jwt_secrets WHERE name = @name
 """
 
 

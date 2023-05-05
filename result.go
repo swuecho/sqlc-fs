@@ -37,6 +37,14 @@ func buildStructs(req *plugin.CodeGenRequest) []Struct {
 	return structs
 }
 
+func npgsqlQuery(q *plugin.Query) string {
+	sql := q.Text
+	for _, param := range q.Params {
+		sql = strings.ReplaceAll(sql, fmt.Sprintf("$%v", param.Number), fmt.Sprintf("@%s", param.Column.Name))
+	}
+	return sql
+}
+
 func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error) {
 	qs := make([]Query, 0, len(req.Queries))
 	for _, query := range req.Queries {
@@ -55,7 +63,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			FieldName:    sdk.LowerTitle(query.Name) + "Stmt",
 			MethodName:   query.Name,
 			SourceName:   query.Filename,
-			SQL:          query.Text,
+			SQL:          npgsqlQuery(query),
 			Comments:     query.Comments,
 			Table:        query.InsertIntoTable,
 		}
