@@ -95,28 +95,34 @@ func (v QueryValue) Params() string {
 }
 
 func (v QueryValue) NpgsqlParams() string {
-	if v.isEmpty() {
-		return ""
+	if v.isEmpty() {  
+		return ""  
 	}
-	var out []string
-	var outT []string
-	if v.Struct == nil {
-		out = append(out, v.Name)
-		outT = append(outT, v.Type())
+	
+	// Column names and types
+	var columnNames []string  
+	var columnTypes []string  
+	
+	if v.Struct == nil { 
+		columnNames = append(columnNames, v.Name)
+		columnTypes = append(columnTypes, v.Type())  
 	} else {
-		for _, f := range v.Struct.Fields {
-			out = append(out, f.Name)
-			outT = append(outT, f.Type)
+		// For a struct, get all the field names and types
+		for _, f := range v.Struct.Fields {  
+			columnNames = append(columnNames, f.Name)
+			columnTypes = append(columnTypes, f.Type)
 		}
 	}
-	var f string
-	for idx, v := range out {
-		f += fmt.Sprintf("\"@%s\", Sql.%s %s", toSnakeCase(v), outT[idx], toSnakeCase(v))
-		if idx < len(out) -1 {
-			f+=", "
+	
+	// Construct the PostgreSQL params string 
+	var sqlParamsString string  
+	for idx, columnName := range columnNames {
+		sqlParamsString += fmt.Sprintf("\"@%s\", Sql.%s %s", toSnakeCase(columnName), columnTypes[idx], toSnakeCase(columnName))
+		if idx < len(columnNames) -1 {  
+			sqlParamsString+=", "  
 		}
 	}
-	return f
+	return sqlParamsString  
 }
 
 func (v QueryValue) ColumnNames() string {
