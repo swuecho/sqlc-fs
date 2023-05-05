@@ -50,7 +50,7 @@ let DeleteAuthor (db: NpgsqlConnection) (id: int32)  =
   db 
   |> Sql.existingConnection
   |> Sql.query deleteAuthor
-  |> Sql.parameters  [ "@id", Sql.int32 id ]
+  |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeNonQuery
 
 
@@ -74,14 +74,14 @@ type GetAuthorRow = {
 
 let GetAuthor (db: NpgsqlConnection) (id: int32) -> GetAuthorRow  =
   let reader = fun (read:RowReader) -> {
-    ID = read.int32 "id"
+    ID = read.int "id"
     Name = read.string "name"
     Bio = read.stringOrNone "bio"}
 
   db
   |> Sql.existingConnection
   |> Sql.query getAuthor
-  |> Sql.parameters  [ "@id", Sql.int32 id ]
+  |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.execute reader
 
 
@@ -111,7 +111,7 @@ type ListAuthorsRow = {
 
 let ListAuthors (db: NpgsqlConnection) () -> ListAuthorsRow list =
   let reader = fun (read:RowReader) -> {
-    ID = read.int32 "id"
+    ID = read.int "id"
     Name = read.string "name"
     Bio = read.stringOrNone "bio"}
   db 

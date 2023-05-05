@@ -134,6 +134,9 @@ func (v QueryValue) NpgsqlParams() string {
 }
 
 func type2readerFunc(t string) string {
+	if t =="int32" {
+		t ="int"
+	}
 	return strings.Replace(t, " option", "OrNone", 1)
 }
 
