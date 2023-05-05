@@ -6,6 +6,7 @@ module ChatLogs
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 
@@ -28,7 +29,7 @@ let ChatLogByID (db: NpgsqlConnection) (id: int32)  =
     Session = read.string "session"
     Question = read.string "question"
     Answer = read.string "answer"
-    CreatedAt = read.DateTime "created_at"}
+    CreatedAt = read.dateTime "created_at"}
 
   db
   |> Sql.existingConnection
@@ -80,7 +81,7 @@ let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
     Session = read.string "session"
     Question = read.string "question"
     Answer = read.string "answer"
-    CreatedAt = read.DateTime "created_at"}
+    CreatedAt = read.dateTime "created_at"}
 
   db
   |> Sql.existingConnection
@@ -201,7 +202,7 @@ let ListChatLogs (db: NpgsqlConnection) ()  =
     Session = read.string "session"
     Question = read.string "question"
     Answer = read.string "answer"
-    CreatedAt = read.DateTime "created_at"}
+    CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
   |> sql.query listChatLogs
@@ -255,7 +256,7 @@ let UpdateChatLog (db: NpgsqlConnection) (arg: UpdateChatLogParams)  =
     Session = read.string "session"
     Question = read.string "question"
     Answer = read.string "answer"
-    CreatedAt = read.DateTime "created_at"}
+    CreatedAt = read.dateTime "created_at"}
 
   db
   |> Sql.existingConnection

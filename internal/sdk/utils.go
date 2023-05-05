@@ -3,18 +3,19 @@ package sdk
 import (
 	"strings"
 	"unicode"
+
+	"github.com/iancoleman/strcase"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
-	"github.com/iancoleman/strcase"
 )
 
 func titleCase(s string) string {
 	// Create a TitleConverter with the current locale's title case rules
 	tc := cases.Title(language.English)
-    
+
 	// Convert the input string to title case
 	return tc.String(s)
-    }
+}
 
 func LowerTitle(s string) string {
 	if s == "" {
@@ -45,10 +46,13 @@ func ToPascalCase(s string) string {
 	return toCamelInitCase(s, true)
 }
 
-func ToCamelCase(s string) string {
-	return toCamelInitCase(s, false)
+func ToLowerCamelCase(s string) string {
+	return strcase.ToLowerCamel(s)
 }
 
+func ToCamelCase(s string) string {
+	return strcase.ToLowerCamel(s)
+}
 func toCamelInitCase(name string, initUpper bool) string {
 	out := ""
 	for i, p := range strings.Split(name, "_") {

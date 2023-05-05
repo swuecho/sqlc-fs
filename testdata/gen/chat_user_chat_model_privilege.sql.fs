@@ -6,6 +6,7 @@ module ChatUserChatModelPrivilege
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 
@@ -59,8 +60,8 @@ let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatMode
     UserID = read.int "user_id"
     ChatModelID = read.int "chat_model_id"
     RateLimit = read.int "rate_limit"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
 
@@ -180,8 +181,8 @@ let ListUserChatModelPrivileges (db: NpgsqlConnection) ()  =
     UserID = read.int "user_id"
     ChatModelID = read.int "chat_model_id"
     RateLimit = read.int "rate_limit"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
   db 
@@ -227,8 +228,8 @@ let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection) (userID: int32)  
     UserID = read.int "user_id"
     ChatModelID = read.int "chat_model_id"
     RateLimit = read.int "rate_limit"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
   db 
@@ -374,8 +375,8 @@ let UpdateUserChatModelPrivilege (db: NpgsqlConnection) (arg: UpdateUserChatMode
     UserID = read.int "user_id"
     ChatModelID = read.int "chat_model_id"
     RateLimit = read.int "rate_limit"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
 
@@ -419,8 +420,8 @@ let UserChatModelPrivilegeByID (db: NpgsqlConnection) (id: int32)  =
     UserID = read.int "user_id"
     ChatModelID = read.int "chat_model_id"
     RateLimit = read.int "rate_limit"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
 
@@ -467,8 +468,8 @@ let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection) (arg: UserChat
     UserID = read.int "user_id"
     ChatModelID = read.int "chat_model_id"
     RateLimit = read.int "rate_limit"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
 

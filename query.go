@@ -140,7 +140,7 @@ func type2readerFunc(t string) string {
 	if t == "int32" {
 		t = "int"
 	}
-	return strings.Replace(t, " option", "OrNone", 1)
+	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
 }
 
 func (v QueryValue) ColumnNames() string {

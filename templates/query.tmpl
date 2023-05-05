@@ -6,6 +6,7 @@ module {{ .SourceName | stem | pascalCase}}
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 {{template "queryCode" . }}
 {{end}}

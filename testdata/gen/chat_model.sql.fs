@@ -6,6 +6,7 @@ module ChatModel
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 

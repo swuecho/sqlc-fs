@@ -6,6 +6,7 @@ module AuthUser
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 
@@ -50,7 +51,7 @@ let CreateAuthUser (db: NpgsqlConnection) (arg: CreateAuthUserParams)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Password = read.string "password"
-    LastLogin = read.DateTime "last_login"
+    LastLogin = read.dateTime "last_login"
     IsSuperuser = read.bool "is_superuser"
     Username = read.string "username"
     FirstName = read.string "first_name"
@@ -58,7 +59,7 @@ let CreateAuthUser (db: NpgsqlConnection) (arg: CreateAuthUserParams)  =
     Email = read.string "email"
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
-    DateJoined = read.DateTime "date_joined"}
+    DateJoined = read.dateTime "date_joined"}
 
   db
   |> Sql.existingConnection
@@ -148,7 +149,7 @@ let GetAllAuthUsers (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Password = read.string "password"
-    LastLogin = read.DateTime "last_login"
+    LastLogin = read.dateTime "last_login"
     IsSuperuser = read.bool "is_superuser"
     Username = read.string "username"
     FirstName = read.string "first_name"
@@ -156,7 +157,7 @@ let GetAllAuthUsers (db: NpgsqlConnection) ()  =
     Email = read.string "email"
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
-    DateJoined = read.DateTime "date_joined"}
+    DateJoined = read.dateTime "date_joined"}
   db 
   |> Sql.existingConnection
   |> sql.query getAllAuthUsers
@@ -198,7 +199,7 @@ let GetAuthUserByEmail (db: NpgsqlConnection) (email: string)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Password = read.string "password"
-    LastLogin = read.DateTime "last_login"
+    LastLogin = read.dateTime "last_login"
     IsSuperuser = read.bool "is_superuser"
     Username = read.string "username"
     FirstName = read.string "first_name"
@@ -206,7 +207,7 @@ let GetAuthUserByEmail (db: NpgsqlConnection) (email: string)  =
     Email = read.string "email"
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
-    DateJoined = read.DateTime "date_joined"}
+    DateJoined = read.dateTime "date_joined"}
 
   db
   |> Sql.existingConnection
@@ -248,7 +249,7 @@ let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Password = read.string "password"
-    LastLogin = read.DateTime "last_login"
+    LastLogin = read.dateTime "last_login"
     IsSuperuser = read.bool "is_superuser"
     Username = read.string "username"
     FirstName = read.string "first_name"
@@ -256,7 +257,7 @@ let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
     Email = read.string "email"
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
-    DateJoined = read.DateTime "date_joined"}
+    DateJoined = read.dateTime "date_joined"}
 
   db
   |> Sql.existingConnection
@@ -348,7 +349,7 @@ let GetUserByEmail (db: NpgsqlConnection) (email: string)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Password = read.string "password"
-    LastLogin = read.DateTime "last_login"
+    LastLogin = read.dateTime "last_login"
     IsSuperuser = read.bool "is_superuser"
     Username = read.string "username"
     FirstName = read.string "first_name"
@@ -356,7 +357,7 @@ let GetUserByEmail (db: NpgsqlConnection) (email: string)  =
     Email = read.string "email"
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
-    DateJoined = read.DateTime "date_joined"}
+    DateJoined = read.dateTime "date_joined"}
 
   db
   |> Sql.existingConnection
@@ -479,7 +480,7 @@ let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
   let reader = fun (read:RowReader) -> {
     ID = read.int "id"
     Password = read.string "password"
-    LastLogin = read.DateTime "last_login"
+    LastLogin = read.dateTime "last_login"
     IsSuperuser = read.bool "is_superuser"
     Username = read.string "username"
     FirstName = read.string "first_name"
@@ -487,7 +488,7 @@ let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
     Email = read.string "email"
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
-    DateJoined = read.DateTime "date_joined"}
+    DateJoined = read.dateTime "date_joined"}
   db 
   |> Sql.existingConnection
   |> sql.query listAuthUsers

@@ -6,6 +6,7 @@ module ChatSnapshot
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 
@@ -43,9 +44,9 @@ let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
     Tags = read.string "tags"
     Session = read.string "session"
     Conversation = read.string "conversation"
-    CreatedAt = read.DateTime "created_at"
+    CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
-    SearchVector = read.interface{}OrNone "search_vector"}
+    SearchVector = read.interfaceOrNone "search_vector"}
 
   db
   |> Sql.existingConnection
@@ -95,9 +96,9 @@ let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
     Tags = read.string "tags"
     Session = read.string "session"
     Conversation = read.string "conversation"
-    CreatedAt = read.DateTime "created_at"
+    CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
-    SearchVector = read.interface{}OrNone "search_vector"}
+    SearchVector = read.interfaceOrNone "search_vector"}
 
   db
   |> Sql.existingConnection
@@ -138,7 +139,7 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection) (userID: int32)  =
     Title = read.string "title"
     Summary = read.string "summary"
     Tags = read.string "tags"
-    CreatedAt = read.DateTime "created_at"}
+    CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
   |> sql.query chatSnapshotMetaByUserID
@@ -245,9 +246,9 @@ let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
     Tags = read.string "tags"
     Session = read.string "session"
     Conversation = read.string "conversation"
-    CreatedAt = read.DateTime "created_at"
+    CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
-    SearchVector = read.interface{}OrNone "search_vector"}
+    SearchVector = read.interfaceOrNone "search_vector"}
 
   db
   |> Sql.existingConnection
@@ -318,9 +319,9 @@ let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
     Tags = read.string "tags"
     Session = read.string "session"
     Conversation = read.string "conversation"
-    CreatedAt = read.DateTime "created_at"
+    CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
-    SearchVector = read.interface{}OrNone "search_vector"}
+    SearchVector = read.interfaceOrNone "search_vector"}
 
   db
   |> Sql.existingConnection
@@ -411,9 +412,9 @@ let ListChatSnapshots (db: NpgsqlConnection) ()  =
     Tags = read.string "tags"
     Session = read.string "session"
     Conversation = read.string "conversation"
-    CreatedAt = read.DateTime "created_at"
+    CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
-    SearchVector = read.interface{}OrNone "search_vector"}
+    SearchVector = read.interfaceOrNone "search_vector"}
   db 
   |> Sql.existingConnection
   |> sql.query listChatSnapshots
@@ -493,14 +494,14 @@ let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
     Tags = read.string "tags"
     Session = read.string "session"
     Conversation = read.string "conversation"
-    CreatedAt = read.DateTime "created_at"
+    CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
-    SearchVector = read.interface{}OrNone "search_vector"}
+    SearchVector = read.interfaceOrNone "search_vector"}
 
   db
   |> Sql.existingConnection
   |> Sql.query updateChatSnapshot
-  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserID; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@created_at", Sql.DateTime arg.CreatedAt ]
+  |> Sql.parameters  [ "@id", Sql.int arg.ID; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserID; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@created_at", Sql.dateTime arg.CreatedAt ]
   |> Sql.execute reader
 
 

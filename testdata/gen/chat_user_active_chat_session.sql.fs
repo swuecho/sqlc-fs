@@ -6,6 +6,7 @@ module ChatUserActiveChatSession
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 
@@ -54,8 +55,8 @@ let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateOrUpd
     ID = read.int "id"
     UserID = read.int "user_id"
     ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"}
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
 
   db
   |> Sql.existingConnection
@@ -98,8 +99,8 @@ let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveCha
     ID = read.int "id"
     UserID = read.int "user_id"
     ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"}
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
 
   db
   |> Sql.existingConnection
@@ -201,8 +202,8 @@ let GetUserActiveChatSession (db: NpgsqlConnection) (userID: int32)  =
     ID = read.int "id"
     UserID = read.int "user_id"
     ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"}
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
 
   db
   |> Sql.existingConnection
@@ -250,8 +251,8 @@ let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
     ID = read.int "id"
     UserID = read.int "user_id"
     ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"}
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
   db 
   |> Sql.existingConnection
   |> sql.query listUserActiveChatSessions
@@ -312,8 +313,8 @@ let UpdateUserActiveChatSession (db: NpgsqlConnection) (arg: UpdateUserActiveCha
     ID = read.int "id"
     UserID = read.int "user_id"
     ChatSessionUuid = read.string "chat_session_uuid"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"}
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
 
   db
   |> Sql.existingConnection

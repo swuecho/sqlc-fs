@@ -6,6 +6,7 @@ module ChatSession
 
 open Npgsql
 open Npgsql.FSharp
+open System
 
 
 
@@ -57,8 +58,8 @@ let CreateChatSession (db: NpgsqlConnection) (arg: CreateChatSessionParams)  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -123,8 +124,8 @@ let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUID
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -137,7 +138,7 @@ let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUID
   db
   |> Sql.existingConnection
   |> Sql.query createChatSessionByUUID
-  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@uuid", Sql.string arg.Uuid; "@topic", Sql.string arg.Topic; "@created_at", Sql.DateTime arg.CreatedAt; "@active", Sql.bool arg.Active; "@max_length", Sql.int arg.MaxLength ]
+  |> Sql.parameters  [ "@user_id", Sql.int arg.UserID; "@uuid", Sql.string arg.Uuid; "@topic", Sql.string arg.Topic; "@created_at", Sql.dateTime arg.CreatedAt; "@active", Sql.bool arg.Active; "@max_length", Sql.int arg.MaxLength ]
   |> Sql.execute reader
 
 
@@ -206,8 +207,8 @@ let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateC
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -347,8 +348,8 @@ let GetAllChatSessions (db: NpgsqlConnection) ()  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -413,8 +414,8 @@ let GetChatSessionByID (db: NpgsqlConnection) (id: int32)  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -471,8 +472,8 @@ let GetChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -529,8 +530,8 @@ let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection) (uuid: string)  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -589,8 +590,8 @@ let GetChatSessionsByUserID (db: NpgsqlConnection) (userID: int32)  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -718,8 +719,8 @@ let UpdateChatSession (db: NpgsqlConnection) (arg: UpdateChatSessionParams)  =
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -781,8 +782,8 @@ let UpdateChatSessionByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionByUUID
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -848,8 +849,8 @@ let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionT
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
@@ -914,8 +915,8 @@ let UpdateSessionMaxLength (db: NpgsqlConnection) (arg: UpdateSessionMaxLengthPa
     UserID = read.int "user_id"
     Uuid = read.string "uuid"
     Topic = read.string "topic"
-    CreatedAt = read.DateTime "created_at"
-    UpdatedAt = read.DateTime "updated_at"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
     Active = read.bool "active"
     Model = read.string "model"
     MaxLength = read.int "max_length"
