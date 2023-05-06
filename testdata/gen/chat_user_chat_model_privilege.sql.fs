@@ -180,14 +180,14 @@ type ListUserChatModelPrivilegesRow = {
 
 let ListUserChatModelPrivileges (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatModelId = read.int "ChatModelId"
-    RateLimit = read.int "RateLimit"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatModelId = read.int "chat_model_id"
+    RateLimit = read.int "rate_limit"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivileges
@@ -226,14 +226,14 @@ type ListUserChatModelPrivilegesByUserIDRow = {
 // LIMIT 1000
 let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatModelId = read.int "ChatModelId"
-    RateLimit = read.int "RateLimit"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatModelId = read.int "chat_model_id"
+    RateLimit = read.int "rate_limit"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesByUserID
@@ -268,11 +268,11 @@ type ListUserChatModelPrivilegesRateLimitRow = {
 
 let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserEmail = read.string "UserEmail"
-    FullName = read.string "FullName"
-    ChatModelName = read.string "ChatModelName"
-    RateLimit = read.int "RateLimit"}
+    Id = read.int "id"
+    UserEmail = read.string "user_email"
+    FullName = read.string "full_name"
+    ChatModelName = read.string "chat_model_name"
+    RateLimit = read.int "rate_limit"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesRateLimit

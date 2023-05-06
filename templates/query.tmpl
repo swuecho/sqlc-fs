@@ -20,14 +20,14 @@ let {{.ConstantName}} = {{$.Q}}-- name: {{.MethodName}} {{.Cmd}}
 
 {{if .Arg.EmitStruct}}
 type {{.Arg.Type}} = { {{- range .Arg.UniqueFields}}
-  {{.Name}}: {{.Type}};
+  {{.Name | pascalCase }}: {{.Type}};
   {{- end}}
 }
 {{- end -}}
 
 {{if .Ret.EmitStruct}}
 type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
-  {{.Name}}: {{.Type}};
+  {{.Name | pascalCase }}: {{.Type}};
   {{- end}}
 }
 {{- end -}}
@@ -39,12 +39,12 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   {{ if  .Ret.UniqueFieldsCountMultiple }}
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
-    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name | snakeCase }}"
+    {{$e.Name | pascalCase }} = read.{{$e.Type | type2readerFunc }} "{{$e.Name }}"
   {{- end -}}
   }
   {{ else}}
   {{- range $i, $e := .Ret.UniqueFields}}
-  let reader = fun (read:RowReader) -> read.{{$e.Type | type2readerFunc }} "{{$e.Name | snakeCase }}"
+  let reader = fun (read:RowReader) -> read.{{$e.Type | type2readerFunc }} "{{$e.Name }}"
   {{- end -}}
   {{end}}
 
@@ -61,7 +61,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
-    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
+    {{$e.Name | pascalCase }} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
   {{- end -}}
   }
   db 

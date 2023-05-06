@@ -351,20 +351,20 @@ type GetAllChatSessionsRow = {
 
 let GetAllChatSessions (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatSessions
@@ -598,20 +598,20 @@ type GetChatSessionsByUserIDRow = {
 
 let GetChatSessionsByUserID (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    Uuid = read.string "Uuid"
-    Topic = read.string "Topic"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    Active = read.bool "Active"
-    Model = read.string "Model"
-    MaxLength = read.int "MaxLength"
-    Temperature = read.double "Temperature"
-    TopP = read.double "TopP"
-    MaxTokens = read.int "MaxTokens"
-    N = read.int "N"
-    Debug = read.bool "Debug"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    Uuid = read.string "uuid"
+    Topic = read.string "topic"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    Active = read.bool "active"
+    Model = read.string "model"
+    MaxLength = read.int "max_length"
+    Temperature = read.double "temperature"
+    TopP = read.double "top_p"
+    MaxTokens = read.int "max_tokens"
+    N = read.int "n"
+    Debug = read.bool "debug"}
   db 
   |> Sql.existingConnection
   |> Sql.query getChatSessionsByUserID

@@ -6,7 +6,7 @@
 {{- end -}}
 type {{.Name}} = {{ "{" }}
 {{range .Fields -}}
-{{"    "}} {{.Name}}: {{.Type}}  {{- if .Comment -}} // {{.Comment}} {{- end }}
+{{"    "}} {{.Name | pascalCase }}: {{.Type}}  {{- if .Comment -}} // {{.Comment}} {{- end }}
 {{end -}}
 {{ "}\n" }}
 {{end}}
