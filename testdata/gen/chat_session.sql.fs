@@ -52,7 +52,7 @@ type CreateChatSessionRow = {
   Debug: bool;
 }
 
-let CreateChatSession (db: NpgsqlConnection) (arg: CreateChatSessionParams)  =
+let CreateChatSession (db: NpgsqlConnection)  (arg: CreateChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -120,7 +120,7 @@ type CreateChatSessionByUUIDRow = {
   Debug: bool;
 }
 
-let CreateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateChatSessionByUUIDParams)  =
+let CreateChatSessionByUUID (db: NpgsqlConnection)  (arg: CreateChatSessionByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -205,7 +205,7 @@ type CreateOrUpdateChatSessionByUUIDRow = {
   Debug: bool;
 }
 
-let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateChatSessionByUUIDParams)  =
+let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection)  (arg: CreateOrUpdateChatSessionByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -263,7 +263,7 @@ WHERE id = @id
 
 
 
-let DeleteChatSession (db: NpgsqlConnection) (id: int32)  = 
+let DeleteChatSession (db: NpgsqlConnection)  (id: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatSession
@@ -304,7 +304,7 @@ type DeleteChatSessionByUUIDRow = {
 
 
 
-let DeleteChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  = 
+let DeleteChatSessionByUUID (db: NpgsqlConnection)  (uuid: string)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatSessionByUUID
@@ -349,7 +349,7 @@ type GetAllChatSessionsRow = {
 }
 
 
-let GetAllChatSessions (db: NpgsqlConnection) ()  =
+let GetAllChatSessions (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     UserId = read.int "user_id"
@@ -414,7 +414,7 @@ type GetChatSessionByIDRow = {
   Debug: bool;
 }
 
-let GetChatSessionByID (db: NpgsqlConnection) (id: int32)  =
+let GetChatSessionByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -474,7 +474,7 @@ type GetChatSessionByUUIDRow = {
   Debug: bool;
 }
 
-let GetChatSessionByUUID (db: NpgsqlConnection) (uuid: string)  =
+let GetChatSessionByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -534,7 +534,7 @@ type GetChatSessionByUUIDWithInActiveRow = {
   Debug: bool;
 }
 
-let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection) (uuid: string)  =
+let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection)  (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -596,7 +596,7 @@ type GetChatSessionsByUserIDRow = {
 }
 
 
-let GetChatSessionsByUserID (db: NpgsqlConnection) (userId: int32)  =
+let GetChatSessionsByUserID (db: NpgsqlConnection)  (userId: int32) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     UserId = read.int "user_id"
@@ -652,7 +652,7 @@ type HasChatSessionPermissionParams = {
   UserId: int32;
 }
 
-let HasChatSessionPermission (db: NpgsqlConnection) (arg: HasChatSessionPermissionParams)  =
+let HasChatSessionPermission (db: NpgsqlConnection)  (arg: HasChatSessionPermissionParams)  =
   
   let reader = fun (read:RowReader) -> read.bool "has_permission"
 
@@ -724,7 +724,7 @@ type UpdateChatSessionRow = {
   Debug: bool;
 }
 
-let UpdateChatSession (db: NpgsqlConnection) (arg: UpdateChatSessionParams)  =
+let UpdateChatSession (db: NpgsqlConnection)  (arg: UpdateChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -789,7 +789,7 @@ type UpdateChatSessionByUUIDRow = {
   Debug: bool;
 }
 
-let UpdateChatSessionByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionByUUIDParams)  =
+let UpdateChatSessionByUUID (db: NpgsqlConnection)  (arg: UpdateChatSessionByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -858,7 +858,7 @@ type UpdateChatSessionTopicByUUIDRow = {
   Debug: bool;
 }
 
-let UpdateChatSessionTopicByUUID (db: NpgsqlConnection) (arg: UpdateChatSessionTopicByUUIDParams)  =
+let UpdateChatSessionTopicByUUID (db: NpgsqlConnection)  (arg: UpdateChatSessionTopicByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -926,7 +926,7 @@ type UpdateSessionMaxLengthRow = {
   Debug: bool;
 }
 
-let UpdateSessionMaxLength (db: NpgsqlConnection) (arg: UpdateSessionMaxLengthParams)  =
+let UpdateSessionMaxLength (db: NpgsqlConnection)  (arg: UpdateSessionMaxLengthParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"

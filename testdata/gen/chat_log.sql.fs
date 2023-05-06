@@ -23,7 +23,7 @@ type ChatLogByIDRow = {
   CreatedAt: DateTime;
 }
 
-let ChatLogByID (db: NpgsqlConnection) (id: int32)  =
+let ChatLogByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -77,7 +77,7 @@ type CreateChatLogRow = {
   CreatedAt: DateTime;
 }
 
-let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
+let CreateChatLog (db: NpgsqlConnection)  (arg: CreateChatLogParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -126,7 +126,7 @@ DELETE FROM chat_logs WHERE id = @id
 
 
 
-let DeleteChatLog (db: NpgsqlConnection) (id: int32)  = 
+let DeleteChatLog (db: NpgsqlConnection)  (id: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatLog
@@ -201,7 +201,7 @@ type ListChatLogsRow = {
 }
 
 
-let ListChatLogs (db: NpgsqlConnection) ()  =
+let ListChatLogs (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Session = read.string "session"
@@ -254,7 +254,7 @@ type UpdateChatLogRow = {
   CreatedAt: DateTime;
 }
 
-let UpdateChatLog (db: NpgsqlConnection) (arg: UpdateChatLogParams)  =
+let UpdateChatLog (db: NpgsqlConnection)  (arg: UpdateChatLogParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"

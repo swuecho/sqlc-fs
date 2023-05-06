@@ -33,7 +33,7 @@ type ChatSnapshotByIDRow = {
   SearchVector: string option;
 }
 
-let ChatSnapshotByID (db: NpgsqlConnection) (id: int32)  =
+let ChatSnapshotByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -87,7 +87,7 @@ type ChatSnapshotByUUIDRow = {
   SearchVector: string option;
 }
 
-let ChatSnapshotByUUID (db: NpgsqlConnection) (uuid: string)  =
+let ChatSnapshotByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -137,7 +137,7 @@ type ChatSnapshotMetaByUserIDRow = {
 }
 
 
-let ChatSnapshotMetaByUserID (db: NpgsqlConnection) (userId: int32)  =
+let ChatSnapshotMetaByUserID (db: NpgsqlConnection)  (userId: int32) =
   let reader = fun (read:RowReader) -> {
     Uuid = read.string "uuid"
     Title = read.string "title"
@@ -178,7 +178,7 @@ type ChatSnapshotSearchRow = {
 }
 
 
-let ChatSnapshotSearch (db: NpgsqlConnection) (arg: ChatSnapshotSearchParams)  =
+let ChatSnapshotSearch (db: NpgsqlConnection)  (arg: ChatSnapshotSearchParams) =
   let reader = fun (read:RowReader) -> {
     Uuid = read.string "uuid"
     Title = read.string "title"
@@ -237,7 +237,7 @@ type CreateChatSnapshotRow = {
   SearchVector: string option;
 }
 
-let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
+let CreateChatSnapshot (db: NpgsqlConnection)  (arg: CreateChatSnapshotParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -313,7 +313,7 @@ type DeleteChatSnapshotRow = {
   SearchVector: string option;
 }
 
-let DeleteChatSnapshot (db: NpgsqlConnection) (arg: DeleteChatSnapshotParams)  =
+let DeleteChatSnapshot (db: NpgsqlConnection)  (arg: DeleteChatSnapshotParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -408,7 +408,7 @@ type ListChatSnapshotsRow = {
 }
 
 
-let ListChatSnapshots (db: NpgsqlConnection) ()  =
+let ListChatSnapshots (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -489,7 +489,7 @@ type UpdateChatSnapshotRow = {
   SearchVector: string option;
 }
 
-let UpdateChatSnapshot (db: NpgsqlConnection) (arg: UpdateChatSnapshotParams)  =
+let UpdateChatSnapshot (db: NpgsqlConnection)  (arg: UpdateChatSnapshotParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -540,7 +540,7 @@ type UpdateChatSnapshotMetaByUUIDParams = {
 
 
 
-let UpdateChatSnapshotMetaByUUID (db: NpgsqlConnection) (arg: UpdateChatSnapshotMetaByUUIDParams)  = 
+let UpdateChatSnapshotMetaByUUID (db: NpgsqlConnection)  (arg: UpdateChatSnapshotMetaByUUIDParams)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query updateChatSnapshotMetaByUUID

@@ -28,7 +28,7 @@ type ChatModelByIDRow = {
   EnablePerModeRatelimit: bool;
 }
 
-let ChatModelByID (db: NpgsqlConnection) (id: int32)  =
+let ChatModelByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -76,7 +76,7 @@ type ChatModelByNameRow = {
   EnablePerModeRatelimit: bool;
 }
 
-let ChatModelByName (db: NpgsqlConnection) (name: string)  =
+let ChatModelByName (db: NpgsqlConnection)  (name: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -143,7 +143,7 @@ type CreateChatModelRow = {
   EnablePerModeRatelimit: bool;
 }
 
-let CreateChatModel (db: NpgsqlConnection) (arg: CreateChatModelParams)  =
+let CreateChatModel (db: NpgsqlConnection)  (arg: CreateChatModelParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -202,7 +202,7 @@ type DeleteChatModelParams = {
 
 
 
-let DeleteChatModel (db: NpgsqlConnection) (arg: DeleteChatModelParams)  = 
+let DeleteChatModel (db: NpgsqlConnection)  (arg: DeleteChatModelParams)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatModel
@@ -262,7 +262,7 @@ type GetDefaultChatModelRow = {
   EnablePerModeRatelimit: bool;
 }
 
-let GetDefaultChatModel (db: NpgsqlConnection) ()  =
+let GetDefaultChatModel (db: NpgsqlConnection)   =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -326,7 +326,7 @@ type ListChatModelsRow = {
 }
 
 
-let ListChatModels (db: NpgsqlConnection) ()  =
+let ListChatModels (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Name = read.string "name"
@@ -372,7 +372,7 @@ type ListSystemChatModelsRow = {
 }
 
 
-let ListSystemChatModels (db: NpgsqlConnection) ()  =
+let ListSystemChatModels (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Name = read.string "name"
@@ -439,7 +439,7 @@ type UpdateChatModelRow = {
   EnablePerModeRatelimit: bool;
 }
 
-let UpdateChatModel (db: NpgsqlConnection) (arg: UpdateChatModelParams)  =
+let UpdateChatModel (db: NpgsqlConnection)  (arg: UpdateChatModelParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -493,7 +493,7 @@ type UpdateChatModelKeyRow = {
   EnablePerModeRatelimit: bool;
 }
 
-let UpdateChatModelKey (db: NpgsqlConnection) (arg: UpdateChatModelKeyParams)  =
+let UpdateChatModelKey (db: NpgsqlConnection)  (arg: UpdateChatModelKeyParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"

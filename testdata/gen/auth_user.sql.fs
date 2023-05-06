@@ -47,7 +47,7 @@ type CreateAuthUserRow = {
   DateJoined: DateTime;
 }
 
-let CreateAuthUser (db: NpgsqlConnection) (arg: CreateAuthUserParams)  =
+let CreateAuthUser (db: NpgsqlConnection)  (arg: CreateAuthUserParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -102,7 +102,7 @@ DELETE FROM auth_user WHERE email = @email
 
 
 
-let DeleteAuthUser (db: NpgsqlConnection) (email: string)  = 
+let DeleteAuthUser (db: NpgsqlConnection)  (email: string)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteAuthUser
@@ -148,7 +148,7 @@ type GetAllAuthUsersRow = {
 }
 
 
-let GetAllAuthUsers (db: NpgsqlConnection) ()  =
+let GetAllAuthUsers (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Password = read.string "password"
@@ -197,7 +197,7 @@ type GetAuthUserByEmailRow = {
   DateJoined: DateTime;
 }
 
-let GetAuthUserByEmail (db: NpgsqlConnection) (email: string)  =
+let GetAuthUserByEmail (db: NpgsqlConnection)  (email: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -249,7 +249,7 @@ type GetAuthUserByIDRow = {
   DateJoined: DateTime;
 }
 
-let GetAuthUserByID (db: NpgsqlConnection) (id: int32)  =
+let GetAuthUserByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -310,7 +310,7 @@ SELECT COUNT(*) FROM auth_user WHERE is_active = true
 
 
 
-let GetTotalActiveUserCount (db: NpgsqlConnection) ()  =
+let GetTotalActiveUserCount (db: NpgsqlConnection)   =
   
   let reader = fun (read:RowReader) -> read.int64 "count"
 
@@ -351,7 +351,7 @@ type GetUserByEmailRow = {
   DateJoined: DateTime;
 }
 
-let GetUserByEmail (db: NpgsqlConnection) (email: string)  =
+let GetUserByEmail (db: NpgsqlConnection)  (email: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -432,7 +432,7 @@ type GetUserStatsRow = {
 }
 
 
-let GetUserStats (db: NpgsqlConnection) (arg: GetUserStatsParams)  =
+let GetUserStats (db: NpgsqlConnection)  (arg: GetUserStatsParams) =
   let reader = fun (read:RowReader) -> {
     FirstName = read.string "first_name"
     LastName = read.string "last_name"
@@ -483,7 +483,7 @@ type ListAuthUsersRow = {
 }
 
 
-let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
+let ListAuthUsers (db: NpgsqlConnection)  (arg: ListAuthUsersParams) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Password = read.string "password"
@@ -537,7 +537,7 @@ type UpdateAuthUserRow = {
   Email: string;
 }
 
-let UpdateAuthUser (db: NpgsqlConnection) (arg: UpdateAuthUserParams)  =
+let UpdateAuthUser (db: NpgsqlConnection)  (arg: UpdateAuthUserParams)  =
   
   let reader = fun (read:RowReader) -> {
     FirstName = read.string "first_name"
@@ -580,7 +580,7 @@ type UpdateAuthUserByEmailRow = {
   Email: string;
 }
 
-let UpdateAuthUserByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserByEmailParams)  =
+let UpdateAuthUserByEmail (db: NpgsqlConnection)  (arg: UpdateAuthUserByEmailParams)  =
   
   let reader = fun (read:RowReader) -> {
     FirstName = read.string "first_name"
@@ -618,7 +618,7 @@ type UpdateAuthUserRateLimitByEmailParams = {
   RateLimit: int32;
 }
 
-let UpdateAuthUserRateLimitByEmail (db: NpgsqlConnection) (arg: UpdateAuthUserRateLimitByEmailParams)  =
+let UpdateAuthUserRateLimitByEmail (db: NpgsqlConnection)  (arg: UpdateAuthUserRateLimitByEmailParams)  =
   
   let reader = fun (read:RowReader) -> read.int "rate_limit"
 
@@ -668,7 +668,7 @@ type UpdateUserPasswordParams = {
 
 
 
-let UpdateUserPassword (db: NpgsqlConnection) (arg: UpdateUserPasswordParams)  = 
+let UpdateUserPassword (db: NpgsqlConnection)  (arg: UpdateUserPasswordParams)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query updateUserPassword

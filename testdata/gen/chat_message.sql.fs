@@ -56,7 +56,7 @@ type CreateChatMessageRow = {
   Raw: string;
 }
 
-let CreateChatMessage (db: NpgsqlConnection) (arg: CreateChatMessageParams)  =
+let CreateChatMessage (db: NpgsqlConnection)  (arg: CreateChatMessageParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -116,7 +116,7 @@ WHERE id = @id
 
 
 
-let DeleteChatMessage (db: NpgsqlConnection) (id: int32)  = 
+let DeleteChatMessage (db: NpgsqlConnection)  (id: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatMessage
@@ -140,7 +140,7 @@ WHERE uuid = @uuid
 
 
 
-let DeleteChatMessageByUUID (db: NpgsqlConnection) (uuid: string)  = 
+let DeleteChatMessageByUUID (db: NpgsqlConnection)  (uuid: string)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatMessageByUUID
@@ -165,7 +165,7 @@ WHERE is_deleted = false and is_pin = false and chat_session_uuid = @chat_sessio
 
 
 
-let DeleteChatMessagesBySesionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  = 
+let DeleteChatMessagesBySesionUUID (db: NpgsqlConnection)  (chatSessionUuid: string)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatMessagesBySesionUUID
@@ -214,7 +214,7 @@ type GetAllChatMessagesRow = {
 }
 
 
-let GetAllChatMessages (db: NpgsqlConnection) ()  =
+let GetAllChatMessages (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -273,7 +273,7 @@ type GetChatMessageByIDRow = {
   Raw: string;
 }
 
-let GetChatMessageByID (db: NpgsqlConnection) (id: int32)  =
+let GetChatMessageByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -343,7 +343,7 @@ type GetChatMessageBySessionUUIDRow = {
   Raw: string;
 }
 
-let GetChatMessageBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessageBySessionUUIDParams)  =
+let GetChatMessageBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessageBySessionUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -406,7 +406,7 @@ type GetChatMessageByUUIDRow = {
 }
 //-- UUID ----
 
-let GetChatMessageByUUID (db: NpgsqlConnection) (uuid: string)  =
+let GetChatMessageByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -478,7 +478,7 @@ type GetChatMessagesBySessionUUIDRow = {
 }
 
 
-let GetChatMessagesBySessionUUID (db: NpgsqlConnection) (arg: GetChatMessagesBySessionUUIDParams)  =
+let GetChatMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessagesBySessionUUIDParams) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -519,7 +519,7 @@ AND created_at >= NOW() - INTERVAL '10 minutes'
 
 // Get total chat message count for user in last 10 minutes
 
-let GetChatMessagesCount (db: NpgsqlConnection) (userId: int32)  =
+let GetChatMessagesCount (db: NpgsqlConnection)  (userId: int32)  =
   
   let reader = fun (read:RowReader) -> read.int64 "count"
 
@@ -556,7 +556,7 @@ type GetChatMessagesCountByUserAndModelParams = {
 }
 // Get total chat message count for user of model in last 10 minutes
 
-let GetChatMessagesCountByUserAndModel (db: NpgsqlConnection) (arg: GetChatMessagesCountByUserAndModelParams)  =
+let GetChatMessagesCountByUserAndModel (db: NpgsqlConnection)  (arg: GetChatMessagesCountByUserAndModelParams)  =
   
   let reader = fun (read:RowReader) -> read.int64 "count"
 
@@ -614,7 +614,7 @@ type GetFirstMessageBySessionUUIDRow = {
   Raw: string;
 }
 
-let GetFirstMessageBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
+let GetFirstMessageBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -698,7 +698,7 @@ type GetLastNChatMessagesRow = {
 }
 
 
-let GetLastNChatMessages (db: NpgsqlConnection) (arg: GetLastNChatMessagesParams)  =
+let GetLastNChatMessages (db: NpgsqlConnection)  (arg: GetLastNChatMessagesParams) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -773,7 +773,7 @@ type GetLatestMessagesBySessionUUIDRow = {
 }
 
 
-let GetLatestMessagesBySessionUUID (db: NpgsqlConnection) (arg: GetLatestMessagesBySessionUUIDParams)  =
+let GetLatestMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetLatestMessagesBySessionUUIDParams) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -824,7 +824,7 @@ type HasChatMessagePermissionParams = {
   UserId: int32;
 }
 
-let HasChatMessagePermission (db: NpgsqlConnection) (arg: HasChatMessagePermissionParams)  =
+let HasChatMessagePermission (db: NpgsqlConnection)  (arg: HasChatMessagePermissionParams)  =
   
   let reader = fun (read:RowReader) -> read.bool "has_permission"
 
@@ -894,7 +894,7 @@ type UpdateChatMessageRow = {
   Raw: string;
 }
 
-let UpdateChatMessage (db: NpgsqlConnection) (arg: UpdateChatMessageParams)  =
+let UpdateChatMessage (db: NpgsqlConnection)  (arg: UpdateChatMessageParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -962,7 +962,7 @@ type UpdateChatMessageByUUIDRow = {
   Raw: string;
 }
 
-let UpdateChatMessageByUUID (db: NpgsqlConnection) (arg: UpdateChatMessageByUUIDParams)  =
+let UpdateChatMessageByUUID (db: NpgsqlConnection)  (arg: UpdateChatMessageByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -1015,7 +1015,7 @@ type UpdateChatMessageContentParams = {
 
 
 
-let UpdateChatMessageContent (db: NpgsqlConnection) (arg: UpdateChatMessageContentParams)  = 
+let UpdateChatMessageContent (db: NpgsqlConnection)  (arg: UpdateChatMessageContentParams)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query updateChatMessageContent
