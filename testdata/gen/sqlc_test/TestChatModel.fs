@@ -57,12 +57,16 @@ let tests =
               Expect.equal retrieveResult.ApiAuthHeader updatedParams.ApiAuthHeader "apiAuthHeader updated"
               Expect.equal retrieveResult.ApiAuthKey updatedParams.ApiAuthKey "apiAuthKey updated"
 
+              let allChatModels = ChatModel.ListSystemChatModels conn ()
+
+              Expect.equal allChatModels.Length 1 "there is only one"
 
               let deletedModelRowCount =
                   ChatModel.DeleteChatModel conn { Id = model.Id; UserId = model.UserId }
+
               Expect.equal deletedModelRowCount 1 "1 record deleted"
 
-              //let retrieveResult = ChatModel.ChatModelByID conn model.Id
+          //let retrieveResult = ChatModel.ChatModelByID conn model.Id
 
-              //Expect.equal retrieveResult {} "delete success" ]
-        ]
+          //Expect.equal retrieveResult {} "delete success" ]
+          ]
