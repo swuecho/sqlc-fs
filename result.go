@@ -180,15 +180,7 @@ func columnName(c *plugin.Column, pos int) string {
 }
 
 func argName(name string) string {
-	out := ""
-	for i, p := range strings.Split(name, "_") {
-		if i == 0 {
-			out += strings.ToLower(p)
-		} else {
-			out += strings.Title(p)
-		}
-	}
-	return out
+	return sdk.ToLowerCamelCase(name)
 }
 
 func paramName(p *plugin.Parameter) string {

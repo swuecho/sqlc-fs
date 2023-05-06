@@ -36,9 +36,6 @@ func Stem(s string) string {
 }
 
 func ToSnakeCase(s string) string {
-	if s == "ID" {
-		return "id"
-	}
 	return strcase.SnakeCase(s)
 }
 
