@@ -33,6 +33,5 @@ func FieldName(name string, settings *plugin.Settings) string {
 	if rename := settings.Rename[name]; rename != "" {
 		return rename
 	}
-	out := sdk.ToPascalCase(name)
-	return out
+	return name
 }

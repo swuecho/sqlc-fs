@@ -203,11 +203,11 @@ type ListChatLogsRow = {
 
 let ListChatLogs (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Session = read.string "Session"
-    Question = read.string "Question"
-    Answer = read.string "Answer"
-    CreatedAt = read.dateTime "CreatedAt"}
+    Id = read.int "id"
+    Session = read.string "session"
+    Question = read.string "question"
+    Answer = read.string "answer"
+    CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
   |> Sql.query listChatLogs

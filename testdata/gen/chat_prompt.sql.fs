@@ -187,19 +187,19 @@ type GetAllChatPromptsRow = {
 
 let GetAllChatPrompts (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    TokenCount = read.int "TokenCount"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatPrompts
@@ -364,19 +364,19 @@ type GetChatPromptsBySessionUUIDRow = {
 
 let GetChatPromptsBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    TokenCount = read.int "TokenCount"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsBySessionUUID
@@ -418,19 +418,19 @@ type GetChatPromptsByUserIDRow = {
 
 let GetChatPromptsByUserID (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    TokenCount = read.int "TokenCount"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsByUserID
@@ -472,19 +472,19 @@ type GetChatPromptsBysession_uuidRow = {
 
 let GetChatPromptsBysession_uuid (db: NpgsqlConnection) (chatSessionUuid: string)  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    Role = read.string "Role"
-    Content = read.string "Content"
-    Score = read.double "Score"
-    UserId = read.int "UserId"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"
-    CreatedBy = read.int "CreatedBy"
-    UpdatedBy = read.int "UpdatedBy"
-    IsDeleted = read.bool "IsDeleted"
-    TokenCount = read.int "TokenCount"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    Role = read.string "role"
+    Content = read.string "content"
+    Score = read.double "score"
+    UserId = read.int "user_id"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"
+    CreatedBy = read.int "created_by"
+    UpdatedBy = read.int "updated_by"
+    IsDeleted = read.bool "is_deleted"
+    TokenCount = read.int "token_count"}
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsBysession_uuid

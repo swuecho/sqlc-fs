@@ -139,11 +139,11 @@ type ChatSnapshotMetaByUserIDRow = {
 
 let ChatSnapshotMetaByUserID (db: NpgsqlConnection) (userId: int32)  =
   let reader = fun (read:RowReader) -> {
-    Uuid = read.string "Uuid"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Tags = read.string "Tags"
-    CreatedAt = read.dateTime "CreatedAt"}
+    Uuid = read.string "uuid"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Tags = read.string "tags"
+    CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotMetaByUserID
@@ -180,9 +180,9 @@ type ChatSnapshotSearchRow = {
 
 let ChatSnapshotSearch (db: NpgsqlConnection) (arg: ChatSnapshotSearchParams)  =
   let reader = fun (read:RowReader) -> {
-    Uuid = read.string "Uuid"
-    Title = read.string "Title"
-    Rank = read.float "Rank"}
+    Uuid = read.string "uuid"
+    Title = read.string "title"
+    Rank = read.float "rank"}
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotSearch
@@ -410,18 +410,18 @@ type ListChatSnapshotsRow = {
 
 let ListChatSnapshots (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Uuid = read.string "Uuid"
-    UserId = read.int "UserId"
-    Title = read.string "Title"
-    Summary = read.string "Summary"
-    Model = read.string "Model"
-    Tags = read.string "Tags"
-    Session = read.string "Session"
-    Conversation = read.string "Conversation"
-    CreatedAt = read.dateTime "CreatedAt"
-    Text = read.string "Text"
-    SearchVector = read.stringOrNone "SearchVector"}
+    Id = read.int "id"
+    Uuid = read.string "uuid"
+    UserId = read.int "user_id"
+    Title = read.string "title"
+    Summary = read.string "summary"
+    Model = read.string "model"
+    Tags = read.string "tags"
+    Session = read.string "session"
+    Conversation = read.string "conversation"
+    CreatedAt = read.dateTime "created_at"
+    Text = read.string "text"
+    SearchVector = read.stringOrNone "search_vector"}
   db 
   |> Sql.existingConnection
   |> Sql.query listChatSnapshots

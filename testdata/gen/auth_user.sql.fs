@@ -150,17 +150,17 @@ type GetAllAuthUsersRow = {
 
 let GetAllAuthUsers (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Password = read.string "Password"
-    LastLogin = read.dateTime "LastLogin"
-    IsSuperuser = read.bool "IsSuperuser"
-    Username = read.string "Username"
-    FirstName = read.string "FirstName"
-    LastName = read.string "LastName"
-    Email = read.string "Email"
-    IsStaff = read.bool "IsStaff"
-    IsActive = read.bool "IsActive"
-    DateJoined = read.dateTime "DateJoined"}
+    Id = read.int "id"
+    Password = read.string "password"
+    LastLogin = read.dateTime "last_login"
+    IsSuperuser = read.bool "is_superuser"
+    Username = read.string "username"
+    FirstName = read.string "first_name"
+    LastName = read.string "last_name"
+    Email = read.string "email"
+    IsStaff = read.bool "is_staff"
+    IsActive = read.bool "is_active"
+    DateJoined = read.dateTime "date_joined"}
   db 
   |> Sql.existingConnection
   |> Sql.query getAllAuthUsers
@@ -434,14 +434,14 @@ type GetUserStatsRow = {
 
 let GetUserStats (db: NpgsqlConnection) (arg: GetUserStatsParams)  =
   let reader = fun (read:RowReader) -> {
-    FirstName = read.string "FirstName"
-    LastName = read.string "LastName"
-    UserEmail = read.string "UserEmail"
-    TotalChatMessages = read.int64 "TotalChatMessages"
-    TotalTokenCount = read.int64 "TotalTokenCount"
-    TotalChatMessages3Days = read.int64 "TotalChatMessages3Days"
-    TotalTokenCount3Days = read.int64 "TotalTokenCount3Days"
-    RateLimit = read.int "RateLimit"}
+    FirstName = read.string "first_name"
+    LastName = read.string "last_name"
+    UserEmail = read.string "user_email"
+    TotalChatMessages = read.int64 "total_chat_messages"
+    TotalTokenCount = read.int64 "total_token_count"
+    TotalChatMessages3Days = read.int64 "total_chat_messages_3_days"
+    TotalTokenCount3Days = read.int64 "total_token_count_3_days"
+    RateLimit = read.int "rate_limit"}
   db 
   |> Sql.existingConnection
   |> Sql.query getUserStats
@@ -485,17 +485,17 @@ type ListAuthUsersRow = {
 
 let ListAuthUsers (db: NpgsqlConnection) (arg: ListAuthUsersParams)  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    Password = read.string "Password"
-    LastLogin = read.dateTime "LastLogin"
-    IsSuperuser = read.bool "IsSuperuser"
-    Username = read.string "Username"
-    FirstName = read.string "FirstName"
-    LastName = read.string "LastName"
-    Email = read.string "Email"
-    IsStaff = read.bool "IsStaff"
-    IsActive = read.bool "IsActive"
-    DateJoined = read.dateTime "DateJoined"}
+    Id = read.int "id"
+    Password = read.string "password"
+    LastLogin = read.dateTime "last_login"
+    IsSuperuser = read.bool "is_superuser"
+    Username = read.string "username"
+    FirstName = read.string "first_name"
+    LastName = read.string "last_name"
+    Email = read.string "email"
+    IsStaff = read.bool "is_staff"
+    IsActive = read.bool "is_active"
+    DateJoined = read.dateTime "date_joined"}
   db 
   |> Sql.existingConnection
   |> Sql.query listAuthUsers

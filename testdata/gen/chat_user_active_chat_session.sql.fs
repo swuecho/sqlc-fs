@@ -255,11 +255,11 @@ type ListUserActiveChatSessionsRow = {
 
 let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
   let reader = fun (read:RowReader) -> {
-    Id = read.int "Id"
-    UserId = read.int "UserId"
-    ChatSessionUuid = read.string "ChatSessionUuid"
-    CreatedAt = read.dateTime "CreatedAt"
-    UpdatedAt = read.dateTime "UpdatedAt"}
+    Id = read.int "id"
+    UserId = read.int "user_id"
+    ChatSessionUuid = read.string "chat_session_uuid"
+    CreatedAt = read.dateTime "created_at"
+    UpdatedAt = read.dateTime "updated_at"}
   db 
   |> Sql.existingConnection
   |> Sql.query listUserActiveChatSessions
