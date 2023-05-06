@@ -58,9 +58,9 @@ let tests =
               Expect.equal retrieveResult.ApiAuthKey updatedParams.ApiAuthKey "apiAuthKey updated"
 
               let allChatModels = ChatModel.ListChatModels conn 
-              printfn "%A" allChatModels
+              // printfn "%A" allChatModels
 
-              Expect.equal allChatModels.Length 1 "there is only one"
+              Expect.equal allChatModels.Length 9 " 8(system model, check schema.sql), 1 new model added"
 
               let deletedModelRowCount =
                   ChatModel.DeleteChatModel conn { Id = model.Id; UserId = model.UserId }
