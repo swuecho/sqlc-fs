@@ -73,6 +73,29 @@ let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams)  =
 
 
 
+let deleteAllJwtSecrets = """-- name: DeleteAllJwtSecrets :execrows
+DELETE FROM jwt_secrets WHERE name = @name
+"""
+
+
+
+
+
+
+
+
+let DeleteAllJwtSecrets db: NpgsqlConnection name: string) =
+  db 
+  |> Sql.existingConnection
+  |> Sql.query deleteAllJwtSecrets
+  |> Sql.parameters  [ "@name", Sql.string name ]
+  |> Sql.executeNonQuery
+
+
+
+
+
+
 
 
 

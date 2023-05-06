@@ -135,6 +135,7 @@ let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveCha
 
 
 
+
 let deleteUserActiveChatSession = """-- name: DeleteUserActiveChatSession :exec
 DELETE FROM user_active_chat_session WHERE user_id = @user_id
 """

@@ -105,6 +105,7 @@ let CreateChatMessage (db: NpgsqlConnection) (arg: CreateChatMessageParams)  =
 
 
 
+
 let deleteChatMessage = """-- name: DeleteChatMessage :exec
 UPDATE chat_message set is_deleted = true, updated_at = now()
 WHERE id = @id

@@ -85,17 +85,11 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 {{range .Comments}}//{{.}}
 {{end -}}
 let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) =
-  let reader = fun (read:RowReader) -> {
-  {{- range $i, $e := .Ret.UniqueFields}}
-    {{$e.Name}} = read.{{$e.Type | type2readerFunc }} "{{$e.Name | snakeCase }}"
-  {{- end -}}
-  }
-
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
-  |> Sql.executeRow
+  |> Sql.executeNonQuery
 {{end}}
 
 {{if eq .Cmd ":execresult"}}

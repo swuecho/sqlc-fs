@@ -286,6 +286,7 @@ let CreateChatSnapshot (db: NpgsqlConnection) (arg: CreateChatSnapshotParams)  =
 
 
 
+
 let deleteChatSnapshot = """-- name: DeleteChatSnapshot :one
 DELETE FROM chat_snapshot WHERE uuid = @uuid
 and user_id = @user_id

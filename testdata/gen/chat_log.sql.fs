@@ -116,6 +116,7 @@ let CreateChatLog (db: NpgsqlConnection) (arg: CreateChatLogParams)  =
 
 
 
+
 let deleteChatLog = """-- name: DeleteChatLog :exec
 DELETE FROM chat_logs WHERE id = @id
 """

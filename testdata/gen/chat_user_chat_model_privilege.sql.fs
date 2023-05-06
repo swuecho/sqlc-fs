@@ -96,6 +96,7 @@ let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatMode
 
 
 
+
 let deleteUserChatModelPrivilege = """-- name: DeleteUserChatModelPrivilege :exec
 DELETE FROM user_chat_model_privilege WHERE id = @id
 """

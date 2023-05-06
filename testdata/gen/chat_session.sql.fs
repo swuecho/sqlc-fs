@@ -252,6 +252,7 @@ let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection) (arg: CreateOrUpdateC
 
 
 
+
 let deleteChatSession = """-- name: DeleteChatSession :exec
 DELETE FROM chat_session 
 WHERE id = @id
