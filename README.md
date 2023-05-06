@@ -48,7 +48,7 @@ go build -o bin/sqlc-ts
 See `testdata/` for a full example that can be run with:
 
 ```bash
-sqlc generate -f ./testdata/sqlc.json && cat ./testdata/gen/query.sql.ts | less
+sqlc generate -f ./testdata/sqlc.json
 ```
 
 ## CREDIT
