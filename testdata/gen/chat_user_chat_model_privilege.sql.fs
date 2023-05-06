@@ -54,7 +54,7 @@ type CreateUserChatModelPrivilegeRow = {
   UpdatedBy: int32;
 }
 
-let CreateUserChatModelPrivilege (db: NpgsqlConnection) (arg: CreateUserChatModelPrivilegeParams)  =
+let CreateUserChatModelPrivilege (db: NpgsqlConnection)  (arg: CreateUserChatModelPrivilegeParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -106,7 +106,7 @@ DELETE FROM user_chat_model_privilege WHERE id = @id
 
 
 
-let DeleteUserChatModelPrivilege (db: NpgsqlConnection) (id: int32)  = 
+let DeleteUserChatModelPrivilege (db: NpgsqlConnection)  (id: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteUserChatModelPrivilege
@@ -178,7 +178,7 @@ type ListUserChatModelPrivilegesRow = {
 }
 
 
-let ListUserChatModelPrivileges (db: NpgsqlConnection) ()  =
+let ListUserChatModelPrivileges (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     UserId = read.int "user_id"
@@ -224,7 +224,7 @@ type ListUserChatModelPrivilegesByUserIDRow = {
 
 // TODO add ratelimit
 // LIMIT 1000
-let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection) (userId: int32)  =
+let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection)  (userId: int32) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     UserId = read.int "user_id"
@@ -266,7 +266,7 @@ type ListUserChatModelPrivilegesRateLimitRow = {
 }
 
 
-let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection) ()  =
+let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     UserEmail = read.string "user_email"
@@ -306,7 +306,7 @@ type RateLimiteByUserAndSessionUUIDRow = {
   ChatModelName: string;
 }
 
-let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection) (arg: RateLimiteByUserAndSessionUUIDParams)  =
+let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection)  (arg: RateLimiteByUserAndSessionUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     RateLimit = read.int "rate_limit"
@@ -371,7 +371,7 @@ type UpdateUserChatModelPrivilegeRow = {
   UpdatedBy: int32;
 }
 
-let UpdateUserChatModelPrivilege (db: NpgsqlConnection) (arg: UpdateUserChatModelPrivilegeParams)  =
+let UpdateUserChatModelPrivilege (db: NpgsqlConnection)  (arg: UpdateUserChatModelPrivilegeParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -418,7 +418,7 @@ type UserChatModelPrivilegeByIDRow = {
   UpdatedBy: int32;
 }
 
-let UserChatModelPrivilegeByID (db: NpgsqlConnection) (id: int32)  =
+let UserChatModelPrivilegeByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -468,7 +468,7 @@ type UserChatModelPrivilegeByUserAndModelIDRow = {
   UpdatedBy: int32;
 }
 
-let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection) (arg: UserChatModelPrivilegeByUserAndModelIDParams)  =
+let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection)  (arg: UserChatModelPrivilegeByUserAndModelIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"

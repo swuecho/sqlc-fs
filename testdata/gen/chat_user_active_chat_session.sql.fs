@@ -50,7 +50,7 @@ type CreateOrUpdateUserActiveChatSessionRow = {
   UpdatedAt: DateTime;
 }
 
-let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateOrUpdateUserActiveChatSessionParams)  =
+let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection)  (arg: CreateOrUpdateUserActiveChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -96,7 +96,7 @@ type CreateUserActiveChatSessionRow = {
   UpdatedAt: DateTime;
 }
 
-let CreateUserActiveChatSession (db: NpgsqlConnection) (arg: CreateUserActiveChatSessionParams)  =
+let CreateUserActiveChatSession (db: NpgsqlConnection)  (arg: CreateUserActiveChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -145,7 +145,7 @@ DELETE FROM user_active_chat_session WHERE user_id = @user_id
 
 
 
-let DeleteUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  = 
+let DeleteUserActiveChatSession (db: NpgsqlConnection)  (userId: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteUserActiveChatSession
@@ -202,7 +202,7 @@ type GetUserActiveChatSessionRow = {
   UpdatedAt: DateTime;
 }
 
-let GetUserActiveChatSession (db: NpgsqlConnection) (userId: int32)  =
+let GetUserActiveChatSession (db: NpgsqlConnection)  (userId: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -253,7 +253,7 @@ type ListUserActiveChatSessionsRow = {
 }
 
 
-let ListUserActiveChatSessions (db: NpgsqlConnection) ()  =
+let ListUserActiveChatSessions (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     UserId = read.int "user_id"
@@ -314,7 +314,7 @@ type UpdateUserActiveChatSessionRow = {
   UpdatedAt: DateTime;
 }
 
-let UpdateUserActiveChatSession (db: NpgsqlConnection) (arg: UpdateUserActiveChatSessionParams)  =
+let UpdateUserActiveChatSession (db: NpgsqlConnection)  (arg: UpdateUserActiveChatSessionParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"

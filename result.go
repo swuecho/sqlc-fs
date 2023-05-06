@@ -37,6 +37,7 @@ func buildStructs(req *plugin.CodeGenRequest) []Struct {
 	return structs
 }
 
+// repalce $1 -> @column_name for npgsql in query
 func npgsqlQuery(q *plugin.Query) string {
 	sql := q.Text
 	for _, param := range q.Params {

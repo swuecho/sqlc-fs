@@ -54,7 +54,7 @@ type CreateChatPromptRow = {
   TokenCount: int32;
 }
 
-let CreateChatPrompt (db: NpgsqlConnection) (arg: CreateChatPromptParams)  =
+let CreateChatPrompt (db: NpgsqlConnection)  (arg: CreateChatPromptParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -115,7 +115,7 @@ WHERE id = @id
 
 
 
-let DeleteChatPrompt (db: NpgsqlConnection) (id: int32)  = 
+let DeleteChatPrompt (db: NpgsqlConnection)  (id: int32)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatPrompt
@@ -140,7 +140,7 @@ WHERE uuid = @uuid
 
 
 
-let DeleteChatPromptByUUID (db: NpgsqlConnection) (uuid: string)  = 
+let DeleteChatPromptByUUID (db: NpgsqlConnection)  (uuid: string)  = 
   db 
   |> Sql.existingConnection
   |> Sql.query deleteChatPromptByUUID
@@ -185,7 +185,7 @@ type GetAllChatPromptsRow = {
 }
 
 
-let GetAllChatPrompts (db: NpgsqlConnection) ()  =
+let GetAllChatPrompts (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -245,7 +245,7 @@ type GetChatPromptByIDRow = {
   TokenCount: int32;
 }
 
-let GetChatPromptByID (db: NpgsqlConnection) (id: int32)  =
+let GetChatPromptByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -302,7 +302,7 @@ type GetChatPromptByUUIDRow = {
   TokenCount: int32;
 }
 
-let GetChatPromptByUUID (db: NpgsqlConnection) (uuid: string)  =
+let GetChatPromptByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -362,7 +362,7 @@ type GetChatPromptsBySessionUUIDRow = {
 }
 
 
-let GetChatPromptsBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
+let GetChatPromptsBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -416,7 +416,7 @@ type GetChatPromptsByUserIDRow = {
 }
 
 
-let GetChatPromptsByUserID (db: NpgsqlConnection) (userId: int32)  =
+let GetChatPromptsByUserID (db: NpgsqlConnection)  (userId: int32) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -470,7 +470,7 @@ type GetChatPromptsBysession_uuidRow = {
 }
 
 
-let GetChatPromptsBysession_uuid (db: NpgsqlConnection) (chatSessionUuid: string)  =
+let GetChatPromptsBysession_uuid (db: NpgsqlConnection)  (chatSessionUuid: string) =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Uuid = read.string "uuid"
@@ -533,7 +533,7 @@ type GetOneChatPromptBySessionUUIDRow = {
   TokenCount: int32;
 }
 
-let GetOneChatPromptBySessionUUID (db: NpgsqlConnection) (chatSessionUuid: string)  =
+let GetOneChatPromptBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -587,7 +587,7 @@ type HasChatPromptPermissionParams = {
   UserId: int32;
 }
 
-let HasChatPromptPermission (db: NpgsqlConnection) (arg: HasChatPromptPermissionParams)  =
+let HasChatPromptPermission (db: NpgsqlConnection)  (arg: HasChatPromptPermissionParams)  =
   
   let reader = fun (read:RowReader) -> read.bool "has_permission"
 
@@ -660,7 +660,7 @@ type UpdateChatPromptRow = {
   TokenCount: int32;
 }
 
-let UpdateChatPrompt (db: NpgsqlConnection) (arg: UpdateChatPromptParams)  =
+let UpdateChatPrompt (db: NpgsqlConnection)  (arg: UpdateChatPromptParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -723,7 +723,7 @@ type UpdateChatPromptByUUIDRow = {
   TokenCount: int32;
 }
 
-let UpdateChatPromptByUUID (db: NpgsqlConnection) (arg: UpdateChatPromptByUUIDParams)  =
+let UpdateChatPromptByUUID (db: NpgsqlConnection)  (arg: UpdateChatPromptByUUIDParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"

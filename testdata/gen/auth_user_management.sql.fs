@@ -81,7 +81,7 @@ WHERE user_id = @user_id
 // GetRateLimit retrieves the rate limit for a user from the auth_user_management table.
 // If no rate limit is set for the user, it returns the default rate limit of 100.
 
-let GetRateLimit (db: NpgsqlConnection) (userId: int32)  =
+let GetRateLimit (db: NpgsqlConnection)  (userId: int32)  =
   
   let reader = fun (read:RowReader) -> read.int "rate_limit"
 

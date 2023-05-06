@@ -43,7 +43,7 @@ type CreateJwtSecretRow = {
   Audience: string;
 }
 
-let CreateJwtSecret (db: NpgsqlConnection) (arg: CreateJwtSecretParams)  =
+let CreateJwtSecret (db: NpgsqlConnection)  (arg: CreateJwtSecretParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
@@ -84,7 +84,7 @@ DELETE FROM jwt_secrets WHERE name = @name
 
 
 
-let DeleteAllJwtSecrets (db: NpgsqlConnection) (name: string) =
+let DeleteAllJwtSecrets (db: NpgsqlConnection)  (name: string) =
   db 
   |> Sql.existingConnection
   |> Sql.query deleteAllJwtSecrets
@@ -144,7 +144,7 @@ type GetJwtSecretRow = {
   Audience: string;
 }
 
-let GetJwtSecret (db: NpgsqlConnection) (name: string)  =
+let GetJwtSecret (db: NpgsqlConnection)  (name: string)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
