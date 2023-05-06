@@ -8,7 +8,7 @@
       }
     }
   ],
-   "sql": [
+  "sql": [
     {
       "schema": "schema.sql",
       "queries": "query/",
@@ -16,7 +16,10 @@
       "codegen": [
         {
           "out": "gen",
-          "plugin": "fs"
+          "plugin": "fs",
+          "options": {
+            "async": true
+          }
         }
       ]
     }
