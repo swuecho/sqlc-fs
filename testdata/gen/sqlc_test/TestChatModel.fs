@@ -57,7 +57,7 @@ let tests =
               Expect.equal retrieveResult.ApiAuthHeader updatedParams.ApiAuthHeader "apiAuthHeader updated"
               Expect.equal retrieveResult.ApiAuthKey updatedParams.ApiAuthKey "apiAuthKey updated"
 
-              let allChatModels = ChatModel.ListSystemChatModels conn 
+              let allChatModels = ChatModel.ListChatModels conn 
 
               Expect.equal allChatModels.Length 1 "there is only one"
 
