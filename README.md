@@ -39,6 +39,38 @@ go install github.com/swuecho/sqlc-fs@latest
   ]
 ```
 
+for async query:
+
+```json5
+// sqlc.json
+{
+  "version": "2",
+  "plugins": [
+    {
+      "name": "fs",
+      "process": {
+        "cmd": "sqlc-fs"
+      }
+    }
+  ],
+   "sql": [
+    {
+      "schema": "schema.sql",
+      "queries": "query/",
+      "engine": "postgresql",
+      "codegen": [
+        {
+          "out": "gen",
+          "plugin": "fs",
+          "options": {
+            "async": true
+          }
+        }
+      ]
+    }
+  ]
+```
+
 ## Dev & Contribution
 
 ```build
