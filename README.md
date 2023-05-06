@@ -2,7 +2,7 @@
 
 sqlc-fs is a [sqlc plugin](https://docs.sqlc.dev/en/stable/guides/plugins.html) to generate queries that are compatible with [Npgsql.Fsharp](https://github.com/Zaid-Ajaj/Npgsql.FSharp).
 
-This plugin is alpha. (current implementation assuming the table column is snake_case)
+This plugin is in alpha stage.
 
 check https://github.com/swuecho/sqlc-fs/tree/main/testdata for demo.
 
