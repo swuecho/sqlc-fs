@@ -38,8 +38,6 @@ func (t *tmplCtx) OutputQuery(sourceName string) bool {
 func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*plugin.CodeGenResponse, error) {
 	funcMap := template.FuncMap{
 		"stem":            sdk.Stem,
-		"lowerTitle":      sdk.LowerTitle,
-		"snakeCase":       sdk.ToSnakeCase,
 		"pascalCase":      sdk.ToPascalCase,
 		"comment":         sdk.DoubleSlashComment,
 		"escape":          sdk.EscapeBacktick,
