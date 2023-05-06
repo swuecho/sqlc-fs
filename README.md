@@ -9,7 +9,7 @@ check https://github.com/swuecho/sqlc-fs/tree/main/testdata for demo.
 ## Installation & Usage
 
 ```bash
-go install github.com/swuecho/sqlc-fs/cmd/@latest
+go install github.com/swuecho/sqlc-fs@latest
 ```
 
 ```json5
@@ -38,6 +38,8 @@ go install github.com/swuecho/sqlc-fs/cmd/@latest
     }
   ]
 ```
+
+## Dev & Contribution
 
 ```build
 go build -o bin/sqlc-ts 
