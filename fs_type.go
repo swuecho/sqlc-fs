@@ -8,19 +8,6 @@ import (
 	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
-func tsTypecheckTemplate(req *plugin.CodeGenRequest, col *plugin.Column) string {
-	typ := postgresType(req, col)
-	cond := fmt.Sprintf(`typeof %% !== "%s"`, typ)
-	if !col.NotNull {
-		cond = fmt.Sprintf(`%s && %% !== null`, cond)
-	}
-
-	if col.IsArray {
-		cond = fmt.Sprintf(`!Array.isArray(%%) || %%.some(e => %s)`, strings.ReplaceAll(cond, "%%", "e"))
-	}
-
-	return cond
-}
 
 func fsType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 	typ := postgresType(req, col)
@@ -256,5 +243,5 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		}
 	}
 
-	return "interface{}"
+	return "string"
 }

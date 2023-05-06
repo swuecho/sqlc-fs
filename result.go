@@ -229,7 +229,6 @@ func columnsToStruct(req *plugin.CodeGenRequest, name string, columns []column, 
 			Name:              fieldName,
 			DBName:            colName,
 			Type:              fsType(req, c.Column),
-			TypecheckTemplate: tsTypecheckTemplate(req, c.Column),
 		})
 		if _, found := seen[baseFieldName]; !found {
 			seen[baseFieldName] = []int{i}

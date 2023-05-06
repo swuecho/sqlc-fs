@@ -3,20 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/swuecho/sqlc-fs/internal/sdk"
-	"strings"
 )
 
 type Field struct {
 	Name              string // CamelCased name for Go
 	DBName            string // Name as used in the DB
 	Type              string
-	TypecheckTemplate string
 	Comment           string
 }
 
-func (f Field) Typecheck(i int) string {
-	return strings.ReplaceAll(f.TypecheckTemplate, "%", fmt.Sprintf("row[%d]", i))
-}
 
 func SetCaseStyle(name string, style string) string {
 	switch style {
