@@ -243,5 +243,5 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		}
 	}
 
-	return "interface{}"
+	return "string"
 }
