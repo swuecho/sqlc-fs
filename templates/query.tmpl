@@ -84,7 +84,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 {{if eq .Cmd ":execrows"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) =
+let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}} =
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}

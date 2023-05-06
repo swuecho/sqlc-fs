@@ -84,7 +84,7 @@ DELETE FROM jwt_secrets WHERE name = @name
 
 
 
-let DeleteAllJwtSecrets db: NpgsqlConnection name: string) =
+let DeleteAllJwtSecrets db: NpgsqlConnection name: string =
   db 
   |> Sql.existingConnection
   |> Sql.query deleteAllJwtSecrets
