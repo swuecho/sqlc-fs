@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"strings"
 	"text/template"
 
@@ -15,17 +16,43 @@ import (
 
 func Generate(req *plugin.CodeGenRequest) (*plugin.CodeGenResponse, error) {
 	structs := buildStructs(req)
+
+	options, err := parseOptions(req)
+	if err != nil {
+		return nil, errors.Errorf("error parse options: %w", err)
+	}
+
 	queries, err := buildQueries(req, structs)
 	if err != nil {
 		return nil, errors.Errorf("error generating queries: %w", err)
 	}
-	return generate(req, structs, queries)
+	return generate(req, structs, queries, options)
+}
+
+type FSharpOption struct {
+	Async bool
+}
+
+func parseOptions(req *plugin.CodeGenRequest) (*FSharpOption, error) {
+	if req.Settings.Codegen != nil {
+		if len(req.Settings.Codegen.Options) != 0 {
+			var options *FSharpOption
+			dec := json.NewDecoder(bytes.NewReader(req.Settings.Codegen.Options))
+			dec.DisallowUnknownFields()
+			if err := dec.Decode(&options); err != nil {
+				return options, fmt.Errorf("unmarshalling options: %s", err)
+			}
+			return options, nil
+		}
+	}
+	return new(FSharpOption), nil
 }
 
 type tmplCtx struct {
 	Q       string
 	Structs []Struct
 	Queries []Query
+	Options *FSharpOption
 
 	// XXX: race
 	SourceName string
@@ -35,7 +62,7 @@ func (t *tmplCtx) OutputQuery(sourceName string) bool {
 	return t.SourceName == sourceName
 }
 
-func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*plugin.CodeGenResponse, error) {
+func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query, options *FSharpOption) (*plugin.CodeGenResponse, error) {
 	funcMap := template.FuncMap{
 		"stem":            sdk.Stem,
 		"pascalCase":      sdk.ToPascalCase,
@@ -58,6 +85,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query) (*p
 		Q:       "\"\"\"",
 		Queries: queries,
 		Structs: structs,
+		Options: options,
 	}
 
 	output := map[string]string{}

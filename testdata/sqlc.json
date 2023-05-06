@@ -16,10 +16,7 @@
       "codegen": [
         {
           "out": "gen",
-          "plugin": "fs",
-          "options": {
-            "async": true
-          }
+          "plugin": "fs"
         }
       ]
     }

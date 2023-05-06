@@ -1,0 +1,1 @@
+the go file in plugin folder is copied from sqlc(c13b156)
