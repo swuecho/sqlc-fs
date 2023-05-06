@@ -35,7 +35,7 @@ type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
 {{if eq .Cmd ":one"}}
 {{range .Comments}}//{{.}}
 {{end}}
-let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
+let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }}  =
   {{ if  .Ret.UniqueFieldsCountMultiple }}
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
@@ -58,7 +58,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 {{if eq .Cmd ":many"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
+let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }} =
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name | pascalCase }} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
@@ -73,7 +73,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 {{if eq .Cmd ":exec"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  = 
+let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }}  = 
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
@@ -84,7 +84,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}})  =
 {{if eq .Cmd ":execrows"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}}) =
+let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }} =
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
@@ -95,7 +95,7 @@ let {{.MethodName}} (db: NpgsqlConnection) ({{.Arg.Pair}}) =
 {{if eq .Cmd ":execresult"}}
 {{range .Comments}}//{{.}}
 {{end -}}
-let {{.MethodName}} db: NpgsqlConnection {{.Arg.Pair}}) =
+let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }} =
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
