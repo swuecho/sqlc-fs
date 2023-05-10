@@ -45,6 +45,10 @@ func parseOptions(req *plugin.CodeGenRequest) (*FSharpOption, error) {
 			if options.EmitModelFileName == "" {
 				options.EmitModelFileName = "model.fs"
 			}
+			if options.EmitModelName == "" {
+				options.EmitModelName = "ModelFromSchema"
+			}
+
 			if err := dec.Decode(&options); err != nil {
 				return options, fmt.Errorf("unmarshalling options: %s", err)
 			}
