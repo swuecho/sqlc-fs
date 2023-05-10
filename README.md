@@ -63,7 +63,7 @@ for async query:
           "out": "gen",
           "plugin": "fs",
           "options": {
-            "async": true
+            "emit_async_code": true
           }
         }
       ]
