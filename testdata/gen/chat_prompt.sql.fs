@@ -22,7 +22,6 @@ open System
 
 
 
-
 let createChatPrompt = """-- name: CreateChatPrompt :one
 INSERT INTO chat_prompt (uuid, chat_session_uuid, role, content, token_count, user_id, created_by, updated_by)
 VALUES (@uuid, @chat_session_uuid, @role, @content, @token_count, @user_id, @created_by, @updated_by)

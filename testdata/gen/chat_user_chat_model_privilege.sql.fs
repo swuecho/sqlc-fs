@@ -30,7 +30,6 @@ open System
 
 
 
-
 let createUserChatModelPrivilege = """-- name: CreateUserChatModelPrivilege :one
 INSERT INTO user_chat_model_privilege (user_id, chat_model_id, rate_limit, created_by, updated_by)
 VALUES (@user_id, @chat_model_id, @rate_limit, @created_by, @updated_by)

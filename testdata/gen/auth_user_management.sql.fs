@@ -72,7 +72,6 @@ open System
 
 
 
-
 let getRateLimit = """-- name: GetRateLimit :one
 SELECT rate_limit AS rate_limit
 FROM auth_user_management
