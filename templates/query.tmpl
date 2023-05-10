@@ -11,7 +11,7 @@ open System
 {{ if $.Options.EmitAutoOpenModel }}
 {{ else }}
 open {{ $.Options.EmiitModelName }}
-{{ end}}
+{{ end }}
 
 {{template "queryCode" . }}
 {{end}}
