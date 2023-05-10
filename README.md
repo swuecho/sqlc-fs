@@ -4,7 +4,7 @@ sqlc-fs is a [sqlc plugin](https://docs.sqlc.dev/en/stable/guides/plugins.html) 
 
 This plugin is in alpha stage.
 
-check https://github.com/swuecho/sqlc-fs/tree/main/testdata for demo.
+check <https://github.com/swuecho/sqlc-fs/tree/main/testdata> for demo.
 
 ## Installation & Usage
 
@@ -63,7 +63,11 @@ for async query:
           "out": "gen",
           "plugin": "fs",
           "options": {
-            "emit_async_code": true
+            // default value
+            // "emit_async_code": false,
+            // "emit_auto_open_model": true,
+            // "emit_model_file_name": "model_from_schema.fs",
+            // "emit_model_name: "ModelFromSchema",
           }
         }
       ]
