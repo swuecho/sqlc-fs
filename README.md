@@ -12,34 +12,6 @@ check <https://github.com/swuecho/sqlc-fs/tree/main/testdata> for demo.
 go install github.com/swuecho/sqlc-fs@latest
 ```
 
-```json5
-// sqlc.json
-{
-  "version": "2",
-  "plugins": [
-    {
-      "name": "fs",
-      "process": {
-        "cmd": "sqlc-fs"
-      }
-    }
-  ],
-   "sql": [
-    {
-      "schema": "schema.sql",
-      "queries": "query/",
-      "engine": "postgresql",
-      "codegen": [
-        {
-          "out": "gen",
-          "plugin": "fs"
-        }
-      ]
-    }
-  ]
-```
-
-for async query:
 
 ```json5
 // sqlc.json
@@ -63,7 +35,7 @@ for async query:
           "out": "gen",
           "plugin": "fs",
           "options": {
-            // default value
+            // options with default value
             // "emit_async_code": false,
             // "emit_auto_open_model": true,
             // "emit_model_file_name": "model_from_schema.fs",
