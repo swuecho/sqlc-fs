@@ -8,8 +8,7 @@ open Npgsql
 open Npgsql.FSharp
 open System
 
-{{ if $.Options.EmitAutoOpenModel }}
-{{ else }}
+{{ if not $.Options.EmitAutoOpenModel }}
 open {{ $.Options.EmiitModelName }}
 {{ end }}
 
