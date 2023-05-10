@@ -11,6 +11,9 @@ open System
 
 
 
+
+
+
 let chatModelByID = """-- name: ChatModelByID :one
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model WHERE id = @id
 """

@@ -19,6 +19,9 @@ open System
 
 
 
+
+
+
 let createChatMessage = """-- name: CreateChatMessage :one
 INSERT INTO chat_message (chat_session_uuid, uuid, role, content, token_count, score, user_id, created_by, updated_by, raw)
 VALUES (@chat_session_uuid, @uuid, @role, @content, @token_count, @score, @user_id, @created_by, @updated_by, @chat_session_uuid0)

@@ -17,6 +17,9 @@ open System
 
 
 
+
+
+
 let createAuthUser = """-- name: CreateAuthUser :one
 INSERT INTO auth_user (email, "password", first_name, last_name, username, is_staff, is_superuser)
 VALUES (@email, @password, @first_name, @last_name, @username, @is_staff, @is_superuser)
