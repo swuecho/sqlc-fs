@@ -30,7 +30,10 @@ func Generate(req *plugin.CodeGenRequest) (*plugin.CodeGenResponse, error) {
 }
 
 type FSharpOption struct {
-	Async bool
+	EmitAsyncCode     bool   `json:"emit_async_code,omitempty"`
+	EmitModelName     string `json:"emit_model_name,omitempty"`
+	EmitModelFileName string `json:"emit_model_file_name,omitempty"`
+	EmitAutoOpenModel bool   `json:"emit_auto_open_model,omitempty"`
 }
 
 func parseOptions(req *plugin.CodeGenRequest) (*FSharpOption, error) {
