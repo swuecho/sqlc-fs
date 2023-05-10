@@ -8,6 +8,9 @@ open Npgsql
 open Npgsql.FSharp
 open System
 
+{{ if not $.Options.EmitAutoOpenModel }}
+open {{ $.Options.EmiitModelName }}
+{{ end }}
 {{template "queryCode" . }}
 {{end}}
 

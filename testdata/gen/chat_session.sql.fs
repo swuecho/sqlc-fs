@@ -22,6 +22,7 @@ open System
 
 
 
+
 let createChatSession = """-- name: CreateChatSession :one
 INSERT INTO chat_session (user_id, topic, max_length, uuid)
 VALUES (@user_id, @topic, @max_length, @uuid)

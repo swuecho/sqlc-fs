@@ -27,6 +27,7 @@ open System
 
 
 
+
 let createOrUpdateUserActiveChatSession = """-- name: CreateOrUpdateUserActiveChatSession :one
 INSERT INTO user_active_chat_session(user_id, chat_session_uuid)
 VALUES (@user_id, @chat_session_uuid)
