@@ -18,20 +18,6 @@ SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, cr
 """
 
 
-type ChatSnapshotByIDRow = {
-  Id: int32;
-  Uuid: string;
-  UserId: int32;
-  Title: string;
-  Summary: string;
-  Model: string;
-  Tags: string;
-  Session: string;
-  Conversation: string;
-  CreatedAt: DateTime;
-  Text: string;
-  SearchVector: string option;
-}
 
 let ChatSnapshotByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -72,20 +58,6 @@ SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, cr
 """
 
 
-type ChatSnapshotByUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  UserId: int32;
-  Title: string;
-  Summary: string;
-  Model: string;
-  Tags: string;
-  Session: string;
-  Conversation: string;
-  CreatedAt: DateTime;
-  Text: string;
-  SearchVector: string option;
-}
 
 let ChatSnapshotByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
@@ -222,20 +194,6 @@ type CreateChatSnapshotParams = {
   Session: string;
   Text: string;
 }
-type CreateChatSnapshotRow = {
-  Id: int32;
-  Uuid: string;
-  UserId: int32;
-  Title: string;
-  Summary: string;
-  Model: string;
-  Tags: string;
-  Session: string;
-  Conversation: string;
-  CreatedAt: DateTime;
-  Text: string;
-  SearchVector: string option;
-}
 
 let CreateChatSnapshot (db: NpgsqlConnection)  (arg: CreateChatSnapshotParams)  =
   
@@ -297,20 +255,6 @@ RETURNING id, uuid, user_id, title, summary, model, tags, session, conversation,
 type DeleteChatSnapshotParams = {
   Uuid: string;
   UserId: int32;
-}
-type DeleteChatSnapshotRow = {
-  Id: int32;
-  Uuid: string;
-  UserId: int32;
-  Title: string;
-  Summary: string;
-  Model: string;
-  Tags: string;
-  Session: string;
-  Conversation: string;
-  CreatedAt: DateTime;
-  Text: string;
-  SearchVector: string option;
 }
 
 let DeleteChatSnapshot (db: NpgsqlConnection)  (arg: DeleteChatSnapshotParams)  =
@@ -392,20 +336,6 @@ SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, cr
 """
 
 
-type ListChatSnapshotsRow = {
-  Id: int32;
-  Uuid: string;
-  UserId: int32;
-  Title: string;
-  Summary: string;
-  Model: string;
-  Tags: string;
-  Session: string;
-  Conversation: string;
-  CreatedAt: DateTime;
-  Text: string;
-  SearchVector: string option;
-}
 
 
 let ListChatSnapshots (db: NpgsqlConnection)  =
@@ -473,20 +403,6 @@ type UpdateChatSnapshotParams = {
   Tags: string;
   Conversation: string;
   CreatedAt: DateTime;
-}
-type UpdateChatSnapshotRow = {
-  Id: int32;
-  Uuid: string;
-  UserId: int32;
-  Title: string;
-  Summary: string;
-  Model: string;
-  Tags: string;
-  Session: string;
-  Conversation: string;
-  CreatedAt: DateTime;
-  Text: string;
-  SearchVector: string option;
 }
 
 let UpdateChatSnapshot (db: NpgsqlConnection)  (arg: UpdateChatSnapshotParams)  =

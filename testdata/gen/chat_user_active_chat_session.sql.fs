@@ -42,13 +42,6 @@ type CreateOrUpdateUserActiveChatSessionParams = {
   UserId: int32;
   ChatSessionUuid: string;
 }
-type CreateOrUpdateUserActiveChatSessionRow = {
-  Id: int32;
-  UserId: int32;
-  ChatSessionUuid: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-}
 
 let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection)  (arg: CreateOrUpdateUserActiveChatSessionParams)  =
   
@@ -87,13 +80,6 @@ RETURNING id, user_id, chat_session_uuid, created_at, updated_at
 type CreateUserActiveChatSessionParams = {
   UserId: int32;
   ChatSessionUuid: string;
-}
-type CreateUserActiveChatSessionRow = {
-  Id: int32;
-  UserId: int32;
-  ChatSessionUuid: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
 }
 
 let CreateUserActiveChatSession (db: NpgsqlConnection)  (arg: CreateUserActiveChatSessionParams)  =
@@ -194,13 +180,6 @@ SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_c
 """
 
 
-type GetUserActiveChatSessionRow = {
-  Id: int32;
-  UserId: int32;
-  ChatSessionUuid: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-}
 
 let GetUserActiveChatSession (db: NpgsqlConnection)  (userId: int32)  =
   
@@ -244,13 +223,6 @@ SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_c
 """
 
 
-type ListUserActiveChatSessionsRow = {
-  Id: int32;
-  UserId: int32;
-  ChatSessionUuid: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-}
 
 
 let ListUserActiveChatSessions (db: NpgsqlConnection)  =
@@ -305,13 +277,6 @@ RETURNING id, user_id, chat_session_uuid, created_at, updated_at
 type UpdateUserActiveChatSessionParams = {
   ChatSessionUuid: string;
   UserId: int32;
-}
-type UpdateUserActiveChatSessionRow = {
-  Id: int32;
-  UserId: int32;
-  ChatSessionUuid: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
 }
 
 let UpdateUserActiveChatSession (db: NpgsqlConnection)  (arg: UpdateUserActiveChatSessionParams)  =

@@ -36,12 +36,6 @@ type CreateJwtSecretParams = {
   Secret: string;
   Audience: string;
 }
-type CreateJwtSecretRow = {
-  Id: int32;
-  Name: string;
-  Secret: string;
-  Audience: string;
-}
 
 let CreateJwtSecret (db: NpgsqlConnection)  (arg: CreateJwtSecretParams)  =
   
@@ -137,12 +131,6 @@ SELECT id, name, secret, audience FROM jwt_secrets WHERE name = @name
 """
 
 
-type GetJwtSecretRow = {
-  Id: int32;
-  Name: string;
-  Secret: string;
-  Audience: string;
-}
 
 let GetJwtSecret (db: NpgsqlConnection)  (name: string)  =
   

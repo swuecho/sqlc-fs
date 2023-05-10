@@ -35,22 +35,6 @@ type CreateChatSessionParams = {
   MaxLength: int32;
   Uuid: string;
 }
-type CreateChatSessionRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 let CreateChatSession (db: NpgsqlConnection)  (arg: CreateChatSessionParams)  =
   
@@ -102,22 +86,6 @@ type CreateChatSessionByUUIDParams = {
   CreatedAt: DateTime;
   Active: bool;
   MaxLength: int32;
-}
-type CreateChatSessionByUUIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
 }
 
 let CreateChatSessionByUUID (db: NpgsqlConnection)  (arg: CreateChatSessionByUUIDParams)  =
@@ -185,22 +153,6 @@ type CreateOrUpdateChatSessionByUUIDParams = {
   Model: string;
   MaxTokens: int32;
   TopP: float;
-  N: int32;
-  Debug: bool;
-}
-type CreateOrUpdateChatSessionByUUIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
   N: int32;
   Debug: bool;
 }
@@ -284,22 +236,6 @@ returning id, user_id, uuid, topic, created_at, updated_at, active, model, max_l
 """
 
 
-type DeleteChatSessionByUUIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 
 
@@ -331,22 +267,6 @@ ORDER BY id
 """
 
 
-type GetAllChatSessionsRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 
 let GetAllChatSessions (db: NpgsqlConnection)  =
@@ -397,22 +317,6 @@ SELECT id, user_id, uuid, topic, created_at, updated_at, active, model, max_leng
 """
 
 
-type GetChatSessionByIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 let GetChatSessionByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -457,22 +361,6 @@ order by updated_at
 """
 
 
-type GetChatSessionByUUIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 let GetChatSessionByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
@@ -517,22 +405,6 @@ order by updated_at
 """
 
 
-type GetChatSessionByUUIDWithInActiveRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection)  (uuid: string)  =
   
@@ -578,22 +450,6 @@ ORDER BY cs.id
 """
 
 
-type GetChatSessionsByUserIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 
 let GetChatSessionsByUserID (db: NpgsqlConnection)  (userId: int32) =
@@ -707,22 +563,6 @@ type UpdateChatSessionParams = {
   Topic: string;
   Active: bool;
 }
-type UpdateChatSessionRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 let UpdateChatSession (db: NpgsqlConnection)  (arg: UpdateChatSessionParams)  =
   
@@ -771,22 +611,6 @@ type UpdateChatSessionByUUIDParams = {
   Uuid: string;
   UserId: int32;
   Topic: string;
-}
-type UpdateChatSessionByUUIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
 }
 
 let UpdateChatSessionByUUID (db: NpgsqlConnection)  (arg: UpdateChatSessionByUUIDParams)  =
@@ -841,22 +665,6 @@ type UpdateChatSessionTopicByUUIDParams = {
   UserId: int32;
   Topic: string;
 }
-type UpdateChatSessionTopicByUUIDRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
-}
 
 let UpdateChatSessionTopicByUUID (db: NpgsqlConnection)  (arg: UpdateChatSessionTopicByUUIDParams)  =
   
@@ -908,22 +716,6 @@ RETURNING id, user_id, uuid, topic, created_at, updated_at, active, model, max_l
 type UpdateSessionMaxLengthParams = {
   Uuid: string;
   MaxLength: int32;
-}
-type UpdateSessionMaxLengthRow = {
-  Id: int32;
-  UserId: int32;
-  Uuid: string;
-  Topic: string;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  Active: bool;
-  Model: string;
-  MaxLength: int32;
-  Temperature: float;
-  TopP: float;
-  MaxTokens: int32;
-  N: int32;
-  Debug: bool;
 }
 
 let UpdateSessionMaxLength (db: NpgsqlConnection)  (arg: UpdateSessionMaxLengthParams)  =

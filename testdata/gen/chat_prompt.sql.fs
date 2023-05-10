@@ -38,21 +38,6 @@ type CreateChatPromptParams = {
   CreatedBy: int32;
   UpdatedBy: int32;
 }
-type CreateChatPromptRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 let CreateChatPrompt (db: NpgsqlConnection)  (arg: CreateChatPromptParams)  =
   
@@ -168,21 +153,6 @@ ORDER BY id
 """
 
 
-type GetAllChatPromptsRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 
 let GetAllChatPrompts (db: NpgsqlConnection)  =
@@ -229,21 +199,6 @@ WHERE is_deleted = false and  id = @id
 """
 
 
-type GetChatPromptByIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 let GetChatPromptByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -286,21 +241,6 @@ WHERE uuid = @uuid
 """
 
 
-type GetChatPromptByUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 let GetChatPromptByUUID (db: NpgsqlConnection)  (uuid: string)  =
   
@@ -345,21 +285,6 @@ ORDER BY id
 """
 
 
-type GetChatPromptsBySessionUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 
 let GetChatPromptsBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string) =
@@ -399,21 +324,6 @@ ORDER BY id
 """
 
 
-type GetChatPromptsByUserIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 
 let GetChatPromptsByUserID (db: NpgsqlConnection)  (userId: int32) =
@@ -453,21 +363,6 @@ ORDER BY id
 """
 
 
-type GetChatPromptsBysession_uuidRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 
 let GetChatPromptsBysession_uuid (db: NpgsqlConnection)  (chatSessionUuid: string) =
@@ -517,21 +412,6 @@ LIMIT 1
 """
 
 
-type GetOneChatPromptBySessionUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 let GetOneChatPromptBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string)  =
   
@@ -644,21 +524,6 @@ type UpdateChatPromptParams = {
   UserId: int32;
   UpdatedBy: int32;
 }
-type UpdateChatPromptRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  TokenCount: int32;
-}
 
 let UpdateChatPrompt (db: NpgsqlConnection)  (arg: UpdateChatPromptParams)  =
   
@@ -705,21 +570,6 @@ RETURNING id, uuid, chat_session_uuid, role, content, score, user_id, created_at
 type UpdateChatPromptByUUIDParams = {
   Uuid: string;
   Content: string;
-  TokenCount: int32;
-}
-type UpdateChatPromptByUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
   TokenCount: int32;
 }
 

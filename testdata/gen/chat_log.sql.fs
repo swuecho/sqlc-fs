@@ -15,13 +15,6 @@ SELECT id, session, question, answer, created_at FROM chat_logs WHERE id = @id
 """
 
 
-type ChatLogByIDRow = {
-  Id: int32;
-  Session: string;
-  Question: string;
-  Answer: string;
-  CreatedAt: DateTime;
-}
 
 let ChatLogByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -68,13 +61,6 @@ type CreateChatLogParams = {
   Session: string;
   Question: string;
   Answer: string;
-}
-type CreateChatLogRow = {
-  Id: int32;
-  Session: string;
-  Question: string;
-  Answer: string;
-  CreatedAt: DateTime;
 }
 
 let CreateChatLog (db: NpgsqlConnection)  (arg: CreateChatLogParams)  =
@@ -192,13 +178,6 @@ SELECT id, session, question, answer, created_at FROM chat_logs ORDER BY id
 """
 
 
-type ListChatLogsRow = {
-  Id: int32;
-  Session: string;
-  Question: string;
-  Answer: string;
-  CreatedAt: DateTime;
-}
 
 
 let ListChatLogs (db: NpgsqlConnection)  =
@@ -245,13 +224,6 @@ type UpdateChatLogParams = {
   Session: string;
   Question: string;
   Answer: string;
-}
-type UpdateChatLogRow = {
-  Id: int32;
-  Session: string;
-  Question: string;
-  Answer: string;
-  CreatedAt: DateTime;
 }
 
 let UpdateChatLog (db: NpgsqlConnection)  (arg: UpdateChatLogParams)  =

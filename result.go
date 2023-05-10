@@ -134,7 +134,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 				same := true
 				for i, f := range s.Fields {
 					c := query.Columns[i]
-					sameName := f.Name == StructName(columnName(c, i), req.Settings)
+					sameName := f.Name == columnName(c, i)
 					sameType := f.Type == fsType(req, c)
 					sameTable := sdk.SameTableName(c.Table, &s.Table, req.Catalog.DefaultSchema)
 					if !sameName || !sameType || !sameTable {

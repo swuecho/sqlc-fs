@@ -5,6 +5,7 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="model.fs" />
     <Compile Include="auth_user.sql.fs" />
     <Compile Include="auth_user_management.sql.fs" />
     <Compile Include="chat_jwt_secrets.sql.fs" />
