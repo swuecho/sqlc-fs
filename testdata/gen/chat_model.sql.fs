@@ -16,17 +16,6 @@ SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id,
 """
 
 
-type ChatModelByIDRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
 
 let ChatModelByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -64,17 +53,6 @@ SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id,
 """
 
 
-type ChatModelByNameRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
 
 let ChatModelByName (db: NpgsqlConnection)  (name: string)  =
   
@@ -122,17 +100,6 @@ RETURNING id, name, label, is_default, url, api_auth_header, api_auth_key, user_
 
 
 type CreateChatModelParams = {
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
-type CreateChatModelRow = {
-  Id: int32;
   Name: string;
   Label: string;
   IsDefault: bool;
@@ -250,17 +217,6 @@ and user_id in (select id from auth_user where is_superuser = true)
 """
 
 
-type GetDefaultChatModelRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
 
 let GetDefaultChatModel (db: NpgsqlConnection)   =
   
@@ -313,17 +269,6 @@ SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id,
 """
 
 
-type ListChatModelsRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
 
 
 let ListChatModels (db: NpgsqlConnection)  =
@@ -359,17 +304,6 @@ ORDER BY id
 """
 
 
-type ListSystemChatModelsRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
 
 
 let ListSystemChatModels (db: NpgsqlConnection)  =
@@ -427,17 +361,6 @@ type UpdateChatModelParams = {
   UserId: int32;
   EnablePerModeRatelimit: bool;
 }
-type UpdateChatModelRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
-}
 
 let UpdateChatModel (db: NpgsqlConnection)  (arg: UpdateChatModelParams)  =
   
@@ -480,17 +403,6 @@ RETURNING id, name, label, is_default, url, api_auth_header, api_auth_key, user_
 type UpdateChatModelKeyParams = {
   Id: int32;
   ApiAuthKey: string;
-}
-type UpdateChatModelKeyRow = {
-  Id: int32;
-  Name: string;
-  Label: string;
-  IsDefault: bool;
-  Url: string;
-  ApiAuthHeader: string;
-  ApiAuthKey: string;
-  UserId: int32;
-  EnablePerModeRatelimit: bool;
 }
 
 let UpdateChatModelKey (db: NpgsqlConnection)  (arg: UpdateChatModelKeyParams)  =

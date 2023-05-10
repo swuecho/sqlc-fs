@@ -38,23 +38,6 @@ type CreateChatMessageParams = {
   UpdatedBy: int32;
   Raw: string;
 }
-type CreateChatMessageRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 let CreateChatMessage (db: NpgsqlConnection)  (arg: CreateChatMessageParams)  =
   
@@ -195,23 +178,6 @@ ORDER BY id
 """
 
 
-type GetAllChatMessagesRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 
 let GetAllChatMessages (db: NpgsqlConnection)  =
@@ -255,23 +221,6 @@ WHERE is_deleted = false and id = @id
 """
 
 
-type GetChatMessageByIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 let GetChatMessageByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -325,23 +274,6 @@ type GetChatMessageBySessionUUIDParams = {
   Limit: int32;
   Offset: int32;
 }
-type GetChatMessageBySessionUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 let GetChatMessageBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessageBySessionUUIDParams)  =
   
@@ -387,23 +319,6 @@ WHERE is_deleted = false and uuid = @uuid
 """
 
 
-type GetChatMessageByUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 //-- UUID ----
 
 let GetChatMessageByUUID (db: NpgsqlConnection)  (uuid: string)  =
@@ -458,23 +373,6 @@ type GetChatMessagesBySessionUUIDParams = {
   Uuid: string;
   Offset: int32;
   Limit: int32;
-}
-type GetChatMessagesBySessionUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
 }
 
 
@@ -596,23 +494,6 @@ LIMIT 1
 """
 
 
-type GetFirstMessageBySessionUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 let GetFirstMessageBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string)  =
   
@@ -679,23 +560,6 @@ type GetLastNChatMessagesParams = {
   Limit: int32;
   ChatSessionUuid: string;
 }
-type GetLastNChatMessagesRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 
 let GetLastNChatMessages (db: NpgsqlConnection)  (arg: GetLastNChatMessagesParams) =
@@ -753,23 +617,6 @@ ORDER BY created_at
 type GetLatestMessagesBySessionUUIDParams = {
   ChatSessionUuid: string;
   Limit: int32;
-}
-type GetLatestMessagesBySessionUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
 }
 
 
@@ -876,23 +723,6 @@ type UpdateChatMessageParams = {
   UserId: int32;
   UpdatedBy: int32;
 }
-type UpdateChatMessageRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
-}
 
 let UpdateChatMessage (db: NpgsqlConnection)  (arg: UpdateChatMessageParams)  =
   
@@ -943,23 +773,6 @@ type UpdateChatMessageByUUIDParams = {
   Content: string;
   IsPin: bool;
   TokenCount: int32;
-}
-type UpdateChatMessageByUUIDRow = {
-  Id: int32;
-  Uuid: string;
-  ChatSessionUuid: string;
-  Role: string;
-  Content: string;
-  Score: float;
-  UserId: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-  IsDeleted: bool;
-  IsPin: bool;
-  TokenCount: int32;
-  Raw: string;
 }
 
 let UpdateChatMessageByUUID (db: NpgsqlConnection)  (arg: UpdateChatMessageByUUIDParams)  =

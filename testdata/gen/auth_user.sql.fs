@@ -33,19 +33,6 @@ type CreateAuthUserParams = {
   IsStaff: bool;
   IsSuperuser: bool;
 }
-type CreateAuthUserRow = {
-  Id: int32;
-  Password: string;
-  LastLogin: DateTime;
-  IsSuperuser: bool;
-  Username: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  IsStaff: bool;
-  IsActive: bool;
-  DateJoined: DateTime;
-}
 
 let CreateAuthUser (db: NpgsqlConnection)  (arg: CreateAuthUserParams)  =
   
@@ -133,19 +120,6 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 """
 
 
-type GetAllAuthUsersRow = {
-  Id: int32;
-  Password: string;
-  LastLogin: DateTime;
-  IsSuperuser: bool;
-  Username: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  IsStaff: bool;
-  IsActive: bool;
-  DateJoined: DateTime;
-}
 
 
 let GetAllAuthUsers (db: NpgsqlConnection)  =
@@ -183,19 +157,6 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 """
 
 
-type GetAuthUserByEmailRow = {
-  Id: int32;
-  Password: string;
-  LastLogin: DateTime;
-  IsSuperuser: bool;
-  Username: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  IsStaff: bool;
-  IsActive: bool;
-  DateJoined: DateTime;
-}
 
 let GetAuthUserByEmail (db: NpgsqlConnection)  (email: string)  =
   
@@ -235,19 +196,6 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 """
 
 
-type GetAuthUserByIDRow = {
-  Id: int32;
-  Password: string;
-  LastLogin: DateTime;
-  IsSuperuser: bool;
-  Username: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  IsStaff: bool;
-  IsActive: bool;
-  DateJoined: DateTime;
-}
 
 let GetAuthUserByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -337,19 +285,6 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 """
 
 
-type GetUserByEmailRow = {
-  Id: int32;
-  Password: string;
-  LastLogin: DateTime;
-  IsSuperuser: bool;
-  Username: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  IsStaff: bool;
-  IsActive: bool;
-  DateJoined: DateTime;
-}
 
 let GetUserByEmail (db: NpgsqlConnection)  (email: string)  =
   
@@ -467,19 +402,6 @@ SELECT id, password, last_login, is_superuser, username, first_name, last_name, 
 type ListAuthUsersParams = {
   Limit: int32;
   Offset: int32;
-}
-type ListAuthUsersRow = {
-  Id: int32;
-  Password: string;
-  LastLogin: DateTime;
-  IsSuperuser: bool;
-  Username: string;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  IsStaff: bool;
-  IsActive: bool;
-  DateJoined: DateTime;
 }
 
 

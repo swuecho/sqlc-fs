@@ -43,16 +43,6 @@ type CreateUserChatModelPrivilegeParams = {
   CreatedBy: int32;
   UpdatedBy: int32;
 }
-type CreateUserChatModelPrivilegeRow = {
-  Id: int32;
-  UserId: int32;
-  ChatModelId: int32;
-  RateLimit: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-}
 
 let CreateUserChatModelPrivilege (db: NpgsqlConnection)  (arg: CreateUserChatModelPrivilegeParams)  =
   
@@ -166,16 +156,6 @@ SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_b
 """
 
 
-type ListUserChatModelPrivilegesRow = {
-  Id: int32;
-  UserId: int32;
-  ChatModelId: int32;
-  RateLimit: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-}
 
 
 let ListUserChatModelPrivileges (db: NpgsqlConnection)  =
@@ -210,16 +190,6 @@ ORDER BY id
 """
 
 
-type ListUserChatModelPrivilegesByUserIDRow = {
-  Id: int32;
-  UserId: int32;
-  ChatModelId: int32;
-  RateLimit: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-}
 
 
 // TODO add ratelimit
@@ -360,16 +330,6 @@ type UpdateUserChatModelPrivilegeParams = {
   RateLimit: int32;
   UpdatedBy: int32;
 }
-type UpdateUserChatModelPrivilegeRow = {
-  Id: int32;
-  UserId: int32;
-  ChatModelId: int32;
-  RateLimit: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-}
 
 let UpdateUserChatModelPrivilege (db: NpgsqlConnection)  (arg: UpdateUserChatModelPrivilegeParams)  =
   
@@ -407,16 +367,6 @@ SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_b
 """
 
 
-type UserChatModelPrivilegeByIDRow = {
-  Id: int32;
-  UserId: int32;
-  ChatModelId: int32;
-  RateLimit: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
-}
 
 let UserChatModelPrivilegeByID (db: NpgsqlConnection)  (id: int32)  =
   
@@ -456,16 +406,6 @@ SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_b
 type UserChatModelPrivilegeByUserAndModelIDParams = {
   UserId: int32;
   ChatModelId: int32;
-}
-type UserChatModelPrivilegeByUserAndModelIDRow = {
-  Id: int32;
-  UserId: int32;
-  ChatModelId: int32;
-  RateLimit: int32;
-  CreatedAt: DateTime;
-  UpdatedAt: DateTime;
-  CreatedBy: int32;
-  UpdatedBy: int32;
 }
 
 let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection)  (arg: UserChatModelPrivilegeByUserAndModelIDParams)  =
