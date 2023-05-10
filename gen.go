@@ -42,9 +42,6 @@ func parseOptions(req *plugin.CodeGenRequest) (*FSharpOption, error) {
 			var options *FSharpOption
 			dec := json.NewDecoder(bytes.NewReader(req.Settings.Codegen.Options))
 			dec.DisallowUnknownFields()
-			if options.EmitModelFileName == "" {
-				options.EmitModelFileName = "model.fs"
-			}
 			if err := dec.Decode(&options); err != nil {
 				return options, fmt.Errorf("unmarshalling options: %s", err)
 			}
@@ -163,6 +160,5 @@ func renderStructs(funcMap template.FuncMap, tctx tmplCtx, output map[string]str
 	_ = tmplModel.ExecuteTemplate(w, "structsFile", &tctx)
 	w.Flush()
 	code := b.Bytes()
-	modelFileName := tctx.Options.EmitModelFileName
-	output[modelFileName] = string(code)
+	output["model.fs"] = string(code)
 }
