@@ -21,9 +21,9 @@ let ChatLogByID (db: NpgsqlConnection)  (id: int32)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
-    Session = read.string "session"
-    Question = read.string "question"
-    Answer = read.string "answer"
+    Session = read.jsonb "session"
+    Question = read.jsonb "question"
+    Answer = read.jsonb "answer"
     CreatedAt = read.dateTime "created_at"}
   
 
@@ -68,9 +68,9 @@ let CreateChatLog (db: NpgsqlConnection)  (arg: CreateChatLogParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
-    Session = read.string "session"
-    Question = read.string "question"
-    Answer = read.string "answer"
+    Session = read.jsonb "session"
+    Question = read.jsonb "question"
+    Answer = read.jsonb "answer"
     CreatedAt = read.dateTime "created_at"}
   
 
@@ -184,9 +184,9 @@ SELECT id, session, question, answer, created_at FROM chat_logs ORDER BY id
 let ListChatLogs (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
-    Session = read.string "session"
-    Question = read.string "question"
-    Answer = read.string "answer"
+    Session = read.jsonb "session"
+    Question = read.jsonb "question"
+    Answer = read.jsonb "answer"
     CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
@@ -231,9 +231,9 @@ let UpdateChatLog (db: NpgsqlConnection)  (arg: UpdateChatLogParams)  =
   
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
-    Session = read.string "session"
-    Question = read.string "question"
-    Answer = read.string "answer"
+    Session = read.jsonb "session"
+    Question = read.jsonb "question"
+    Answer = read.jsonb "answer"
     CreatedAt = read.dateTime "created_at"}
   
 
