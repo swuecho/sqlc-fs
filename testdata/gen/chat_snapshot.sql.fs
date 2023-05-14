@@ -105,7 +105,7 @@ type ChatSnapshotMetaByUserIDRow = {
   Uuid: string;
   Title: string;
   Summary: string;
-  Tags: jsonb;
+  Tags: string;
   CreatedAt: DateTime;
 }
 
