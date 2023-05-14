@@ -33,7 +33,7 @@ func buildStructs(req *plugin.CodeGenRequest) []Struct {
 			for _, column := range table.Columns {
 				s.Fields = append(s.Fields, Field{
 					Name:    FieldName(column.Name, req.Settings),
-					Type:    jsonb2Str(fsType(req, column)),
+					Type:    fsType(req, column),
 					Comment: column.Comment,
 				})
 			}
@@ -83,7 +83,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			p := query.Params[0]
 			gq.Arg = QueryValue{
 				Name: paramName(p),
-				Typ:  jsonb2Str(fsType(req, p.Column)),
+				Typ:  fsType(req, p.Column),
 			}
 		} else if len(query.Params) > 1 {
 			var cols []column
@@ -128,7 +128,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			}
 			gq.Ret = QueryValue{
 				Name: name,
-				Typ:  jsonb2Str(fsType(req, c)),
+				Typ:  fsType(req, c),
 			}
 		} else if len(query.Columns) > 1 {
 			var gs *Struct
@@ -142,7 +142,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 				for i, f := range s.Fields {
 					c := query.Columns[i]
 					sameName := f.Name == columnName(c, i)
-					sameType := f.Type == jsonb2Str(fsType(req, c))
+					sameType := f.Type == fsType(req, c)
 					sameTable := sdk.SameTableName(c.Table, &s.Table, req.Catalog.DefaultSchema)
 					if !sameName || !sameType || !sameTable {
 						same = false

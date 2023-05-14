@@ -13,7 +13,7 @@ open System
 {{- end -}}
 type {{.Name}} = {{ "{" }}
 {{range .Fields -}}
-{{"    "}} {{.Name | pascalCase }}: {{.Type}}  {{- if .Comment -}} // {{.Comment}} {{- end }}
+{{"    "}} {{.Name | pascalCase }}: {{.Type | json2str }}  {{- if .Comment -}} // {{.Comment}} {{- end }}
 {{end -}}
 {{ "}\n" }}
 {{end}}

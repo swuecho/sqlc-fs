@@ -105,7 +105,7 @@ type ChatSnapshotMetaByUserIDRow = {
   Uuid: string;
   Title: string;
   Summary: string;
-  Tags: jsonb;
+  Tags: string;
   CreatedAt: DateTime;
 }
 
@@ -115,7 +115,7 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection)  (userId: int32) =
     Uuid = read.string "uuid"
     Title = read.string "title"
     Summary = read.string "summary"
-    Tags = read.jsonb "tags"
+    Tags = read.string "tags"
     CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection

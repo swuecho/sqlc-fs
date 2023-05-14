@@ -30,7 +30,7 @@ type {{.Arg.Type}} = { {{- range .Arg.UniqueFields}}
 
 {{if .Ret.EmitStruct}}
 type {{.Ret.Type}} = { {{- range .Ret.Struct.Fields}}
-  {{.Name | pascalCase }}: {{.Type}};
+  {{.Name | pascalCase }}: {{.Type | json2str }};
   {{- end}}
 }
 {{- end -}}
