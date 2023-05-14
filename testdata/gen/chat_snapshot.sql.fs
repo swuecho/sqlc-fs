@@ -105,7 +105,7 @@ type ChatSnapshotMetaByUserIDRow = {
   Uuid: string;
   Title: string;
   Summary: string;
-  Tags: string;
+  Tags: jsonb;
   CreatedAt: DateTime;
 }
 
@@ -115,7 +115,7 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection)  (userId: int32) =
     Uuid = read.string "uuid"
     Title = read.string "title"
     Summary = read.string "summary"
-    Tags = read.string "tags"
+    Tags = read.jsonb "tags"
     CreatedAt = read.dateTime "created_at"}
   db 
   |> Sql.existingConnection
@@ -218,7 +218,7 @@ let CreateChatSnapshot (db: NpgsqlConnection)  (arg: CreateChatSnapshotParams)  
   db
   |> Sql.existingConnection
   |> Sql.query createChatSnapshot
-  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@model", Sql.string arg.Model; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@session", Sql.string arg.Session; "@text", Sql.string arg.Text ]
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@model", Sql.string arg.Model; "@summary", Sql.string arg.Summary; "@tags", Sql.jsonb arg.Tags; "@conversation", Sql.jsonb arg.Conversation; "@session", Sql.jsonb arg.Session; "@text", Sql.string arg.Text ]
   |> Sql.executeRow reader
 
 
@@ -428,7 +428,7 @@ let UpdateChatSnapshot (db: NpgsqlConnection)  (arg: UpdateChatSnapshotParams)  
   db
   |> Sql.existingConnection
   |> Sql.query updateChatSnapshot
-  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.string arg.Tags; "@conversation", Sql.string arg.Conversation; "@created_at", Sql.date arg.CreatedAt ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@tags", Sql.jsonb arg.Tags; "@conversation", Sql.jsonb arg.Conversation; "@created_at", Sql.date arg.CreatedAt ]
   |> Sql.executeRow reader
 
 

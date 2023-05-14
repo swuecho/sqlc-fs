@@ -8,7 +8,6 @@ import (
 	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
-
 func fsType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 	typ := postgresType(req, col)
 	if !col.NotNull {
@@ -83,7 +82,7 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		return "string"
 
 	case "jsonb":
-		return "string"
+		return "jsonb"
 
 	case "tsvector":
 		return "string"

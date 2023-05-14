@@ -77,7 +77,7 @@ let CreateChatLog (db: NpgsqlConnection)  (arg: CreateChatLogParams)  =
   db
   |> Sql.existingConnection
   |> Sql.query createChatLog
-  |> Sql.parameters  [ "@session", Sql.string arg.Session; "@question", Sql.string arg.Question; "@answer", Sql.string arg.Answer ]
+  |> Sql.parameters  [ "@session", Sql.jsonb arg.Session; "@question", Sql.jsonb arg.Question; "@answer", Sql.jsonb arg.Answer ]
   |> Sql.executeRow reader
 
 
@@ -240,7 +240,7 @@ let UpdateChatLog (db: NpgsqlConnection)  (arg: UpdateChatLogParams)  =
   db
   |> Sql.existingConnection
   |> Sql.query updateChatLog
-  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@session", Sql.string arg.Session; "@question", Sql.string arg.Question; "@answer", Sql.string arg.Answer ]
+  |> Sql.parameters  [ "@id", Sql.int arg.Id; "@session", Sql.jsonb arg.Session; "@question", Sql.jsonb arg.Question; "@answer", Sql.jsonb arg.Answer ]
   |> Sql.executeRow reader
 
 
