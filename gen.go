@@ -30,22 +30,44 @@ func Generate(req *plugin.CodeGenRequest) (*plugin.CodeGenResponse, error) {
 }
 
 type FSharpOption struct {
-	Async bool
+	EmitAsyncCode     bool   `json:"emit_async_code,omitempty"`
+	EmitModelName     string `json:"emit_model_name,omitempty"`
+	EmitModelFileName string `json:"emit_model_file_name,omitempty"`
+	EmitAutoOpenModel *bool  `json:"emit_auto_open_model,omitempty"`
 }
 
 func parseOptions(req *plugin.CodeGenRequest) (*FSharpOption, error) {
+	var options *FSharpOption
 	if req.Settings.Codegen != nil {
 		if len(req.Settings.Codegen.Options) != 0 {
-			var options *FSharpOption
 			dec := json.NewDecoder(bytes.NewReader(req.Settings.Codegen.Options))
 			dec.DisallowUnknownFields()
 			if err := dec.Decode(&options); err != nil {
 				return options, fmt.Errorf("unmarshalling options: %s", err)
 			}
+			// unset, default = true
+			if options.EmitAutoOpenModel == nil {
+				defaultValue := true
+				options.EmitAutoOpenModel = &defaultValue
+			}
+
+			if len(options.EmitModelFileName) == 0 {
+				options.EmitModelFileName = "model_from_schema.fs"
+			}
+			if len(options.EmitModelName) == 0 {
+				options.EmitModelName = "ModelFromSchema"
+			}
+
 			return options, nil
 		}
 	}
-	return new(FSharpOption), nil
+	defaultValue := true
+	options = &FSharpOption{
+		EmitAutoOpenModel: &defaultValue,
+		EmitModelFileName: "model_from_schema.fs",
+		EmitModelName:     "ModelFromSchema",
+	}
+	return options, nil
 }
 
 type tmplCtx struct {
@@ -157,5 +179,5 @@ func renderStructs(funcMap template.FuncMap, tctx tmplCtx, output map[string]str
 	_ = tmplModel.ExecuteTemplate(w, "structsFile", &tctx)
 	w.Flush()
 	code := b.Bytes()
-	output["model.fs"] = string(code)
+	output[tctx.Options.EmitModelFileName] = string(code)
 }

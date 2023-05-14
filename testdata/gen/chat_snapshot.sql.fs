@@ -13,6 +13,7 @@ open System
 
 
 
+
 let chatSnapshotByID = """-- name: ChatSnapshotByID :one
 SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, created_at, text, search_vector FROM chat_snapshot WHERE id = @id
 """

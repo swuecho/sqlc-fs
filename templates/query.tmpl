@@ -8,6 +8,9 @@ open Npgsql
 open Npgsql.FSharp
 open System
 
+{{ if not $.Options.EmitAutoOpenModel }}
+open {{ $.Options.EmiitModelName }}
+{{ end }}
 {{template "queryCode" . }}
 {{end}}
 
@@ -54,7 +57,7 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
   {{ end -}}
-  |> Sql.executeRow{{if $.Options.Async}}Async{{end}} reader
+  |> Sql.executeRow{{if $.Options.EmitAsyncCode}}Async{{end}} reader
 {{end}}
 
 {{if eq .Cmd ":many"}}
@@ -72,7 +75,7 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
   {{ end -}}
-  |> Sql.execute{{if $.Options.Async}}Async{{end}} reader
+  |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}} reader
 {{end}}
 
 {{if eq .Cmd ":exec"}}
@@ -85,7 +88,7 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
   {{ end -}}
-  |> Sql.executeNonQuery{{if $.Options.Async}}Async{{end}}
+  |> Sql.executeNonQuery{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{end}}
 
 {{if eq .Cmd ":execrows"}}
@@ -98,7 +101,7 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
   {{ end -}}
-  |> Sql.executeNonQuery{{if $.Options.Async}}Async{{end}}
+  |> Sql.executeNonQuery{{if $.Options.EmitAsyncCode }}Async{{end}}
 {{end}}
 
 {{if eq .Cmd ":execresult"}}
@@ -110,8 +113,9 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   |> Sql.query {{.ConstantName}}
   {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+
   {{ end -}}
-  |> Sql.execute{{if $.Options.Async}}Async{{end}}
+  |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{ end }}
 
 {{ end }}
