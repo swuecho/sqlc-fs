@@ -113,7 +113,6 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   |> Sql.query {{.ConstantName}}
   {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
-
   {{ end -}}
   |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{ end }}
