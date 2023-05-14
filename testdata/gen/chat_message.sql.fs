@@ -396,6 +396,7 @@ let GetChatMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessagesBy
   db 
   |> Sql.existingConnection
   |> Sql.query getChatMessagesBySessionUUID
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@offset", Sql.int arg.Offset; "@limit", Sql.int arg.Limit ]
   |> Sql.execute reader
 
 
@@ -582,6 +583,7 @@ let GetLastNChatMessages (db: NpgsqlConnection)  (arg: GetLastNChatMessagesParam
   db 
   |> Sql.existingConnection
   |> Sql.query getLastNChatMessages
+  |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@limit", Sql.int arg.Limit; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
   |> Sql.execute reader
 
 
@@ -640,6 +642,7 @@ let GetLatestMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetLatestMessag
   db 
   |> Sql.existingConnection
   |> Sql.query getLatestMessagesBySessionUUID
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@limit", Sql.int arg.Limit ]
   |> Sql.execute reader
 
 

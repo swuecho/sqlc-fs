@@ -207,6 +207,7 @@ let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection)  (userId: int32) 
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesByUserID
+  |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
 
 

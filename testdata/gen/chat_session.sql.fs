@@ -471,6 +471,7 @@ let GetChatSessionsByUserID (db: NpgsqlConnection)  (userId: int32) =
   db 
   |> Sql.existingConnection
   |> Sql.query getChatSessionsByUserID
+  |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
 
 

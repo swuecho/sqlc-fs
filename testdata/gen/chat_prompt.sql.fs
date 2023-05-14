@@ -305,6 +305,7 @@ let GetChatPromptsBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsBySessionUUID
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.execute reader
 
 
@@ -344,6 +345,7 @@ let GetChatPromptsByUserID (db: NpgsqlConnection)  (userId: int32) =
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsByUserID
+  |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
 
 
@@ -383,6 +385,7 @@ let GetChatPromptsBysession_uuid (db: NpgsqlConnection)  (chatSessionUuid: strin
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsBysession_uuid
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.execute reader
 
 
