@@ -54,7 +54,9 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   db
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
+  {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+  {{ end -}}
   |> Sql.executeRow{{if $.Options.EmitAsyncCode}}Async{{end}} reader
 {{end}}
 
@@ -70,6 +72,9 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
+  {{ if .Arg.NpgsqlParams -}}
+  |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+  {{ end -}}
   |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}} reader
 {{end}}
 
@@ -80,7 +85,9 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
+  {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+  {{ end -}}
   |> Sql.executeNonQuery{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{end}}
 
@@ -91,7 +98,9 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
+  {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+  {{ end -}}
   |> Sql.executeNonQuery{{if $.Options.EmitAsyncCode }}Async{{end}}
 {{end}}
 
@@ -102,7 +111,10 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}
+  {{ if .Arg.NpgsqlParams -}}
   |> Sql.parameters  [ {{ .Arg.NpgsqlParams }} ]
+
+  {{ end -}}
   |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{ end }}
 

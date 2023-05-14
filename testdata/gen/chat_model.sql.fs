@@ -236,7 +236,6 @@ let GetDefaultChatModel (db: NpgsqlConnection)   =
   db
   |> Sql.existingConnection
   |> Sql.query getDefaultChatModel
-  |> Sql.parameters  [  ]
   |> Sql.executeRow reader
 
 

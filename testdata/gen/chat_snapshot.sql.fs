@@ -120,6 +120,7 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection)  (userId: int32) =
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotMetaByUserID
+  |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
 
 
@@ -159,6 +160,7 @@ let ChatSnapshotSearch (db: NpgsqlConnection)  (arg: ChatSnapshotSearchParams) =
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotSearch
+  |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@search", Sql.string arg.Search ]
   |> Sql.execute reader
 
 
