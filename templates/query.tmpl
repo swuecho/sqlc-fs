@@ -23,7 +23,7 @@ let {{.ConstantName}} = {{$.Q}}-- name: {{.MethodName}} {{.Cmd}}
 
 {{if .Arg.EmitStruct}}
 type {{.Arg.Type}} = { {{- range .Arg.UniqueFields}}
-  {{.Name | pascalCase }}: {{.Type}};
+  {{.Name | pascalCase }}: {{.Type | json2str }};
   {{- end}}
 }
 {{- end -}}

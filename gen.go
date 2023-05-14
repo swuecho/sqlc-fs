@@ -92,6 +92,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query, opt
 		"escape":          sdk.EscapeBacktick,
 		"hasPrefix":       strings.HasPrefix,
 		"type2readerFunc": type2readerFunc,
+		"json2str": jsonb2Str,
 	}
 
 	tmpl := template.Must(

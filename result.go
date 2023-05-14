@@ -10,6 +10,15 @@ import (
 	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
 
+func jsonb2Str(s string) string {
+	if s == "jsonb" {
+		return "string"
+	} else {
+		return s
+	}
+
+}
+
 func buildStructs(req *plugin.CodeGenRequest) []Struct {
 	var structs []Struct
 	for _, schema := range req.Catalog.Schemas {
@@ -24,7 +33,7 @@ func buildStructs(req *plugin.CodeGenRequest) []Struct {
 			for _, column := range table.Columns {
 				s.Fields = append(s.Fields, Field{
 					Name:    FieldName(column.Name, req.Settings),
-					Type:    fsType(req, column),
+					Type:    jsonb2Str(fsType(req, column)),
 					Comment: column.Comment,
 				})
 			}
@@ -46,11 +55,9 @@ func npgsqlQuery(q *plugin.Query) string {
 	return sql
 }
 
-
-
 func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error) {
 	qs := make([]Query, 0, len(req.Queries))
-	
+
 	for _, query := range req.Queries {
 		if query.Name == "" {
 			continue
@@ -76,7 +83,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			p := query.Params[0]
 			gq.Arg = QueryValue{
 				Name: paramName(p),
-				Typ:  fsType(req, p.Column),
+				Typ:  jsonb2Str(fsType(req, p.Column)),
 			}
 		} else if len(query.Params) > 1 {
 			var cols []column
@@ -121,7 +128,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			}
 			gq.Ret = QueryValue{
 				Name: name,
-				Typ:  fsType(req, c),
+				Typ:  jsonb2Str(fsType(req, c)),
 			}
 		} else if len(query.Columns) > 1 {
 			var gs *Struct
@@ -135,7 +142,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 				for i, f := range s.Fields {
 					c := query.Columns[i]
 					sameName := f.Name == columnName(c, i)
-					sameType := f.Type == fsType(req, c)
+					sameType := f.Type == jsonb2Str(fsType(req, c))
 					sameTable := sdk.SameTableName(c.Table, &s.Table, req.Catalog.DefaultSchema)
 					if !sameName || !sameType || !sameTable {
 						same = false
@@ -229,9 +236,9 @@ func columnsToStruct(req *plugin.CodeGenRequest, name string, columns []column, 
 			fieldName = fmt.Sprintf("%s_%d", fieldName, suffix)
 		}
 		gs.Fields = append(gs.Fields, Field{
-			Name:              fieldName,
-			DBName:            colName,
-			Type:              fsType(req, c.Column),
+			Name:   fieldName,
+			DBName: colName,
+			Type:  fsType(req, c.Column),
 		})
 		if _, found := seen[baseFieldName]; !found {
 			seen[baseFieldName] = []int{i}

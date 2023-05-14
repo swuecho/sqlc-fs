@@ -63,7 +63,7 @@ let CreateChatMessage (db: NpgsqlConnection)  (arg: CreateChatMessageParams)  =
   db
   |> Sql.existingConnection
   |> Sql.query createChatMessage
-  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@uuid", Sql.string arg.Uuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy; "@raw", Sql.string arg.Raw ]
+  |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@uuid", Sql.string arg.Uuid; "@role", Sql.string arg.Role; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount; "@score", Sql.double arg.Score; "@user_id", Sql.int arg.UserId; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy; "@raw", Sql.jsonb arg.Raw ]
   |> Sql.executeRow reader
 
 
