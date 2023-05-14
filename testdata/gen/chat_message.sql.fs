@@ -57,7 +57,7 @@ let CreateChatMessage (db: NpgsqlConnection)  (arg: CreateChatMessageParams)  =
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db
@@ -197,7 +197,7 @@ let GetAllChatMessages (db: NpgsqlConnection)  =
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatMessages
@@ -240,7 +240,7 @@ let GetChatMessageByID (db: NpgsqlConnection)  (id: int32)  =
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db
@@ -293,7 +293,7 @@ let GetChatMessageBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessageBySe
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db
@@ -339,7 +339,7 @@ let GetChatMessageByUUID (db: NpgsqlConnection)  (uuid: string)  =
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db
@@ -393,7 +393,7 @@ let GetChatMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessagesBy
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getChatMessagesBySessionUUID
@@ -514,7 +514,7 @@ let GetFirstMessageBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: strin
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db
@@ -580,7 +580,7 @@ let GetLastNChatMessages (db: NpgsqlConnection)  (arg: GetLastNChatMessagesParam
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getLastNChatMessages
@@ -639,7 +639,7 @@ let GetLatestMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetLatestMessag
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   db 
   |> Sql.existingConnection
   |> Sql.query getLatestMessagesBySessionUUID
@@ -745,7 +745,7 @@ let UpdateChatMessage (db: NpgsqlConnection)  (arg: UpdateChatMessageParams)  =
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db
@@ -796,7 +796,7 @@ let UpdateChatMessageByUUID (db: NpgsqlConnection)  (arg: UpdateChatMessageByUUI
     IsDeleted = read.bool "is_deleted"
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
-    Raw = read.jsonb "raw"}
+    Raw = read.string "raw"}
   
 
   db

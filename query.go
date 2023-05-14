@@ -172,6 +172,10 @@ func type2readerFunc(t string) string {
 		t = "float"
 	}
 
+	if t == "jsonb" {
+		t = "string"
+	}
+
 	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
 }
 
