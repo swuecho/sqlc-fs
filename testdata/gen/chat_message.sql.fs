@@ -712,6 +712,9 @@ let HasChatMessagePermission (db: NpgsqlConnection)  (arg: HasChatMessagePermiss
 
 
 
+
+
+
 let updateChatMessage = """-- name: UpdateChatMessage :one
 UPDATE chat_message SET role = @role, content = @content, score = @score, user_id = @user_id, updated_by = @updated_by, updated_at = now()
 WHERE id = @id

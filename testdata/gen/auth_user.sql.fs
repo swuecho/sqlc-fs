@@ -395,6 +395,58 @@ let GetUserStats (db: NpgsqlConnection)  (arg: GetUserStatsParams) =
 
 
 
+let listAuthUserID = """-- name: ListAuthUserID :many
+SELECT id FROM auth_user
+"""
+
+
+
+
+let ListAuthUserID (db: NpgsqlConnection)  =
+  let reader = fun (read:RowReader) -> read.int "id"
+  db 
+  |> Sql.existingConnection
+  |> Sql.query listAuthUserID
+  |> Sql.execute reader
+
+
+
+
+
+
+
+
+
+
+let listAuthUserIDandEmail = """-- name: ListAuthUserIDandEmail :many
+SELECT id, email FROM auth_user
+"""
+
+
+type ListAuthUserIDandEmailRow = {
+  Id: int32;
+  Email: string;
+}
+
+
+let ListAuthUserIDandEmail (db: NpgsqlConnection)  =
+  let reader = fun (read:RowReader) -> {
+    Id = read.int "id"
+    Email = read.string "email"}
+  db 
+  |> Sql.existingConnection
+  |> Sql.query listAuthUserIDandEmail
+  |> Sql.execute reader
+
+
+
+
+
+
+
+
+
+
 let listAuthUsers = """-- name: ListAuthUsers :many
 SELECT id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined FROM auth_user ORDER BY id LIMIT @limit OFFSET @offset
 """
@@ -431,6 +483,32 @@ let ListAuthUsers (db: NpgsqlConnection)  (arg: ListAuthUsersParams) =
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+let totalAuthUsers = """-- name: TotalAuthUsers :one
+SELECT COUNT(*) FROM auth_user
+"""
+
+
+
+let TotalAuthUsers (db: NpgsqlConnection)   =
+  
+  let reader = fun (read:RowReader) -> read.int64 "count"
+
+  db
+  |> Sql.existingConnection
+  |> Sql.query totalAuthUsers
+  |> Sql.executeRow reader
 
 
 

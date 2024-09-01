@@ -174,6 +174,8 @@ let DeleteChatLog (db: NpgsqlConnection)  (id: int32)  =
 
 
 
+
+
 let listChatLogs = """-- name: ListChatLogs :many
 SELECT id, session, question, answer, created_at FROM chat_logs ORDER BY id
 """
@@ -192,6 +194,7 @@ let ListChatLogs (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listChatLogs
   |> Sql.execute reader
+
 
 
 

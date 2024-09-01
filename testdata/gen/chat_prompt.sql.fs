@@ -512,6 +512,9 @@ let HasChatPromptPermission (db: NpgsqlConnection)  (arg: HasChatPromptPermissio
 
 
 
+
+
+
 let updateChatPrompt = """-- name: UpdateChatPrompt :one
 UPDATE chat_prompt SET chat_session_uuid = @chat_session_uuid, role = @role, content = @content, score = @score, user_id = @user_id, updated_at = now(), updated_by = @updated_by
 WHERE id = @id
