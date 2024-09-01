@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: docker-compose
-        run: docker-compose up -d
+        run: docker compose up -d
         working-directory: testdata/gen
 
       - name: show docker ps
@@ -60,7 +60,7 @@ jobs:
           echo $DATABASE_URL
           dotnet run
         working-directory: testdata/gen/sqlc_test
-      
+
   #  - name: Test
   #  - name: Test
   #    run: dotnet test --no-build --verbosity normal
