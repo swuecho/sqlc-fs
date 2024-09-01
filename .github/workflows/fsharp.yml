@@ -15,16 +15,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: docker-compose
+      - name: docker compose
         run: docker compose up -d
         working-directory: testdata/gen
 
       - name: show docker ps
-        run: docker-compose ps
+        run: docker compose ps
         working-directory: testdata/gen
 
       - name: show docker logs
-        run: docker-compose logs
+        run: docker compose logs
         working-directory: testdata/gen
 
       - name: Setup .NET
