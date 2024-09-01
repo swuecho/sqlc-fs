@@ -117,6 +117,7 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection)  (userId: int32) =
     Summary = read.string "summary"
     Tags = read.string "tags"
     CreatedAt = read.dateTime "created_at"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotMetaByUserID
@@ -157,6 +158,7 @@ let ChatSnapshotSearch (db: NpgsqlConnection)  (arg: ChatSnapshotSearchParams) =
     Uuid = read.string "uuid"
     Title = read.string "title"
     Rank = read.float "rank"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query chatSnapshotSearch
@@ -334,6 +336,8 @@ let DeleteChatSnapshot (db: NpgsqlConnection)  (arg: DeleteChatSnapshotParams)  
 
 
 
+
+
 let listChatSnapshots = """-- name: ListChatSnapshots :many
 SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, created_at, text, search_vector FROM chat_snapshot ORDER BY id
 """
@@ -355,10 +359,12 @@ let ListChatSnapshots (db: NpgsqlConnection)  =
     CreatedAt = read.dateTime "created_at"
     Text = read.string "text"
     SearchVector = read.stringOrNone "search_vector"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listChatSnapshots
   |> Sql.execute reader
+
 
 
 

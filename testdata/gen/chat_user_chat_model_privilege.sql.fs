@@ -152,6 +152,8 @@ let DeleteUserChatModelPrivilege (db: NpgsqlConnection)  (id: int32)  =
 
 
 
+
+
 let listUserChatModelPrivileges = """-- name: ListUserChatModelPrivileges :many
 SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_by, updated_by FROM user_chat_model_privilege ORDER BY id
 """
@@ -169,6 +171,7 @@ let ListUserChatModelPrivileges (db: NpgsqlConnection)  =
     UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivileges
@@ -205,6 +208,7 @@ let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection)  (userId: int32) 
     UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesByUserID
@@ -245,6 +249,7 @@ let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection)  =
     FullName = read.string "full_name"
     ChatModelName = read.string "chat_model_name"
     RateLimit = read.int "rate_limit"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesRateLimit
@@ -290,6 +295,7 @@ let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection)  (arg: RateLimiteByUse
   |> Sql.query rateLimiteByUserAndSessionUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
+
 
 
 

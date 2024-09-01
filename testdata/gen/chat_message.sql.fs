@@ -198,6 +198,7 @@ let GetAllChatMessages (db: NpgsqlConnection)  =
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
     Raw = read.string "raw"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatMessages
@@ -394,6 +395,7 @@ let GetChatMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessagesBy
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
     Raw = read.string "raw"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getChatMessagesBySessionUUID
@@ -581,6 +583,7 @@ let GetLastNChatMessages (db: NpgsqlConnection)  (arg: GetLastNChatMessagesParam
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
     Raw = read.string "raw"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getLastNChatMessages
@@ -640,6 +643,7 @@ let GetLatestMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetLatestMessag
     IsPin = read.bool "is_pin"
     TokenCount = read.int "token_count"
     Raw = read.string "raw"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getLatestMessagesBySessionUUID
@@ -684,6 +688,9 @@ let HasChatMessagePermission (db: NpgsqlConnection)  (arg: HasChatMessagePermiss
   |> Sql.query hasChatMessagePermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
+
+
+
 
 
 

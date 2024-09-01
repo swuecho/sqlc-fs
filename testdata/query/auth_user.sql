@@ -4,6 +4,15 @@ SELECT * FROM auth_user ORDER BY id;
 -- name: ListAuthUsers :many
 SELECT * FROM auth_user ORDER BY id LIMIT $1 OFFSET $2;
 
+-- name: ListAuthUserID :many
+SELECT id FROM auth_user;
+
+-- name: TotalAuthUsers :one
+SELECT COUNT(*) FROM auth_user;
+
+-- name: ListAuthUserIDandEmail :many
+SELECT id, email FROM auth_user;
+
 -- name: GetAuthUserByID :one
 SELECT * FROM auth_user WHERE id = $1;
 

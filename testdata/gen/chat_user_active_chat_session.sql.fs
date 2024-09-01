@@ -219,6 +219,8 @@ let GetUserActiveChatSession (db: NpgsqlConnection)  (userId: int32)  =
 
 
 
+
+
 let listUserActiveChatSessions = """-- name: ListUserActiveChatSessions :many
 SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_chat_session ORDER BY id
 """
@@ -233,10 +235,12 @@ let ListUserActiveChatSessions (db: NpgsqlConnection)  =
     ChatSessionUuid = read.string "chat_session_uuid"
     CreatedAt = read.dateTime "created_at"
     UpdatedAt = read.dateTime "updated_at"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserActiveChatSessions
   |> Sql.execute reader
+
 
 
 

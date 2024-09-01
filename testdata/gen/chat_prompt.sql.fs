@@ -171,6 +171,7 @@ let GetAllChatPrompts (db: NpgsqlConnection)  =
     UpdatedBy = read.int "updated_by"
     IsDeleted = read.bool "is_deleted"
     TokenCount = read.int "token_count"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatPrompts
@@ -303,6 +304,7 @@ let GetChatPromptsBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string
     UpdatedBy = read.int "updated_by"
     IsDeleted = read.bool "is_deleted"
     TokenCount = read.int "token_count"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsBySessionUUID
@@ -343,6 +345,7 @@ let GetChatPromptsByUserID (db: NpgsqlConnection)  (userId: int32) =
     UpdatedBy = read.int "updated_by"
     IsDeleted = read.bool "is_deleted"
     TokenCount = read.int "token_count"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsByUserID
@@ -383,6 +386,7 @@ let GetChatPromptsBysession_uuid (db: NpgsqlConnection)  (chatSessionUuid: strin
     UpdatedBy = read.int "updated_by"
     IsDeleted = read.bool "is_deleted"
     TokenCount = read.int "token_count"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getChatPromptsBysession_uuid
@@ -480,6 +484,9 @@ let HasChatPromptPermission (db: NpgsqlConnection)  (arg: HasChatPromptPermissio
   |> Sql.query hasChatPromptPermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
+
+
+
 
 
 
