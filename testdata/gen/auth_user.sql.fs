@@ -136,6 +136,7 @@ let GetAllAuthUsers (db: NpgsqlConnection)  =
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
     DateJoined = read.dateTime "date_joined"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getAllAuthUsers
@@ -377,6 +378,7 @@ let GetUserStats (db: NpgsqlConnection)  (arg: GetUserStatsParams) =
     TotalChatMessages3Days = read.int64 "total_chat_messages_3_days"
     TotalTokenCount3Days = read.int64 "total_token_count_3_days"
     RateLimit = read.int "rate_limit"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getUserStats
@@ -404,6 +406,7 @@ SELECT id FROM auth_user
 
 let ListAuthUserID (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> read.int "id"
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listAuthUserID
@@ -433,6 +436,7 @@ let ListAuthUserIDandEmail (db: NpgsqlConnection)  =
   let reader = fun (read:RowReader) -> {
     Id = read.int "id"
     Email = read.string "email"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listAuthUserIDandEmail
@@ -471,6 +475,7 @@ let ListAuthUsers (db: NpgsqlConnection)  (arg: ListAuthUsersParams) =
     IsStaff = read.bool "is_staff"
     IsActive = read.bool "is_active"
     DateJoined = read.dateTime "date_joined"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listAuthUsers

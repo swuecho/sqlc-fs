@@ -66,13 +66,13 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
 let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }} =
   {{- if eq (len .Ret.UniqueFields) 1 }}
   let reader = fun (read:RowReader) -> read.{{(index .Ret.UniqueFields 0).Type | type2readerFunc }} "{{(index .Ret.UniqueFields 0).Name}}"
-  {{- else }}
+  {{ else }}
   let reader = fun (read:RowReader) -> {
   {{- range $i, $e := .Ret.UniqueFields}}
     {{$e.Name | pascalCase }} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
   {{- end -}}
   }
-  {{- end }}
+  {{ end }}
   db 
   |> Sql.existingConnection
   |> Sql.query {{.ConstantName}}

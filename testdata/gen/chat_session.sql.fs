@@ -286,6 +286,7 @@ let GetAllChatSessions (db: NpgsqlConnection)  =
     MaxTokens = read.int "max_tokens"
     N = read.int "n"
     Debug = read.bool "debug"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getAllChatSessions
@@ -469,6 +470,7 @@ let GetChatSessionsByUserID (db: NpgsqlConnection)  (userId: int32) =
     MaxTokens = read.int "max_tokens"
     N = read.int "n"
     Debug = read.bool "debug"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query getChatSessionsByUserID

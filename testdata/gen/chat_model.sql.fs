@@ -284,6 +284,7 @@ let ListChatModels (db: NpgsqlConnection)  =
     ApiAuthKey = read.string "api_auth_key"
     UserId = read.int "user_id"
     EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listChatModels
@@ -319,6 +320,7 @@ let ListSystemChatModels (db: NpgsqlConnection)  =
     ApiAuthKey = read.string "api_auth_key"
     UserId = read.int "user_id"
     EnablePerModeRatelimit = read.bool "enable_per_mode_ratelimit"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listSystemChatModels

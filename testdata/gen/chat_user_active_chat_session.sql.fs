@@ -235,6 +235,7 @@ let ListUserActiveChatSessions (db: NpgsqlConnection)  =
     ChatSessionUuid = read.string "chat_session_uuid"
     CreatedAt = read.dateTime "created_at"
     UpdatedAt = read.dateTime "updated_at"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserActiveChatSessions

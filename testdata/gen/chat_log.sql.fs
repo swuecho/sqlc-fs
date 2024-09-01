@@ -190,6 +190,7 @@ let ListChatLogs (db: NpgsqlConnection)  =
     Question = read.string "question"
     Answer = read.string "answer"
     CreatedAt = read.dateTime "created_at"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listChatLogs

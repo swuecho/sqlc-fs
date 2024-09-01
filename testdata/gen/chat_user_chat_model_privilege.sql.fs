@@ -171,6 +171,7 @@ let ListUserChatModelPrivileges (db: NpgsqlConnection)  =
     UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivileges
@@ -207,6 +208,7 @@ let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection)  (userId: int32) 
     UpdatedAt = read.dateTime "updated_at"
     CreatedBy = read.int "created_by"
     UpdatedBy = read.int "updated_by"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesByUserID
@@ -247,6 +249,7 @@ let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection)  =
     FullName = read.string "full_name"
     ChatModelName = read.string "chat_model_name"
     RateLimit = read.int "rate_limit"}
+  
   db 
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivilegesRateLimit
