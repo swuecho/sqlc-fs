@@ -93,6 +93,7 @@ let CreateChatPrompt (db: NpgsqlConnection)  (arg: CreateChatPromptParams)  =
 
 
 
+
 let deleteChatPrompt = """-- name: DeleteChatPrompt :exec
 UPDATE chat_prompt 
 SET is_deleted = true, updated_at = now()

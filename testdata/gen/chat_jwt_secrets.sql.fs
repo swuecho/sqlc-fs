@@ -67,6 +67,36 @@ let CreateJwtSecret (db: NpgsqlConnection)  (arg: CreateJwtSecretParams)  =
 
 
 
+let createJwtSecretLastID = """-- name: CreateJwtSecretLastID :execlastid
+INSERT INTO jwt_secrets (name, secret, audience)
+VALUES (@name, @secret, @audience)
+"""
+
+
+type CreateJwtSecretLastIDParams = {
+  Name: string;
+  Secret: string;
+  Audience: string;
+}
+
+
+
+
+
+
+
+
+// execlastid: implemented with SELECT lastval() after INSERT. Prefer :one with RETURNING for PostgreSQL.
+let CreateJwtSecretLastID (db: NpgsqlConnection)  (arg: CreateJwtSecretLastIDParams) =
+  use cmd = new NpgsqlCommand(createJwtSecretLastID, db)
+  cmd.Parameters.AddWithValue("@name", arg.Name) |> ignore
+  cmd.Parameters.AddWithValue("@secret", arg.Secret) |> ignore
+  cmd.Parameters.AddWithValue("@audience", arg.Audience) |> ignore
+
+  cmd.ExecuteNonQuery() |> ignore
+  use lv = new NpgsqlCommand("SELECT lastval()", db)
+  Convert.ToInt64(lv.ExecuteScalar())
+
 
 
 

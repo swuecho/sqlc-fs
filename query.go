@@ -254,10 +254,9 @@ func validateQueryCommand(q *plugin.Query) error {
 		metadata.CmdCopyFrom,
 		metadata.CmdBatchExec,
 		metadata.CmdBatchMany,
-		metadata.CmdBatchOne:
+		metadata.CmdBatchOne,
+		metadata.CmdExecLastID:
 		return nil
-	case metadata.CmdExecLastID:
-		return fmt.Errorf("unsupported sqlc command %s for query %s: sqlc-fs does not generate F# for this annotation yet", q.Cmd, q.Name)
 	default:
 		return fmt.Errorf("unsupported sqlc command %s for query %s", q.Cmd, q.Name)
 	}
@@ -320,26 +319,26 @@ func (q Query) BatchResultRowType() string {
 	return q.Ret.Typ
 }
 
-// BatchBindParamsFSharp emits NpgsqlBatchCommand parameter binding lines (indented with 4 spaces).
+// BatchBindParamsFSharp emits NpgsqlBatchCommand parameter binding lines (indented for nested batch loop body).
 func (q Query) BatchBindParamsFSharp() string {
-	return q.Arg.batchBindParamsFSharp("bc", "arg", q.Arg.IsStruct())
+	return q.Arg.batchBindParamsFSharp("bc", "arg", q.Arg.IsStruct(), "    ")
 }
 
 // CommandBindParamsFSharp binds parameters on an NpgsqlCommand (e.g. :execlastid).
 func (q Query) CommandBindParamsFSharp() string {
 	if q.Arg.IsStruct() {
-		return q.Arg.batchBindParamsFSharp("cmd", "arg", true)
+		return q.Arg.batchBindParamsFSharp("cmd", "arg", true, "  ")
 	}
 	if q.Arg.isEmpty() {
 		return ""
 	}
-	return q.Arg.batchBindParamsFSharp("cmd", q.Arg.Name, false)
+	return q.Arg.batchBindParamsFSharp("cmd", q.Arg.Name, false, "  ")
 }
 
 // batchBindParamsFSharp binds one statement's parameters. When useStructFields is true, accessors are
 // rootArg + "." + PascalCase(field); otherwise rootArg is the full accessor (e.g. batch loop variable "arg"
-// or a single scalar parameter name).
-func (v QueryValue) batchBindParamsFSharp(cmdVar, rootArg string, useStructFields bool) string {
+// or a single scalar parameter name). lineIndent must match surrounding F# indentation (e.g. "  " in a top-level let body).
+func (v QueryValue) batchBindParamsFSharp(cmdVar, rootArg string, useStructFields bool, lineIndent string) string {
 	fields := v.CopyFromFields()
 	var b strings.Builder
 	for _, f := range fields {
@@ -355,10 +354,10 @@ func (v QueryValue) batchBindParamsFSharp(cmdVar, rootArg string, useStructField
 			accessor = rootArg
 		}
 		if isOptionType(f.Type) {
-			fmt.Fprintf(&b, "    %s.Parameters.AddWithValue(%q, match %s with | Some v -> box v | None -> box DBNull.Value) |> ignore\n",
-				cmdVar, param, accessor)
+			fmt.Fprintf(&b, "%s%s.Parameters.AddWithValue(%q, match %s with | Some v -> box v | None -> box DBNull.Value) |> ignore\n",
+				lineIndent, cmdVar, param, accessor)
 		} else {
-			fmt.Fprintf(&b, "    %s.Parameters.AddWithValue(%q, %s) |> ignore\n", cmdVar, param, accessor)
+			fmt.Fprintf(&b, "%s%s.Parameters.AddWithValue(%q, %s) |> ignore\n", lineIndent, cmdVar, param, accessor)
 		}
 	}
 	return b.String()

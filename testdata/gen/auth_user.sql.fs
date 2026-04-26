@@ -84,6 +84,7 @@ let CreateAuthUser (db: NpgsqlConnection)  (arg: CreateAuthUserParams)  =
 
 
 
+
 let deleteAuthUser = """-- name: DeleteAuthUser :exec
 DELETE FROM auth_user WHERE email = @email
 """

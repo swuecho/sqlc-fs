@@ -19,8 +19,9 @@ Supported query annotations:
 - `:execresult`
 - `:copyfrom`
 - `:batchexec`, `:batchmany`, and `:batchone` (via `NpgsqlBatch` / `NpgsqlBatchCommand`; row reading uses `RowReader` from Npgsql.FSharp)
+- `:execlastid` (PostgreSQL: runs the statement then `SELECT lastval()` on the same connection). This is not the same as MySQL `LastInsertId`; it is wrong if the insert does not advance a sequence, or when triggers/other inserts run on the same connection. Prefer `:one` with `RETURNING id` when possible.
 
-Unsupported query annotations fail generation with a clear error instead of producing an empty function. This currently includes `:execlastid`.
+Unsupported query annotations fail generation with a clear error instead of producing an empty function (unknown command names).
 
 Batch methods are synchronous only (`emit_async_code` does not yet emit async batch variants).
 

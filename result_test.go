@@ -99,13 +99,13 @@ func TestType2ReaderFuncUsesArrayReaders(t *testing.T) {
 	}
 }
 
-func TestUnsupportedCommandsReturnErrors(t *testing.T) {
+func TestUnknownQueryCommandReturnsError(t *testing.T) {
 	req := &plugin.CodeGenRequest{
 		Settings: &plugin.Settings{},
 		Catalog:  &plugin.Catalog{DefaultSchema: "public"},
 		Queries: []*plugin.Query{{
-			Name: "InsertAuthorLastID",
-			Cmd:  metadata.CmdExecLastID,
+			Name: "Nope",
+			Cmd:  ":not_a_sqlc_command",
 		}},
 	}
 
@@ -113,8 +113,55 @@ func TestUnsupportedCommandsReturnErrors(t *testing.T) {
 	if err == nil {
 		t.Fatal("buildQueries() error = nil, want unsupported command error")
 	}
-	if !strings.Contains(err.Error(), "unsupported sqlc command :execlastid") {
+	if !strings.Contains(err.Error(), "unsupported sqlc command :not_a_sqlc_command") {
 		t.Fatalf("buildQueries() error = %q, want unsupported command message", err)
+	}
+}
+
+func TestGenerateEmitsExecLastID(t *testing.T) {
+	req := &plugin.CodeGenRequest{
+		Settings: &plugin.Settings{Codegen: &plugin.Codegen{}},
+		Catalog:  &plugin.Catalog{DefaultSchema: "public"},
+		Queries: []*plugin.Query{{
+			Text:     "INSERT INTO jwt_secrets (name, secret, audience) VALUES ($1, $2, $3)",
+			Name:     "CreateJwtSecretLastID",
+			Cmd:      metadata.CmdExecLastID,
+			Filename: "chat_jwt_secrets.sql",
+			Params: []*plugin.Parameter{
+				param(1, "name", "text"),
+				param(2, "secret", "text"),
+				param(3, "audience", "text"),
+			},
+			Columns: []*plugin.Column{{
+				Name:    "id",
+				NotNull: true,
+				Type:    &plugin.Identifier{Name: "pg_catalog.int8"},
+			}},
+		}},
+	}
+	resp, err := Generate(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got string
+	for _, f := range resp.Files {
+		if f.Name == "chat_jwt_secrets.sql.fs" {
+			got = string(f.Contents)
+			break
+		}
+	}
+	if got == "" {
+		t.Fatal("missing chat_jwt_secrets.sql.fs")
+	}
+	for _, want := range []string{
+		`let CreateJwtSecretLastID (db: NpgsqlConnection)`,
+		`new NpgsqlCommand(createJwtSecretLastID, db)`,
+		`SELECT lastval()`,
+		`Convert.ToInt64(lv.ExecuteScalar())`,
+	} {
+		if !strings.Contains(got, want) {
+			t.Fatalf("missing %q in:\n%s", want, got)
+		}
 	}
 }
 

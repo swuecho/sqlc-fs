@@ -193,6 +193,7 @@ let CreateChatModels (db: NpgsqlConnection) (args: seq<CreateChatModelsParams>) 
 
 
 
+
 let deleteChatModel = """-- name: DeleteChatModel :exec
 DELETE FROM chat_model WHERE id = @id and user_id = @user_id
 """

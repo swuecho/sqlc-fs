@@ -122,6 +122,18 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{ end }}
 
+{{- if eq .Cmd ":execlastid"}}
+{{range .Comments}}//{{.}}
+{{end -}}
+// execlastid: implemented with SELECT lastval() after INSERT. Prefer :one with RETURNING for PostgreSQL.
+let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- end }} =
+  use cmd = new NpgsqlCommand({{.ConstantName}}, db)
+{{.CommandBindParamsFSharp}}
+  cmd.ExecuteNonQuery() |> ignore
+  use lv = new NpgsqlCommand("SELECT lastval()", db)
+  {{.ExecLastIDScalarExpr}}
+{{- end }}
+
 {{- if eq .Cmd ":batchexec"}}
 {{range .Comments}}//{{.}}
 {{end -}}

@@ -128,6 +128,7 @@ let CreateChatSessionByUUID (db: NpgsqlConnection)  (arg: CreateChatSessionByUUI
 
 
 
+
 let createOrUpdateChatSessionByUUID = """-- name: CreateOrUpdateChatSessionByUUID :one
 INSERT INTO chat_session(uuid, user_id, topic, max_length, temperature, model, max_tokens, top_p, n, debug)
 VALUES (@uuid, @user_id, @topic, @max_length, @temperature, @model, @max_tokens, @top_p, @n, @debug)
