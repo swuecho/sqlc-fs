@@ -72,6 +72,7 @@ open System
 
 
 
+
 let getRateLimit = """-- name: GetRateLimit :one
 SELECT rate_limit AS rate_limit
 FROM auth_user_management
@@ -91,8 +92,6 @@ let GetRateLimit (db: NpgsqlConnection)  (userId: int32)  =
   |> Sql.query getRateLimit
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.executeRow reader
-
-
 
 
 

@@ -4,6 +4,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/swuecho/sqlc-fs/internal/metadata"
 	"github.com/swuecho/sqlc-fs/internal/plugin"
 )
 
@@ -95,6 +96,80 @@ func TestType2ReaderFuncUsesArrayReaders(t *testing.T) {
 	}
 	if got := type2readerFuncParam("jsonb"); got != "jsonb" {
 		t.Fatalf("type2readerFuncParam(jsonb) = %q, want jsonb", got)
+	}
+}
+
+func TestUnsupportedCommandsReturnErrors(t *testing.T) {
+	req := &plugin.CodeGenRequest{
+		Settings: &plugin.Settings{},
+		Catalog:  &plugin.Catalog{DefaultSchema: "public"},
+		Queries: []*plugin.Query{{
+			Name: "BatchDeleteAuthors",
+			Cmd:  metadata.CmdBatchExec,
+		}},
+	}
+
+	_, err := buildQueries(req, nil)
+	if err == nil {
+		t.Fatal("buildQueries() error = nil, want unsupported command error")
+	}
+	if !strings.Contains(err.Error(), "unsupported sqlc command :batchexec") {
+		t.Fatalf("buildQueries() error = %q, want unsupported command message", err)
+	}
+}
+
+func TestGenerateEmitsCopyFromFunction(t *testing.T) {
+	req := &plugin.CodeGenRequest{
+		Settings: &plugin.Settings{
+			Codegen: &plugin.Codegen{},
+		},
+		Catalog: &plugin.Catalog{DefaultSchema: "public"},
+		Queries: []*plugin.Query{{
+			Text:     "INSERT INTO authors (name, bio) VALUES ($1, $2)",
+			Name:     "CreateAuthors",
+			Cmd:      metadata.CmdCopyFrom,
+			Filename: "authors.sql",
+			Params: []*plugin.Parameter{
+				param(1, "name", "text"),
+				{
+					Number: 2,
+					Column: &plugin.Column{
+						Name:    "bio",
+						NotNull: false,
+						Type:    &plugin.Identifier{Name: "text"},
+					},
+				},
+			},
+			InsertIntoTable: &plugin.Identifier{Schema: "public", Name: "authors"},
+		}},
+	}
+
+	resp, err := Generate(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var got string
+	for _, file := range resp.Files {
+		if file.Name == "authors.sql.fs" {
+			got = string(file.Contents)
+			break
+		}
+	}
+	if got == "" {
+		t.Fatal("Generate() did not emit authors.sql.fs")
+	}
+	for _, want := range []string{
+		`type CreateAuthorsParams = {`,
+		`Bio: string option`,
+		`let CreateAuthors (db: NpgsqlConnection) (args: seq<CreateAuthorsParams>) =`,
+		`db.BeginBinaryImport("COPY \"public\".\"authors\" (\"name\", \"bio\") FROM STDIN (FORMAT BINARY)")`,
+		`match arg.Bio with`,
+		`| None -> writer.WriteNull()`,
+	} {
+		if !strings.Contains(got, want) {
+			t.Fatalf("generated copyfrom code missing %q:\n%s", want, got)
+		}
 	}
 }
 

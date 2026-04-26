@@ -4,6 +4,7 @@ const (
 	CmdExec       = ":exec"
 	CmdExecResult = ":execresult"
 	CmdExecRows   = ":execrows"
+	CmdExecLastID = ":execlastid"
 	CmdMany       = ":many"
 	CmdOne        = ":one"
 	CmdCopyFrom   = ":copyfrom"

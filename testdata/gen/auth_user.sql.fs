@@ -80,7 +80,6 @@ let CreateAuthUser (db: NpgsqlConnection)  (arg: CreateAuthUserParams)  =
 
 
 
-
 let deleteAuthUser = """-- name: DeleteAuthUser :exec
 DELETE FROM auth_user WHERE email = @email
 """
@@ -96,8 +95,6 @@ let DeleteAuthUser (db: NpgsqlConnection)  (email: string)  =
   |> Sql.query deleteAuthUser
   |> Sql.parameters  [ "@email", Sql.string email ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -152,8 +149,6 @@ let GetAllAuthUsers (db: NpgsqlConnection)  =
 
 
 
-
-
 let getAuthUserByEmail = """-- name: GetAuthUserByEmail :one
 SELECT id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined FROM auth_user WHERE email = @email
 """
@@ -181,8 +176,6 @@ let GetAuthUserByEmail (db: NpgsqlConnection)  (email: string)  =
   |> Sql.query getAuthUserByEmail
   |> Sql.parameters  [ "@email", Sql.string email ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -252,8 +245,6 @@ let GetAuthUserByID (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let getTotalActiveUserCount = """-- name: GetTotalActiveUserCount :one
 SELECT COUNT(*) FROM auth_user WHERE is_active = true
 """
@@ -268,8 +259,6 @@ let GetTotalActiveUserCount (db: NpgsqlConnection)   =
   |> Sql.existingConnection
   |> Sql.query getTotalActiveUserCount
   |> Sql.executeRow reader
-
-
 
 
 
@@ -308,8 +297,6 @@ let GetUserByEmail (db: NpgsqlConnection)  (email: string)  =
   |> Sql.query getUserByEmail
   |> Sql.parameters  [ "@email", Sql.string email ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -395,8 +382,6 @@ let GetUserStats (db: NpgsqlConnection)  (arg: GetUserStatsParams) =
 
 
 
-
-
 let listAuthUserID = """-- name: ListAuthUserID :many
 SELECT id FROM auth_user
 """
@@ -411,8 +396,6 @@ let ListAuthUserID (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listAuthUserID
   |> Sql.execute reader
-
-
 
 
 
@@ -441,8 +424,6 @@ let ListAuthUserIDandEmail (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listAuthUserIDandEmail
   |> Sql.execute reader
-
-
 
 
 
@@ -498,8 +479,6 @@ let ListAuthUsers (db: NpgsqlConnection)  (arg: ListAuthUsersParams) =
 
 
 
-
-
 let totalAuthUsers = """-- name: TotalAuthUsers :one
 SELECT COUNT(*) FROM auth_user
 """
@@ -514,8 +493,6 @@ let TotalAuthUsers (db: NpgsqlConnection)   =
   |> Sql.existingConnection
   |> Sql.query totalAuthUsers
   |> Sql.executeRow reader
-
-
 
 
 
@@ -567,8 +544,6 @@ let UpdateAuthUser (db: NpgsqlConnection)  (arg: UpdateAuthUserParams)  =
 
 
 
-
-
 let updateAuthUserByEmail = """-- name: UpdateAuthUserByEmail :one
 UPDATE auth_user SET first_name = @first_name, last_name= @last_name, last_login = now() 
 WHERE email = @email
@@ -600,8 +575,6 @@ let UpdateAuthUserByEmail (db: NpgsqlConnection)  (arg: UpdateAuthUserByEmailPar
   |> Sql.query updateAuthUserByEmail
   |> Sql.parameters  [ "@email", Sql.string arg.Email; "@first_name", Sql.string arg.FirstName; "@last_name", Sql.string arg.LastName ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -660,8 +633,6 @@ let UpdateAuthUserRateLimitByEmail (db: NpgsqlConnection)  (arg: UpdateAuthUserR
 
 
 
-
-
 let updateUserPassword = """-- name: UpdateUserPassword :exec
 UPDATE auth_user SET "password" = @password WHERE email = @email
 """
@@ -681,8 +652,6 @@ let UpdateUserPassword (db: NpgsqlConnection)  (arg: UpdateUserPasswordParams)  
   |> Sql.query updateUserPassword
   |> Sql.parameters  [ "@email", Sql.string arg.Email; "@password", Sql.string arg.Password ]
   |> Sql.executeNonQuery
-
-
 
 
 

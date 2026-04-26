@@ -22,6 +22,7 @@ open System
 
 
 
+
 let createChatPrompt = """-- name: CreateChatPrompt :one
 INSERT INTO chat_prompt (uuid, chat_session_uuid, role, content, token_count, user_id, created_by, updated_by)
 VALUES (@uuid, @chat_session_uuid, @role, @content, @token_count, @user_id, @created_by, @updated_by)
@@ -88,8 +89,6 @@ let CreateChatPrompt (db: NpgsqlConnection)  (arg: CreateChatPromptParams)  =
 
 
 
-
-
 let deleteChatPrompt = """-- name: DeleteChatPrompt :exec
 UPDATE chat_prompt 
 SET is_deleted = true, updated_at = now()
@@ -113,8 +112,6 @@ let DeleteChatPrompt (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let deleteChatPromptByUUID = """-- name: DeleteChatPromptByUUID :exec
 UPDATE chat_prompt
 SET is_deleted = true, updated_at = now()
@@ -132,8 +129,6 @@ let DeleteChatPromptByUUID (db: NpgsqlConnection)  (uuid: string)  =
   |> Sql.query deleteChatPromptByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -193,8 +188,6 @@ let GetAllChatPrompts (db: NpgsqlConnection)  =
 
 
 
-
-
 let getChatPromptByID = """-- name: GetChatPromptByID :one
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, token_count FROM chat_prompt
 WHERE is_deleted = false and  id = @id
@@ -225,8 +218,6 @@ let GetChatPromptByID (db: NpgsqlConnection)  (id: int32)  =
   |> Sql.query getChatPromptByID
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -277,8 +268,6 @@ let GetChatPromptByUUID (db: NpgsqlConnection)  (uuid: string)  =
 
 
 
-
-
 let getChatPromptsBySessionUUID = """-- name: GetChatPromptsBySessionUUID :many
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, token_count
 FROM chat_prompt 
@@ -310,8 +299,6 @@ let GetChatPromptsBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: string
   |> Sql.query getChatPromptsBySessionUUID
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.execute reader
-
-
 
 
 
@@ -359,8 +346,6 @@ let GetChatPromptsByUserID (db: NpgsqlConnection)  (userId: int32) =
 
 
 
-
-
 let getChatPromptsBysession_uuid = """-- name: GetChatPromptsBysession_uuid :many
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, token_count
 FROM chat_prompt 
@@ -392,8 +377,6 @@ let GetChatPromptsBysession_uuid (db: NpgsqlConnection)  (chatSessionUuid: strin
   |> Sql.query getChatPromptsBysession_uuid
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.execute reader
-
-
 
 
 
@@ -460,8 +443,6 @@ let GetOneChatPromptBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: stri
 
 
 
-
-
 let hasChatPromptPermission = """-- name: HasChatPromptPermission :one
 SELECT COUNT(*) > 0 as has_permission
 FROM chat_prompt cp
@@ -484,8 +465,6 @@ let HasChatPromptPermission (db: NpgsqlConnection)  (arg: HasChatPromptPermissio
   |> Sql.query hasChatPromptPermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -569,8 +548,6 @@ let UpdateChatPrompt (db: NpgsqlConnection)  (arg: UpdateChatPromptParams)  =
 
 
 
-
-
 let updateChatPromptByUUID = """-- name: UpdateChatPromptByUUID :one
 UPDATE chat_prompt SET content = @content, token_count = @token_count, updated_at = now()
 WHERE uuid = @uuid and is_deleted = false
@@ -607,8 +584,6 @@ let UpdateChatPromptByUUID (db: NpgsqlConnection)  (arg: UpdateChatPromptByUUIDP
   |> Sql.query updateChatPromptByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount ]
   |> Sql.executeRow reader
-
-
 
 
 

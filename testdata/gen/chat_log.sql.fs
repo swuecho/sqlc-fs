@@ -49,8 +49,6 @@ let ChatLogByID (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let createChatLog = """-- name: CreateChatLog :one
 INSERT INTO chat_logs (session, question, answer)
 VALUES (@session, @question, @answer)
@@ -79,7 +77,6 @@ let CreateChatLog (db: NpgsqlConnection)  (arg: CreateChatLogParams)  =
   |> Sql.query createChatLog
   |> Sql.parameters  [ "@session", Sql.jsonb arg.Session; "@question", Sql.jsonb arg.Question; "@answer", Sql.jsonb arg.Answer ]
   |> Sql.executeRow reader
-
 
 
 
@@ -174,8 +171,6 @@ let DeleteChatLog (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let listChatLogs = """-- name: ListChatLogs :many
 SELECT id, session, question, answer, created_at FROM chat_logs ORDER BY id
 """
@@ -195,8 +190,6 @@ let ListChatLogs (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listChatLogs
   |> Sql.execute reader
-
-
 
 
 
@@ -246,8 +239,6 @@ let UpdateChatLog (db: NpgsqlConnection)  (arg: UpdateChatLogParams)  =
   |> Sql.query updateChatLog
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@session", Sql.jsonb arg.Session; "@question", Sql.jsonb arg.Question; "@answer", Sql.jsonb arg.Answer ]
   |> Sql.executeRow reader
-
-
 
 
 

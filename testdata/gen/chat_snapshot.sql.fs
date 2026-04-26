@@ -52,8 +52,6 @@ let ChatSnapshotByID (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let chatSnapshotByUUID = """-- name: ChatSnapshotByUUID :one
 SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, created_at, text, search_vector FROM chat_snapshot WHERE uuid = @uuid
 """
@@ -82,8 +80,6 @@ let ChatSnapshotByUUID (db: NpgsqlConnection)  (uuid: string)  =
   |> Sql.query chatSnapshotByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -131,8 +127,6 @@ let ChatSnapshotMetaByUserID (db: NpgsqlConnection)  (userId: int32) =
 
 
 
-
-
 let chatSnapshotSearch = """-- name: ChatSnapshotSearch :many
 SELECT uuid, title, ts_rank(search_vector, websearch_to_tsquery(@search), 1) as rank
 FROM chat_snapshot
@@ -164,7 +158,6 @@ let ChatSnapshotSearch (db: NpgsqlConnection)  (arg: ChatSnapshotSearchParams) =
   |> Sql.query chatSnapshotSearch
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@search", Sql.string arg.Search ]
   |> Sql.execute reader
-
 
 
 
@@ -222,8 +215,6 @@ let CreateChatSnapshot (db: NpgsqlConnection)  (arg: CreateChatSnapshotParams)  
   |> Sql.query createChatSnapshot
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@title", Sql.string arg.Title; "@model", Sql.string arg.Model; "@summary", Sql.string arg.Summary; "@tags", Sql.jsonb arg.Tags; "@conversation", Sql.jsonb arg.Conversation; "@session", Sql.jsonb arg.Session; "@text", Sql.string arg.Text ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -336,8 +327,6 @@ let DeleteChatSnapshot (db: NpgsqlConnection)  (arg: DeleteChatSnapshotParams)  
 
 
 
-
-
 let listChatSnapshots = """-- name: ListChatSnapshots :many
 SELECT id, uuid, user_id, title, summary, model, tags, session, conversation, created_at, text, search_vector FROM chat_snapshot ORDER BY id
 """
@@ -364,8 +353,6 @@ let ListChatSnapshots (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listChatSnapshots
   |> Sql.execute reader
-
-
 
 
 
@@ -446,8 +433,6 @@ let UpdateChatSnapshot (db: NpgsqlConnection)  (arg: UpdateChatSnapshotParams)  
 
 
 
-
-
 let updateChatSnapshotMetaByUUID = """-- name: UpdateChatSnapshotMetaByUUID :exec
 UPDATE chat_snapshot
 SET title = @title, summary = @summary
@@ -471,8 +456,6 @@ let UpdateChatSnapshotMetaByUUID (db: NpgsqlConnection)  (arg: UpdateChatSnapsho
   |> Sql.query updateChatSnapshotMetaByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@title", Sql.string arg.Title; "@summary", Sql.string arg.Summary; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeNonQuery
-
-
 
 
 

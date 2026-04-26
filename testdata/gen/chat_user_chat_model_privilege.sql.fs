@@ -30,6 +30,7 @@ open System
 
 
 
+
 let createUserChatModelPrivilege = """-- name: CreateUserChatModelPrivilege :one
 INSERT INTO user_chat_model_privilege (user_id, chat_model_id, rate_limit, created_by, updated_by)
 VALUES (@user_id, @chat_model_id, @rate_limit, @created_by, @updated_by)
@@ -63,8 +64,6 @@ let CreateUserChatModelPrivilege (db: NpgsqlConnection)  (arg: CreateUserChatMod
   |> Sql.query createUserChatModelPrivilege
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_model_id", Sql.int arg.ChatModelId; "@rate_limit", Sql.int arg.RateLimit; "@created_by", Sql.int arg.CreatedBy; "@updated_by", Sql.int arg.UpdatedBy ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -152,8 +151,6 @@ let DeleteUserChatModelPrivilege (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let listUserChatModelPrivileges = """-- name: ListUserChatModelPrivileges :many
 SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_by, updated_by FROM user_chat_model_privilege ORDER BY id
 """
@@ -176,8 +173,6 @@ let ListUserChatModelPrivileges (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listUserChatModelPrivileges
   |> Sql.execute reader
-
-
 
 
 
@@ -214,8 +209,6 @@ let ListUserChatModelPrivilegesByUserID (db: NpgsqlConnection)  (userId: int32) 
   |> Sql.query listUserChatModelPrivilegesByUserID
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.execute reader
-
-
 
 
 
@@ -262,8 +255,6 @@ let ListUserChatModelPrivilegesRateLimit (db: NpgsqlConnection)  =
 
 
 
-
-
 let rateLimiteByUserAndSessionUUID = """-- name: RateLimiteByUserAndSessionUUID :one
 SELECT ucmp.rate_limit, cm.name AS chat_model_name
 FROM user_chat_model_privilege ucmp
@@ -295,8 +286,6 @@ let RateLimiteByUserAndSessionUUID (db: NpgsqlConnection)  (arg: RateLimiteByUse
   |> Sql.query rateLimiteByUserAndSessionUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -368,8 +357,6 @@ let UpdateUserChatModelPrivilege (db: NpgsqlConnection)  (arg: UpdateUserChatMod
 
 
 
-
-
 let userChatModelPrivilegeByID = """-- name: UserChatModelPrivilegeByID :one
 SELECT id, user_id, chat_model_id, rate_limit, created_at, updated_at, created_by, updated_by FROM user_chat_model_privilege WHERE id = @id
 """
@@ -394,8 +381,6 @@ let UserChatModelPrivilegeByID (db: NpgsqlConnection)  (id: int32)  =
   |> Sql.query userChatModelPrivilegeByID
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -434,8 +419,6 @@ let UserChatModelPrivilegeByUserAndModelID (db: NpgsqlConnection)  (arg: UserCha
   |> Sql.query userChatModelPrivilegeByUserAndModelID
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@chat_model_id", Sql.int arg.ChatModelId ]
   |> Sql.executeRow reader
-
-
 
 
 

@@ -9,7 +9,7 @@ open Npgsql.FSharp
 open System
 
 {{ if not $.Options.EmitAutoOpenModel }}
-open {{ $.Options.EmiitModelName }}
+open {{ $.Options.EmitModelName }}
 {{ end }}
 {{template "queryCode" . }}
 {{end}}
@@ -120,6 +120,25 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   {{ end -}}
   |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{ end }}
+
+{{- if eq .Cmd ":copyfrom"}}
+{{range .Comments}}//{{.}}
+{{end -}}
+let {{.MethodName}} (db: NpgsqlConnection) (args: seq<{{.Arg.Type}}>) =
+  use writer = db.BeginBinaryImport({{printf "%q" .CopyFromSQL}})
+  for arg in args do
+    writer.StartRow()
+    {{- range .Arg.CopyFromFields}}
+    {{- if isOption .Type}}
+    match {{fieldAccessor "arg" .}} with
+    | Some value -> writer.Write(value)
+    | None -> writer.WriteNull()
+    {{- else}}
+    writer.Write({{fieldAccessor "arg" .}})
+    {{- end}}
+    {{- end}}
+  writer.Complete()
+{{- end -}}
 
 {{ end }}
 {{ end }}

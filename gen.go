@@ -92,6 +92,8 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query, opt
 		"hasPrefix":       strings.HasPrefix,
 		"type2readerFunc": type2readerFunc,
 		"json2str":        jsonb2Str,
+		"isOption":        isOptionType,
+		"fieldAccessor":   fsharpFieldAccessor,
 	}
 
 	tmpl := template.Must(
