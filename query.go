@@ -143,40 +143,44 @@ func (v QueryValue) NpgsqlParams() string {
 }
 
 func type2readerFuncParam(t string) string {
-	if t == "int32" {
-		t = "int"
-	}
-	if t == "float64" || t == "float" {
-		t = "double"
-	}
-	if t == "float32" {
-		t = "float"
-	}
-
-	if t == "DateTime" {
-		t = "date"
-	}
-
+	t = normalizeReaderType(t, true)
 	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
 }
 
 func type2readerFunc(t string) string {
+	t = normalizeReaderType(t, false)
+	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
+}
+
+func normalizeReaderType(t string, forParam bool) string {
+	isArray := strings.HasSuffix(t, "[]")
+	if isArray {
+		t = strings.TrimSuffix(t, "[]")
+	}
+
 	if t == "int32" {
 		t = "int"
 	}
 	if t == "float64" || t == "float" {
 		t = "double"
 	}
-
 	if t == "float32" {
 		t = "float"
+	}
+
+	if forParam && t == "DateTime" {
+		t = "date"
 	}
 
 	if t == "jsonb" {
 		t = "string"
 	}
 
-	return sdk.ToLowerCamelCase(strings.Replace(t, " option", "OrNone", 1))
+	if isArray {
+		t += "Array"
+	}
+
+	return t
 }
 
 func (v QueryValue) ColumnNames() string {
@@ -220,7 +224,6 @@ type Query struct {
 	// Used for :copyfrom
 	Table *plugin.Identifier
 }
-
 
 func (q Query) hasRetType() bool {
 	scanned := q.Cmd == metadata.CmdOne || q.Cmd == metadata.CmdMany ||

@@ -2,13 +2,17 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/jinzhu/inflection"
 	"github.com/swuecho/sqlc-fs/internal/plugin"
 	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
+
+var dollarParamPattern = regexp.MustCompile(`\$(\d+)`)
 
 func jsonb2Str(s string) string {
 	if s == "jsonb" {
@@ -46,13 +50,19 @@ func buildStructs(req *plugin.CodeGenRequest) []Struct {
 	return structs
 }
 
-// repalce $1 -> @column_name for npgsql in query
+// replace $1 -> @column_name for npgsql in query
 func npgsqlQuery(q *plugin.Query) string {
-	sql := q.Text
+	names := map[string]string{}
 	for _, param := range q.Params {
-		sql = strings.ReplaceAll(sql, fmt.Sprintf("$%v", param.Number), fmt.Sprintf("@%s", param.Column.Name))
+		names[strconv.Itoa(int(param.Number))] = paramSQLName(param)
 	}
-	return sql
+
+	return dollarParamPattern.ReplaceAllStringFunc(q.Text, func(match string) string {
+		if name, ok := names[match[1:]]; ok {
+			return "@" + name
+		}
+		return match
+	})
 }
 
 func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error) {
@@ -183,7 +193,7 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 }
 
 func columnName(c *plugin.Column, pos int) string {
-	if c.Name != "" {
+	if c != nil && c.Name != "" {
 		return c.Name
 	}
 	return fmt.Sprintf("column_%d", pos+1)
@@ -193,11 +203,19 @@ func argName(name string) string {
 	return sdk.ToLowerCamelCase(name)
 }
 
-func paramName(p *plugin.Parameter) string {
-	if p.Column.Name != "" {
-		return argName(p.Column.Name)
+func paramSQLName(p *plugin.Parameter) string {
+	if p == nil {
+		return "column_1"
 	}
-	return fmt.Sprintf("dollar_%d", p.Number)
+	pos := int(p.Number) - 1
+	if pos < 0 {
+		pos = 0
+	}
+	return columnName(p.Column, pos)
+}
+
+func paramName(p *plugin.Parameter) string {
+	return argName(paramSQLName(p))
 }
 
 type column struct {
@@ -220,7 +238,11 @@ func columnsToStruct(req *plugin.CodeGenRequest, name string, columns []column, 
 	seen := map[string][]int{}
 	suffixes := map[int]int{}
 	for i, c := range columns {
-		colName := columnName(c.Column, i)
+		pos := i
+		if !useID && c.id > 0 {
+			pos = c.id - 1
+		}
+		colName := columnName(c.Column, pos)
 		fieldName := FieldName(colName, req.Settings)
 		baseFieldName := fieldName
 		// Track suffixes by the ID of the column, so that columns referring to the same numbered parameter can be
@@ -238,7 +260,7 @@ func columnsToStruct(req *plugin.CodeGenRequest, name string, columns []column, 
 		gs.Fields = append(gs.Fields, Field{
 			Name:   fieldName,
 			DBName: colName,
-			Type:  fsType(req, c.Column),
+			Type:   fsType(req, c.Column),
 		})
 		if _, found := seen[baseFieldName]; !found {
 			seen[baseFieldName] = []int{i}
