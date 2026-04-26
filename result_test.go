@@ -77,6 +77,21 @@ func TestGeneratedParamsUseFallbackNames(t *testing.T) {
 	}
 }
 
+func TestType2ReaderFuncUsesArrayReaders(t *testing.T) {
+	if got := type2readerFunc("string[]"); got != "stringArray" {
+		t.Fatalf("type2readerFunc(string[]) = %q, want stringArray", got)
+	}
+	if got := type2readerFunc("int32[]"); got != "intArray" {
+		t.Fatalf("type2readerFunc(int32[]) = %q, want intArray", got)
+	}
+	if got := type2readerFunc("DateTime"); got != "dateTime" {
+		t.Fatalf("type2readerFunc(DateTime) = %q, want dateTime", got)
+	}
+	if got := type2readerFuncParam("DateTime"); got != "date" {
+		t.Fatalf("type2readerFuncParam(DateTime) = %q, want date", got)
+	}
+}
+
 func param(number int32, name string, typ string) *plugin.Parameter {
 	return &plugin.Parameter{
 		Number: number,
