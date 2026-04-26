@@ -199,6 +199,17 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 			}
 		}
 
+		if gq.Cmd == metadata.CmdBatchExec || gq.Cmd == metadata.CmdBatchMany || gq.Cmd == metadata.CmdBatchOne {
+			if gq.Arg.isEmpty() {
+				return nil, fmt.Errorf("batch query %s must have parameters", gq.MethodName)
+			}
+		}
+		if gq.Cmd == metadata.CmdBatchMany || gq.Cmd == metadata.CmdBatchOne {
+			if gq.Ret.isEmpty() {
+				return nil, fmt.Errorf("batch query %s must return columns", gq.MethodName)
+			}
+		}
+
 		qs = append(qs, gq)
 	}
 	sort.Slice(qs, func(i, j int) bool { return qs[i].MethodName < qs[j].MethodName })

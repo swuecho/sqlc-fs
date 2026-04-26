@@ -104,8 +104,8 @@ func TestUnsupportedCommandsReturnErrors(t *testing.T) {
 		Settings: &plugin.Settings{},
 		Catalog:  &plugin.Catalog{DefaultSchema: "public"},
 		Queries: []*plugin.Query{{
-			Name: "BatchDeleteAuthors",
-			Cmd:  metadata.CmdBatchExec,
+			Name: "InsertAuthorLastID",
+			Cmd:  metadata.CmdExecLastID,
 		}},
 	}
 
@@ -113,8 +113,105 @@ func TestUnsupportedCommandsReturnErrors(t *testing.T) {
 	if err == nil {
 		t.Fatal("buildQueries() error = nil, want unsupported command error")
 	}
-	if !strings.Contains(err.Error(), "unsupported sqlc command :batchexec") {
+	if !strings.Contains(err.Error(), "unsupported sqlc command :execlastid") {
 		t.Fatalf("buildQueries() error = %q, want unsupported command message", err)
+	}
+}
+
+func TestGenerateEmitsBatchExec(t *testing.T) {
+	req := &plugin.CodeGenRequest{
+		Settings: &plugin.Settings{Codegen: &plugin.Codegen{}},
+		Catalog:  &plugin.Catalog{DefaultSchema: "public"},
+		Queries: []*plugin.Query{{
+			Text:     "DELETE FROM authors WHERE id = $1",
+			Name:     "BatchDeleteAuthors",
+			Cmd:      metadata.CmdBatchExec,
+			Filename: "batch_authors.sql",
+			Params:   []*plugin.Parameter{param(1, "id", "pg_catalog.int4")},
+		}},
+	}
+	resp, err := Generate(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got string
+	for _, f := range resp.Files {
+		if f.Name == "batch_authors.sql.fs" {
+			got = string(f.Contents)
+			break
+		}
+	}
+	if got == "" {
+		t.Fatal("missing batch_authors.sql.fs")
+	}
+	for _, want := range []string{
+		`let BatchDeleteAuthors (db: NpgsqlConnection) (args: seq<int32>)`,
+		`new NpgsqlBatch(db)`,
+		`NpgsqlBatchCommand(batchDeleteAuthors)`,
+		`bc.Parameters.AddWithValue("@id", arg)`,
+	} {
+		if !strings.Contains(got, want) {
+			t.Fatalf("missing %q in:\n%s", want, got)
+		}
+	}
+}
+
+func TestGenerateEmitsBatchManyAndBatchOne(t *testing.T) {
+	req := &plugin.CodeGenRequest{
+		Settings: &plugin.Settings{Codegen: &plugin.Codegen{}},
+		Catalog:  &plugin.Catalog{DefaultSchema: "public"},
+		Queries: []*plugin.Query{
+			{
+				Text:     "SELECT id, name, bio FROM authors WHERE name = $1",
+				Name:     "BatchAuthorsByName",
+				Cmd:      metadata.CmdBatchMany,
+				Filename: "batch_authors.sql",
+				Params:   []*plugin.Parameter{param(1, "name", "text")},
+				Columns: []*plugin.Column{
+					{Name: "id", NotNull: true, Type: &plugin.Identifier{Name: "pg_catalog.int4"}},
+					{Name: "name", NotNull: true, Type: &plugin.Identifier{Name: "text"}},
+					{Name: "bio", NotNull: false, Type: &plugin.Identifier{Name: "text"}},
+				},
+			},
+			{
+				Text:     "SELECT id, name, bio FROM authors WHERE id = $1 LIMIT 1",
+				Name:     "BatchAuthorByID",
+				Cmd:      metadata.CmdBatchOne,
+				Filename: "batch_authors.sql",
+				Params:   []*plugin.Parameter{param(1, "id", "pg_catalog.int4")},
+				Columns: []*plugin.Column{
+					{Name: "id", NotNull: true, Type: &plugin.Identifier{Name: "pg_catalog.int4"}},
+					{Name: "name", NotNull: true, Type: &plugin.Identifier{Name: "text"}},
+					{Name: "bio", NotNull: false, Type: &plugin.Identifier{Name: "text"}},
+				},
+			},
+		},
+	}
+	resp, err := Generate(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got string
+	for _, f := range resp.Files {
+		if f.Name == "batch_authors.sql.fs" {
+			got = string(f.Contents)
+			break
+		}
+	}
+	if got == "" {
+		t.Fatal("missing batch_authors.sql.fs")
+	}
+	if !strings.Contains(got, `let BatchAuthorsByName (db: NpgsqlConnection) (args: seq<string>)`) {
+		t.Fatalf("batchmany signature missing:\n%s", got)
+	}
+	if !strings.Contains(got, `List<list<`) || !strings.Contains(got, `readBatchRow`) {
+		t.Fatalf("batchmany reader missing:\n%s", got)
+	}
+	if !strings.Contains(got, `let BatchAuthorByID (db: NpgsqlConnection) (args: seq<int32>)`) {
+		t.Fatalf("batchone signature missing:\n%s", got)
+	}
+	if !strings.Contains(got, `batchone: expected one row`) {
+		t.Fatalf("batchone guard missing:\n%s", got)
 	}
 }
 

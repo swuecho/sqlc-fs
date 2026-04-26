@@ -251,12 +251,12 @@ func validateQueryCommand(q *plugin.Query) error {
 		metadata.CmdExec,
 		metadata.CmdExecRows,
 		metadata.CmdExecResult,
-		metadata.CmdCopyFrom:
-		return nil
-	case metadata.CmdExecLastID,
+		metadata.CmdCopyFrom,
 		metadata.CmdBatchExec,
 		metadata.CmdBatchMany,
 		metadata.CmdBatchOne:
+		return nil
+	case metadata.CmdExecLastID:
 		return fmt.Errorf("unsupported sqlc command %s for query %s: sqlc-fs does not generate F# for this annotation yet", q.Cmd, q.Name)
 	default:
 		return fmt.Errorf("unsupported sqlc command %s for query %s", q.Cmd, q.Name)
@@ -305,4 +305,81 @@ func (q Query) TableIdentifier() string {
 
 func quotePostgresIdent(s string) string {
 	return `"` + strings.ReplaceAll(s, `"`, `""`) + `"`
+}
+
+// BatchElemType is the element type of (args: seq<...>) for :batchexec / :batchmany / :batchone.
+func (q Query) BatchElemType() string {
+	return q.Arg.Type()
+}
+
+// BatchResultRowType is the type of one scanned row for :batchmany / :batchone.
+func (q Query) BatchResultRowType() string {
+	if q.Ret.Struct != nil {
+		return q.Ret.Struct.Name
+	}
+	return q.Ret.Typ
+}
+
+// BatchBindParamsFSharp emits NpgsqlBatchCommand parameter binding lines (indented with 4 spaces).
+func (q Query) BatchBindParamsFSharp() string {
+	return q.Arg.batchBindParamsFSharp("bc", "arg", q.Arg.IsStruct())
+}
+
+// CommandBindParamsFSharp binds parameters on an NpgsqlCommand (e.g. :execlastid).
+func (q Query) CommandBindParamsFSharp() string {
+	if q.Arg.IsStruct() {
+		return q.Arg.batchBindParamsFSharp("cmd", "arg", true)
+	}
+	if q.Arg.isEmpty() {
+		return ""
+	}
+	return q.Arg.batchBindParamsFSharp("cmd", q.Arg.Name, false)
+}
+
+// batchBindParamsFSharp binds one statement's parameters. When useStructFields is true, accessors are
+// rootArg + "." + PascalCase(field); otherwise rootArg is the full accessor (e.g. batch loop variable "arg"
+// or a single scalar parameter name).
+func (v QueryValue) batchBindParamsFSharp(cmdVar, rootArg string, useStructFields bool) string {
+	fields := v.CopyFromFields()
+	var b strings.Builder
+	for _, f := range fields {
+		col := f.DBName
+		if col == "" {
+			col = sdk.ToSnakeCase(f.Name)
+		}
+		param := "@" + col
+		var accessor string
+		if useStructFields {
+			accessor = rootArg + "." + sdk.ToPascalCase(f.Name)
+		} else {
+			accessor = rootArg
+		}
+		if isOptionType(f.Type) {
+			fmt.Fprintf(&b, "    %s.Parameters.AddWithValue(%q, match %s with | Some v -> box v | None -> box DBNull.Value) |> ignore\n",
+				cmdVar, param, accessor)
+		} else {
+			fmt.Fprintf(&b, "    %s.Parameters.AddWithValue(%q, %s) |> ignore\n", cmdVar, param, accessor)
+		}
+	}
+	return b.String()
+}
+
+// ExecLastIDScalarType is the F# type returned for :execlastid (PostgreSQL via lastval()).
+func (q Query) ExecLastIDScalarType() string {
+	if !q.Ret.isEmpty() && q.Ret.Struct == nil && q.Ret.Typ != "" {
+		return q.Ret.Typ
+	}
+	return "int64"
+}
+
+// ExecLastIDScalarExpr converts lastval() ExecuteScalar() to the declared F# type.
+func (q Query) ExecLastIDScalarExpr() string {
+	switch q.ExecLastIDScalarType() {
+	case "int32":
+		return "Convert.ToInt32(lv.ExecuteScalar())"
+	case "int16":
+		return "Convert.ToInt16(lv.ExecuteScalar())"
+	default:
+		return "Convert.ToInt64(lv.ExecuteScalar())"
+	}
 }

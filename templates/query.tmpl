@@ -7,6 +7,7 @@ module {{ .SourceName | stem | pascalCase}}
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
 
 {{ if not $.Options.EmitAutoOpenModel }}
 open {{ $.Options.EmitModelName }}
@@ -120,6 +121,79 @@ let {{.MethodName}} (db: NpgsqlConnection) {{if .Arg.Pair}} ({{.Arg.Pair}}) {{- 
   {{ end -}}
   |> Sql.execute{{if $.Options.EmitAsyncCode}}Async{{end}}
 {{ end }}
+
+{{- if eq .Cmd ":batchexec"}}
+{{range .Comments}}//{{.}}
+{{end -}}
+let {{.MethodName}} (db: NpgsqlConnection) (args: seq<{{.BatchElemType}}>) =
+  use batch = new NpgsqlBatch(db)
+  for arg in args do
+    let bc = NpgsqlBatchCommand({{.ConstantName}})
+{{.BatchBindParamsFSharp}}
+    batch.BatchCommands.Add(bc) |> ignore
+  batch.ExecuteNonQuery() |> ignore
+{{- end}}
+
+{{- if eq .Cmd ":batchmany"}}
+{{range .Comments}}//{{.}}
+{{end -}}
+let {{.MethodName}} (db: NpgsqlConnection) (args: seq<{{.BatchElemType}}>) =
+  let argList = args |> Seq.toList
+  use batch = new NpgsqlBatch(db)
+  for arg in argList do
+    let bc = NpgsqlBatchCommand({{.ConstantName}})
+{{.BatchBindParamsFSharp}}
+    batch.BatchCommands.Add(bc) |> ignore
+  use reader = batch.ExecuteReader()
+  let results = System.Collections.Generic.List<list<{{.BatchResultRowType}}>>()
+  {{- if eq (len .Ret.UniqueFields) 1 }}
+  let readBatchRow (read: RowReader) = read.{{(index .Ret.UniqueFields 0).Type | type2readerFunc }} "{{(index .Ret.UniqueFields 0).Name}}"
+  {{- else }}
+  let readBatchRow (read: RowReader) = {
+  {{- range $i, $e := .Ret.UniqueFields}}
+    {{$e.Name | pascalCase }} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
+  {{- end }}
+  }
+  {{- end }}
+  for i in 0 .. argList.Length - 1 do
+    let rows = System.Collections.Generic.List<{{.BatchResultRowType}}>()
+    while reader.Read() do
+      rows.Add(readBatchRow (RowReader(unbox reader)))
+    results.Add(List.ofSeq rows)
+    if i < argList.Length - 1 then
+      reader.NextResult() |> ignore
+  List.ofSeq results
+{{- end}}
+
+{{- if eq .Cmd ":batchone"}}
+{{range .Comments}}//{{.}}
+{{end -}}
+let {{.MethodName}} (db: NpgsqlConnection) (args: seq<{{.BatchElemType}}>) =
+  let argList = args |> Seq.toList
+  use batch = new NpgsqlBatch(db)
+  for arg in argList do
+    let bc = NpgsqlBatchCommand({{.ConstantName}})
+{{.BatchBindParamsFSharp}}
+    batch.BatchCommands.Add(bc) |> ignore
+  use reader = batch.ExecuteReader()
+  let results = System.Collections.Generic.List<{{.BatchResultRowType}}>()
+  {{- if eq (len .Ret.UniqueFields) 1 }}
+  let readBatchRow (read: RowReader) = read.{{(index .Ret.UniqueFields 0).Type | type2readerFunc }} "{{(index .Ret.UniqueFields 0).Name}}"
+  {{- else }}
+  let readBatchRow (read: RowReader) = {
+  {{- range $i, $e := .Ret.UniqueFields}}
+    {{$e.Name | pascalCase }} = read.{{$e.Type | type2readerFunc }} "{{$e.Name}}"
+  {{- end }}
+  }
+  {{- end }}
+  for i in 0 .. argList.Length - 1 do
+    if not (reader.Read()) then
+      failwith "batchone: expected one row"
+    results.Add(readBatchRow (RowReader(unbox reader)))
+    if i < argList.Length - 1 then
+      reader.NextResult() |> ignore
+  List.ofSeq results
+{{- end}}
 
 {{- if eq .Cmd ":copyfrom"}}
 {{range .Comments}}//{{.}}

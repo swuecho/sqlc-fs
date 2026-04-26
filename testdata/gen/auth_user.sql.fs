@@ -7,6 +7,10 @@ module AuthUser
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
+
+
+
 
 
 

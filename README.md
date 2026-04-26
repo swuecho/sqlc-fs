@@ -18,8 +18,11 @@ Supported query annotations:
 - `:execrows`
 - `:execresult`
 - `:copyfrom`
+- `:batchexec`, `:batchmany`, and `:batchone` (via `NpgsqlBatch` / `NpgsqlBatchCommand`; row reading uses `RowReader` from Npgsql.FSharp)
 
-Unsupported query annotations fail generation with a clear error instead of producing an empty function. This currently includes `:execlastid`, `:batchexec`, `:batchmany`, and `:batchone`.
+Unsupported query annotations fail generation with a clear error instead of producing an empty function. This currently includes `:execlastid`.
+
+Batch methods are synchronous only (`emit_async_code` does not yet emit async batch variants).
 
 The plugin supports sqlc `rename` settings and the plugin options shown below. Other sqlc generator features, such as Go type overrides, enum helper generation, exact table name settings, and MySQL/SQLite-specific generation are not implemented for the F# generator.
 
