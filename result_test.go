@@ -90,6 +90,12 @@ func TestType2ReaderFuncUsesArrayReaders(t *testing.T) {
 	if got := type2readerFuncParam("DateTime"); got != "date" {
 		t.Fatalf("type2readerFuncParam(DateTime) = %q, want date", got)
 	}
+	if got := type2readerFunc("jsonb"); got != "string" {
+		t.Fatalf("type2readerFunc(jsonb) = %q, want string", got)
+	}
+	if got := type2readerFuncParam("jsonb"); got != "jsonb" {
+		t.Fatalf("type2readerFuncParam(jsonb) = %q, want jsonb", got)
+	}
 }
 
 func param(number int32, name string, typ string) *plugin.Parameter {

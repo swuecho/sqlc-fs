@@ -172,7 +172,7 @@ func normalizeReaderType(t string, forParam bool) string {
 		t = "date"
 	}
 
-	if t == "jsonb" {
+	if !forParam && t == "jsonb" {
 		t = "string"
 	}
 
