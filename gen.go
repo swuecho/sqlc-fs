@@ -8,7 +8,6 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/pkg/errors"
 	"github.com/samber/lo"
 	"github.com/swuecho/sqlc-fs/internal/plugin"
 	"github.com/swuecho/sqlc-fs/internal/sdk"
@@ -19,12 +18,12 @@ func Generate(req *plugin.CodeGenRequest) (*plugin.CodeGenResponse, error) {
 
 	options, err := parseOptions(req)
 	if err != nil {
-		return nil, errors.Errorf("error parse options: %w", err)
+		return nil, fmt.Errorf("error parse options: %w", err)
 	}
 
 	queries, err := buildQueries(req, structs)
 	if err != nil {
-		return nil, errors.Errorf("error generating queries: %w", err)
+		return nil, fmt.Errorf("error generating queries: %w", err)
 	}
 	return generate(req, structs, queries, options)
 }
@@ -92,7 +91,7 @@ func generate(req *plugin.CodeGenRequest, structs []Struct, queries []Query, opt
 		"escape":          sdk.EscapeBacktick,
 		"hasPrefix":       strings.HasPrefix,
 		"type2readerFunc": type2readerFunc,
-		"json2str": jsonb2Str,
+		"json2str":        jsonb2Str,
 	}
 
 	tmpl := template.Must(

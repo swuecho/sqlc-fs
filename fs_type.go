@@ -199,7 +199,10 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 	case "void":
 		return "interface{}"
 	case "any":
-		return "interface{}"
+		// sqlc reports unresolved expression parameters (for example
+		// string_to_array($1, $2)) as "any". Emit text so the generated F#
+		// stays usable unless the SQL adds a more specific cast.
+		return "string"
 	default:
 		rel, err := parseIdentifierString(columnType)
 		if err != nil {
