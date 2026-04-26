@@ -6,6 +6,27 @@ This plugin is in alpha stage.
 
 check <https://github.com/swuecho/sqlc-fs/tree/main/testdata> for demo.
 
+## Supported sqlc features
+
+sqlc-fs currently targets PostgreSQL and emits F# modules that use Npgsql and Npgsql.FSharp.
+
+Supported query annotations:
+
+- `:one`
+- `:many`
+- `:exec`
+- `:execrows`
+- `:execresult`
+- `:copyfrom`
+- `:batchexec`, `:batchmany`, and `:batchone` (via `NpgsqlBatch` / `NpgsqlBatchCommand`; row reading uses `RowReader` from Npgsql.FSharp)
+- `:execlastid` (PostgreSQL: runs the statement then `SELECT lastval()` on the same connection). This is not the same as MySQL `LastInsertId`; it is wrong if the insert does not advance a sequence, or when triggers/other inserts run on the same connection. Prefer `:one` with `RETURNING id` when possible.
+
+Unsupported query annotations fail generation with a clear error instead of producing an empty function (unknown command names).
+
+Batch methods are synchronous only (`emit_async_code` does not yet emit async batch variants).
+
+The plugin supports sqlc `rename` settings and the plugin options shown below. Other sqlc generator features, such as Go type overrides, enum helper generation, exact table name settings, and MySQL/SQLite-specific generation are not implemented for the F# generator.
+
 ## Installation & Usage
 
 ```bash
@@ -39,7 +60,7 @@ go install github.com/swuecho/sqlc-fs@latest
             // "emit_async_code": false,
             // "emit_auto_open_model": true,
             // "emit_model_file_name": "model_from_schema.fs",
-            // "emit_model_name: "ModelFromSchema",
+            // "emit_model_name": "ModelFromSchema",
           }
         }
       ]
@@ -50,7 +71,7 @@ go install github.com/swuecho/sqlc-fs@latest
 ## Dev & Contribution
 
 ```build
-go build -o bin/sqlc-ts 
+go build -o bin/sqlc-fs
 ```
 
 See `testdata/` for a full example that can be run with:

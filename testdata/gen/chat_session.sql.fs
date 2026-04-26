@@ -7,6 +7,11 @@ module ChatSession
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
+
+
+
+
 
 
 
@@ -71,8 +76,6 @@ let CreateChatSession (db: NpgsqlConnection)  (arg: CreateChatSessionParams)  =
 
 
 
-
-
 let createChatSessionByUUID = """-- name: CreateChatSessionByUUID :one
 INSERT INTO chat_session (user_id, uuid, topic, created_at, active,  max_length)
 VALUES (@user_id, @uuid, @topic, @created_at, @active, @max_length)
@@ -126,10 +129,9 @@ let CreateChatSessionByUUID (db: NpgsqlConnection)  (arg: CreateChatSessionByUUI
 
 
 
-
 let createOrUpdateChatSessionByUUID = """-- name: CreateOrUpdateChatSessionByUUID :one
 INSERT INTO chat_session(uuid, user_id, topic, max_length, temperature, model, max_tokens, top_p, n, debug)
-VALUES (@uuid, @user_id, @topic, @max_length, @temperature, @model, @max_tokens, @top_p, @n, @uuid0)
+VALUES (@uuid, @user_id, @topic, @max_length, @temperature, @model, @max_tokens, @top_p, @n, @debug)
 ON CONFLICT (uuid) 
 DO UPDATE SET
 max_length = EXCLUDED.max_length, 
@@ -204,8 +206,6 @@ let CreateOrUpdateChatSessionByUUID (db: NpgsqlConnection)  (arg: CreateOrUpdate
 
 
 
-
-
 let deleteChatSession = """-- name: DeleteChatSession :exec
 DELETE FROM chat_session 
 WHERE id = @id
@@ -222,8 +222,6 @@ let DeleteChatSession (db: NpgsqlConnection)  (id: int32)  =
   |> Sql.query deleteChatSession
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -247,8 +245,6 @@ let DeleteChatSessionByUUID (db: NpgsqlConnection)  (uuid: string)  =
   |> Sql.query deleteChatSessionByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -312,8 +308,6 @@ let GetAllChatSessions (db: NpgsqlConnection)  =
 
 
 
-
-
 let getChatSessionByID = """-- name: GetChatSessionByID :one
 SELECT id, user_id, uuid, topic, created_at, updated_at, active, model, max_length, temperature, top_p, max_tokens, n, debug FROM chat_session WHERE id = @id
 """
@@ -344,8 +338,6 @@ let GetChatSessionByID (db: NpgsqlConnection)  (id: int32)  =
   |> Sql.query getChatSessionByID
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -398,8 +390,6 @@ let GetChatSessionByUUID (db: NpgsqlConnection)  (uuid: string)  =
 
 
 
-
-
 let getChatSessionByUUIDWithInActive = """-- name: GetChatSessionByUUIDWithInActive :one
 SELECT id, user_id, uuid, topic, created_at, updated_at, active, model, max_length, temperature, top_p, max_tokens, n, debug FROM chat_session 
 WHERE uuid = @uuid
@@ -432,8 +422,6 @@ let GetChatSessionByUUIDWithInActive (db: NpgsqlConnection)  (uuid: string)  =
   |> Sql.query getChatSessionByUUIDWithInActive
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -497,8 +485,6 @@ let GetChatSessionsByUserID (db: NpgsqlConnection)  (userId: int32) =
 
 
 
-
-
 let hasChatSessionPermission = """-- name: HasChatSessionPermission :one
 SELECT COUNT(*) > 0 as has_permission
 FROM chat_session cs
@@ -521,8 +507,6 @@ let HasChatSessionPermission (db: NpgsqlConnection)  (arg: HasChatSessionPermiss
   |> Sql.query hasChatSessionPermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -605,8 +589,6 @@ let UpdateChatSession (db: NpgsqlConnection)  (arg: UpdateChatSessionParams)  =
 
 
 
-
-
 let updateChatSessionByUUID = """-- name: UpdateChatSessionByUUID :one
 UPDATE chat_session SET user_id = @user_id, topic = @topic, updated_at = now()
 WHERE uuid = @uuid
@@ -644,8 +626,6 @@ let UpdateChatSessionByUUID (db: NpgsqlConnection)  (arg: UpdateChatSessionByUUI
   |> Sql.query updateChatSessionByUUID
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@user_id", Sql.int arg.UserId; "@topic", Sql.string arg.Topic ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -709,8 +689,6 @@ let UpdateChatSessionTopicByUUID (db: NpgsqlConnection)  (arg: UpdateChatSession
 
 
 
-
-
 let updateSessionMaxLength = """-- name: UpdateSessionMaxLength :one
 UPDATE chat_session
 SET max_length = @max_length,
@@ -749,8 +727,6 @@ let UpdateSessionMaxLength (db: NpgsqlConnection)  (arg: UpdateSessionMaxLengthP
   |> Sql.query updateSessionMaxLength
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@max_length", Sql.int arg.MaxLength ]
   |> Sql.executeRow reader
-
-
 
 
 

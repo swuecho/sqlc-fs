@@ -7,6 +7,12 @@ module AuthUserManagement
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
+
+
+
+
+
 
 
 
@@ -91,8 +97,6 @@ let GetRateLimit (db: NpgsqlConnection)  (userId: int32)  =
   |> Sql.query getRateLimit
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.executeRow reader
-
-
 
 
 

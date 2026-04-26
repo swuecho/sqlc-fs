@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/jinzhu/inflection"
+	"github.com/swuecho/sqlc-fs/internal/metadata"
 	"github.com/swuecho/sqlc-fs/internal/plugin"
 	"github.com/swuecho/sqlc-fs/internal/sdk"
 )
@@ -74,6 +75,9 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 		}
 		if query.Cmd == "" {
 			continue
+		}
+		if err := validateQueryCommand(query); err != nil {
+			return nil, err
 		}
 
 		constantName := sdk.LowerTitle(query.Name)
@@ -183,6 +187,26 @@ func buildQueries(req *plugin.CodeGenRequest, structs []Struct) ([]Query, error)
 				Emit:   emit,
 				Name:   "i",
 				Struct: gs,
+			}
+		}
+
+		if gq.Cmd == metadata.CmdCopyFrom {
+			if gq.Table == nil {
+				return nil, fmt.Errorf("copyfrom query %s is missing insert table metadata", gq.MethodName)
+			}
+			if gq.Arg.isEmpty() {
+				return nil, fmt.Errorf("copyfrom query %s must have parameters", gq.MethodName)
+			}
+		}
+
+		if gq.Cmd == metadata.CmdBatchExec || gq.Cmd == metadata.CmdBatchMany || gq.Cmd == metadata.CmdBatchOne {
+			if gq.Arg.isEmpty() {
+				return nil, fmt.Errorf("batch query %s must have parameters", gq.MethodName)
+			}
+		}
+		if gq.Cmd == metadata.CmdBatchMany || gq.Cmd == metadata.CmdBatchOne {
+			if gq.Ret.isEmpty() {
+				return nil, fmt.Errorf("batch query %s must return columns", gq.MethodName)
 			}
 		}
 

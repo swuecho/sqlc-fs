@@ -7,6 +7,10 @@ module ChatModel
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
+
+
+
 
 
 
@@ -47,8 +51,6 @@ let ChatModelByID (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let chatModelByName = """-- name: ChatModelByName :one
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model WHERE name = @name
 """
@@ -74,8 +76,6 @@ let ChatModelByName (db: NpgsqlConnection)  (name: string)  =
   |> Sql.query chatModelByName
   |> Sql.parameters  [ "@name", Sql.string name ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -140,6 +140,43 @@ let CreateChatModel (db: NpgsqlConnection)  (arg: CreateChatModelParams)  =
 
 
 
+let createChatModels = """-- name: CreateChatModels :copyfrom
+INSERT INTO chat_model (name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit)
+VALUES (@name, @label, @is_default, @url, @api_auth_header, @api_auth_key, @user_id, @enable_per_mode_ratelimit)
+"""
+
+
+type CreateChatModelsParams = {
+  Name: string;
+  Label: string;
+  IsDefault: bool;
+  Url: string;
+  ApiAuthHeader: string;
+  ApiAuthKey: string;
+  UserId: int32;
+  EnablePerModeRatelimit: bool;
+}
+
+
+
+
+
+
+
+
+let CreateChatModels (db: NpgsqlConnection) (args: seq<CreateChatModelsParams>) =
+  use writer = db.BeginBinaryImport("COPY \"chat_model\" (\"name\", \"label\", \"is_default\", \"url\", \"api_auth_header\", \"api_auth_key\", \"user_id\", \"enable_per_mode_ratelimit\") FROM STDIN (FORMAT BINARY)")
+  for arg in args do
+    writer.StartRow()
+    writer.Write(arg.Name)
+    writer.Write(arg.Label)
+    writer.Write(arg.IsDefault)
+    writer.Write(arg.Url)
+    writer.Write(arg.ApiAuthHeader)
+    writer.Write(arg.ApiAuthKey)
+    writer.Write(arg.UserId)
+    writer.Write(arg.EnablePerModeRatelimit)
+  writer.Complete()
 
 
 
@@ -176,8 +213,6 @@ let DeleteChatModel (db: NpgsqlConnection)  (arg: DeleteChatModelParams)  =
   |> Sql.query deleteChatModel
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -264,8 +299,6 @@ let GetDefaultChatModel (db: NpgsqlConnection)   =
 
 
 
-
-
 let listChatModels = """-- name: ListChatModels :many
 SELECT id, name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit FROM chat_model ORDER BY id
 """
@@ -289,8 +322,6 @@ let ListChatModels (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listChatModels
   |> Sql.execute reader
-
-
 
 
 
@@ -325,8 +356,6 @@ let ListSystemChatModels (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listSystemChatModels
   |> Sql.execute reader
-
-
 
 
 
@@ -396,8 +425,6 @@ let UpdateChatModel (db: NpgsqlConnection)  (arg: UpdateChatModelParams)  =
 
 
 
-
-
 let updateChatModelKey = """-- name: UpdateChatModelKey :one
 UPDATE chat_model SET api_auth_key = @api_auth_key
 WHERE id = @id
@@ -429,8 +456,6 @@ let UpdateChatModelKey (db: NpgsqlConnection)  (arg: UpdateChatModelKeyParams)  
   |> Sql.query updateChatModelKey
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@api_auth_key", Sql.string arg.ApiAuthKey ]
   |> Sql.executeRow reader
-
-
 
 
 

@@ -7,6 +7,12 @@ module ChatUserActiveChatSession
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
+
+
+
+
+
 
 
 
@@ -69,8 +75,6 @@ let CreateOrUpdateUserActiveChatSession (db: NpgsqlConnection)  (arg: CreateOrUp
 
 
 
-
-
 let createUserActiveChatSession = """-- name: CreateUserActiveChatSession :one
 INSERT INTO user_active_chat_session (user_id, chat_session_uuid)
 VALUES (@user_id, @chat_session_uuid)
@@ -121,8 +125,6 @@ let CreateUserActiveChatSession (db: NpgsqlConnection)  (arg: CreateUserActiveCh
 
 
 
-
-
 let deleteUserActiveChatSession = """-- name: DeleteUserActiveChatSession :exec
 DELETE FROM user_active_chat_session WHERE user_id = @user_id
 """
@@ -138,8 +140,6 @@ let DeleteUserActiveChatSession (db: NpgsqlConnection)  (userId: int32)  =
   |> Sql.query deleteUserActiveChatSession
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -219,8 +219,6 @@ let GetUserActiveChatSession (db: NpgsqlConnection)  (userId: int32)  =
 
 
 
-
-
 let listUserActiveChatSessions = """-- name: ListUserActiveChatSessions :many
 SELECT id, user_id, chat_session_uuid, created_at, updated_at FROM user_active_chat_session ORDER BY id
 """
@@ -240,8 +238,6 @@ let ListUserActiveChatSessions (db: NpgsqlConnection)  =
   |> Sql.existingConnection
   |> Sql.query listUserActiveChatSessions
   |> Sql.execute reader
-
-
 
 
 
@@ -299,8 +295,6 @@ let UpdateUserActiveChatSession (db: NpgsqlConnection)  (arg: UpdateUserActiveCh
   |> Sql.query updateUserActiveChatSession
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string arg.ChatSessionUuid; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
-
-
 
 
 

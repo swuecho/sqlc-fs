@@ -7,6 +7,10 @@ module ChatMessage
 open Npgsql
 open Npgsql.FSharp
 open System
+open System.Data
+
+
+
 
 
 
@@ -22,7 +26,7 @@ open System
 
 let createChatMessage = """-- name: CreateChatMessage :one
 INSERT INTO chat_message (chat_session_uuid, uuid, role, content, token_count, score, user_id, created_by, updated_by, raw)
-VALUES (@chat_session_uuid, @uuid, @role, @content, @token_count, @score, @user_id, @created_by, @updated_by, @chat_session_uuid0)
+VALUES (@chat_session_uuid, @uuid, @role, @content, @token_count, @score, @user_id, @created_by, @updated_by, @raw)
 RETURNING id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, is_pin, token_count, raw
 """
 
@@ -112,8 +116,6 @@ let DeleteChatMessage (db: NpgsqlConnection)  (id: int32)  =
 
 
 
-
-
 let deleteChatMessageByUUID = """-- name: DeleteChatMessageByUUID :exec
 UPDATE chat_message SET is_deleted = true, updated_at = now()
 WHERE uuid = @uuid
@@ -130,8 +132,6 @@ let DeleteChatMessageByUUID (db: NpgsqlConnection)  (uuid: string)  =
   |> Sql.query deleteChatMessageByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -155,8 +155,6 @@ let DeleteChatMessagesBySesionUUID (db: NpgsqlConnection)  (chatSessionUuid: str
   |> Sql.query deleteChatMessagesBySesionUUID
   |> Sql.parameters  [ "@chat_session_uuid", Sql.string chatSessionUuid ]
   |> Sql.executeNonQuery
-
-
 
 
 
@@ -215,8 +213,6 @@ let GetAllChatMessages (db: NpgsqlConnection)  =
 
 
 
-
-
 let getChatMessageByID = """-- name: GetChatMessageByID :one
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, is_pin, token_count, raw FROM chat_message 
 WHERE is_deleted = false and id = @id
@@ -249,8 +245,6 @@ let GetChatMessageByID (db: NpgsqlConnection)  (id: int32)  =
   |> Sql.query getChatMessageByID
   |> Sql.parameters  [ "@id", Sql.int id ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -312,8 +306,6 @@ let GetChatMessageBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessageBySe
 
 
 
-
-
 let getChatMessageByUUID = """-- name: GetChatMessageByUUID :one
 
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, is_pin, token_count, raw FROM chat_message 
@@ -348,8 +340,6 @@ let GetChatMessageByUUID (db: NpgsqlConnection)  (uuid: string)  =
   |> Sql.query getChatMessageByUUID
   |> Sql.parameters  [ "@uuid", Sql.string uuid ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -409,8 +399,6 @@ let GetChatMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetChatMessagesBy
 
 
 
-
-
 let getChatMessagesCount = """-- name: GetChatMessagesCount :one
 SELECT COUNT(*)
 FROM chat_message
@@ -430,8 +418,6 @@ let GetChatMessagesCount (db: NpgsqlConnection)  (userId: int32)  =
   |> Sql.query getChatMessagesCount
   |> Sql.parameters  [ "@user_id", Sql.int userId ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -467,8 +453,6 @@ let GetChatMessagesCountByUserAndModel (db: NpgsqlConnection)  (arg: GetChatMess
   |> Sql.query getChatMessagesCountByUserAndModel
   |> Sql.parameters  [ "@user_id", Sql.int arg.UserId; "@model", Sql.string arg.Model ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -535,8 +519,6 @@ let GetFirstMessageBySessionUUID (db: NpgsqlConnection)  (chatSessionUuid: strin
 
 
 
-
-
 let getLastNChatMessages = """-- name: GetLastNChatMessages :many
 SELECT id, uuid, chat_session_uuid, role, content, score, user_id, created_at, updated_at, created_by, updated_by, is_deleted, is_pin, token_count, raw
 FROM chat_message
@@ -589,8 +571,6 @@ let GetLastNChatMessages (db: NpgsqlConnection)  (arg: GetLastNChatMessagesParam
   |> Sql.query getLastNChatMessages
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@limit", Sql.int arg.Limit; "@chat_session_uuid", Sql.string arg.ChatSessionUuid ]
   |> Sql.execute reader
-
-
 
 
 
@@ -663,8 +643,6 @@ let GetLatestMessagesBySessionUUID (db: NpgsqlConnection)  (arg: GetLatestMessag
 
 
 
-
-
 let hasChatMessagePermission = """-- name: HasChatMessagePermission :one
 SELECT COUNT(*) > 0 as has_permission
 FROM chat_message cm
@@ -688,8 +666,6 @@ let HasChatMessagePermission (db: NpgsqlConnection)  (arg: HasChatMessagePermiss
   |> Sql.query hasChatMessagePermission
   |> Sql.parameters  [ "@id", Sql.int arg.Id; "@user_id", Sql.int arg.UserId ]
   |> Sql.executeRow reader
-
-
 
 
 
@@ -770,8 +746,6 @@ let UpdateChatMessage (db: NpgsqlConnection)  (arg: UpdateChatMessageParams)  =
 
 
 
-
-
 let updateChatMessageByUUID = """-- name: UpdateChatMessageByUUID :one
 UPDATE chat_message SET content = @content, is_pin = @is_pin, token_count = @token_count,  updated_at = now() 
 WHERE uuid = @uuid
@@ -821,8 +795,6 @@ let UpdateChatMessageByUUID (db: NpgsqlConnection)  (arg: UpdateChatMessageByUUI
 
 
 
-
-
 let updateChatMessageContent = """-- name: UpdateChatMessageContent :exec
 UPDATE chat_message
 SET content = @content, updated_at = now(), token_count = @token_count
@@ -845,8 +817,6 @@ let UpdateChatMessageContent (db: NpgsqlConnection)  (arg: UpdateChatMessageCont
   |> Sql.query updateChatMessageContent
   |> Sql.parameters  [ "@uuid", Sql.string arg.Uuid; "@content", Sql.string arg.Content; "@token_count", Sql.int arg.TokenCount ]
   |> Sql.executeNonQuery
-
-
 
 
 

@@ -17,6 +17,10 @@ INSERT INTO chat_model (name, label, is_default, url, api_auth_header, api_auth_
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
 RETURNING *;
 
+-- name: CreateChatModels :copyfrom
+INSERT INTO chat_model (name, label, is_default, url, api_auth_header, api_auth_key, user_id, enable_per_mode_ratelimit)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+
 -- name: UpdateChatModel :one
 UPDATE chat_model SET name = $2, label = $3, is_default = $4, url = $5, api_auth_header = $6, api_auth_key = $7, enable_per_mode_ratelimit = $9
 WHERE id = $1 and user_id = $8
